@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Diagnóstico de Maturidade de IA · AIMANA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   AIMANA · Diagnóstico de Maturidade de IA
+   Sistema visual das LPs AI Coworker / Curso Unimed
+   =========================================================== */
+:root{
+  --navy:#2b296b;
+  --ink:#0f0f2d;
+  --blue:#2c479e;
+  --teal:#2bbcb6;
+  --teal-soft:#7fe0dc;
+  --sky:#58c9f4;
+  --cream:#f7f4ec;
+  --gray:#8a8aa3;
+  --green:#00995d;
+  --pink:#ef5ba1;
+  --line:rgba(15,15,45,0.12);
+  --line-dark:rgba(255,255,255,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Titillium Web',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* ====== TELAS (exibição sequencial) ====== */
+.tela{display:none}
+.tela.active{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ====== TOPBAR ====== */
+.topbar{background:var(--ink);color:#fff;padding:10px 32px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.topbar a{color:var(--teal);text-decoration:none}
+.topbar a:hover{text-decoration:underline}
+.topbar strong{color:var(--teal)}
+
+/* ====== HERO (tela 1 e topo da tela 5) ====== */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:28px 0 100px}
+.hero-nav{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:3}
+.hero-nav .aimana img,.hero-nav .aimana svg{height:28px;width:auto;display:block}
+.hero-nav .hero-partner{display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);font-weight:600}
+.hero-nav .partner-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(43,188,182,.25)}
+.hero-nav .partner-text{line-height:1.3;text-align:right}
+.hero-nav .partner-text strong{display:block;font-weight:700;color:#fff;font-size:11px;letter-spacing:.18em}
+
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:56px 0 0;position:relative;z-index:2}
+.hero-copy .eyebrow{display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:24px}
+.hero-copy h1{font-size:60px;line-height:.95;font-weight:900;letter-spacing:-.015em;text-transform:uppercase;margin-bottom:24px}
+.hero-copy h1 em{font-style:normal;color:var(--teal)}
+.hero-copy .lead{font-size:19px;line-height:1.45;color:rgba(255,255,255,0.82);max-width:520px;margin-bottom:28px;font-weight:300}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+.pill{display:inline-flex;align-items:center;padding:7px 16px;border-radius:9999px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.1);color:#fff}
+.pill.solid{background:var(--teal);color:var(--navy);font-weight:700}
+.pill.green{background:var(--green);color:#fff;font-weight:700}
+
+/* "a" line motif */
+.a-motif{position:absolute;pointer-events:none;stroke:var(--teal);stroke-width:10;fill:none}
+.a-motif.hero-right{right:-80px;bottom:-120px;width:520px;height:460px;opacity:.22}
+.a-motif.result-top{right:-40px;top:-40px;width:320px;height:260px;opacity:.28}
+
+/* ====== FORM SECTIONS (telas 2-4) ====== */
+.form-section{background:var(--cream);padding:64px 0 96px;min-height:100vh}
+.form-section .wrap{max-width:720px}
+.progress-wrap{margin-bottom:28px}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;margin-bottom:10px;color:var(--navy)}
+.progress-label .pct{color:var(--teal)}
+.progress-bar{height:6px;background:rgba(43,41,107,.1);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--sky));border-radius:999px;transition:width .4s ease;width:0%}
+
+/* ====== FORM CARD ====== */
+.form-card{max-width:580px;margin:0 auto;background:#fff;border-radius:28px;padding:44px;box-shadow:0 28px 56px rgba(43,41,107,.1)}
+.form-card .form-eyebrow{display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:14px}
+.form-card .form-title{font-size:28px;line-height:1.08;font-weight:900;color:var(--navy);letter-spacing:-.01em;margin-bottom:8px;text-transform:none}
+.form-card .form-title em{font-style:normal;color:var(--teal)}
+.form-card .form-subtitle{font-size:15px;color:var(--ink);opacity:.72;line-height:1.5;margin-bottom:28px;font-weight:400}
+
+/* inputs */
+.input-group{margin-bottom:18px}
+.input-group label{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;margin-bottom:6px;color:var(--navy);text-transform:uppercase}
+.input-group label .obrig{color:var(--teal)}
+.input-group input,
+.input-group select,
+.input-group textarea{width:100%;padding:14px 16px;font-family:inherit;font-size:15px;font-weight:400;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:12px;transition:border-color .15s,box-shadow .15s;min-height:48px;-webkit-appearance:none;appearance:none;text-transform:none;letter-spacing:0}
+.input-group input::placeholder,
+.input-group textarea::placeholder{color:rgba(15,15,45,.38)}
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,188,182,.15)}
+.input-group select{cursor:pointer;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232bbcb6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;padding-right:44px}
+.input-group textarea{resize:vertical;min-height:108px;line-height:1.5}
+.input-erro{display:none;font-size:12px;color:var(--pink);margin-top:6px;font-weight:600}
+.input-group.erro .input-erro{display:block}
+.input-group.erro input,
+.input-group.erro select,
+.input-group.erro textarea{border-color:var(--pink)}
+.input-group .micro-hint{display:block;font-size:12px;color:var(--gray);margin-top:6px;font-weight:400;line-height:1.4}
+
+/* ====== PERGUNTAS (telas 2-4) ====== */
+.pergunta{margin-bottom:28px}
+.pergunta-titulo{display:block;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px;line-height:1.35;text-transform:none;letter-spacing:0}
+.pergunta-hint{display:block;font-size:13px;color:var(--gray);font-weight:400;margin-bottom:12px}
+.pergunta.erro .pergunta-titulo::after{content:" — obrigatória";color:var(--pink);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.pergunta.erro .opcoes,.pergunta.erro textarea{animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.opcoes{display:flex;flex-direction:column;gap:10px}
+.opcao{position:relative;display:flex;align-items:center;min-height:48px;padding:14px 16px 14px 48px;background:#fff;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;transition:all .15s ease;font-size:15px;line-height:1.4;color:var(--ink);user-select:none;font-weight:400;text-transform:none;letter-spacing:0}
+.opcao:hover{background:#fafafa;border-color:rgba(43,188,182,.5)}
+.opcao input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.opcao .marker{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:2px solid rgba(15,15,45,.28);background:transparent;transition:all .15s ease}
+.opcao[data-tipo="radio"] .marker{border-radius:50%}
+.opcao[data-tipo="checkbox"] .marker{border-radius:5px}
+.opcao input:checked ~ .marker{background:var(--teal);border-color:var(--teal)}
+.opcao[data-tipo="radio"] input:checked ~ .marker::after{content:"";position:absolute;inset:4px;background:#fff;border-radius:50%}
+.opcao[data-tipo="checkbox"] input:checked ~ .marker::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.opcao.selecionada{background:rgba(43,188,182,.08);border-color:var(--teal)}
+
+/* ====== LGPD checkbox (tela 1) ====== */
+.lgpd-box{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:rgba(43,188,182,.06);border:1px solid rgba(43,188,182,.25);border-radius:12px;margin:20px 0 16px;font-size:13px;line-height:1.5;color:var(--ink);font-weight:400}
+.lgpd-box input{flex:0 0 auto;margin:3px 0 0;width:18px;height:18px;accent-color:var(--teal);cursor:pointer}
+.lgpd-box label{display:block;cursor:pointer;font-size:13px;line-height:1.5;color:var(--ink);font-weight:400;letter-spacing:0;text-transform:none;margin:0}
+.lgpd-box a{color:var(--teal);text-decoration:underline;font-weight:600}
+.lgpd-box strong{font-weight:700;color:var(--navy)}
+
+/* ====== BOTÕES ====== */
+.botoes-nav{display:flex;gap:12px;margin-top:28px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 28px;min-height:52px;font-family:inherit;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border:none;border-radius:12px;cursor:pointer;transition:all .15s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--teal);color:var(--navy);flex-grow:1}
+.btn-primary:hover:not(:disabled){background:#26a9a4;transform:translateY(-1px);box-shadow:0 10px 24px rgba(43,188,182,.28)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;background:rgba(15,15,45,.12);color:rgba(15,15,45,.4);box-shadow:none;transform:none}
+.btn-secondary{background:transparent;color:var(--navy);border:1.5px solid rgba(15,15,45,.2)}
+.btn-secondary:hover{background:rgba(15,15,45,.04);border-color:rgba(15,15,45,.35)}
+.btn-cta-1{background:var(--teal);color:var(--navy);width:100%;margin-bottom:10px}
+.btn-cta-1:hover{background:#26a9a4;transform:translateY(-1px);box-shadow:0 10px 24px rgba(43,188,182,.28)}
+.btn-cta-2{background:transparent;color:var(--navy);border:1.5px solid var(--teal);width:100%}
+.btn-cta-2:hover{background:rgba(43,188,182,.08)}
+
+/* ====== TELA 5 — RESULTADO ====== */
+.result-hero{padding:56px 0 72px}
+.result-badge{display:inline-flex;align-items:center;gap:14px;padding:10px 20px;background:rgba(43,188,182,.15);border:1px solid rgba(43,188,182,.4);border-radius:9999px;margin-bottom:20px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.result-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(43,188,182,.25)}
+.result-hero h1{font-size:52px;line-height:.98;font-weight:900;letter-spacing:-.01em;text-transform:uppercase;margin-bottom:16px;color:#fff}
+.result-hero h1 .emoji{display:inline-block;font-size:58px;vertical-align:-6px;margin-right:10px}
+.result-hero h1 em{font-style:normal;color:var(--teal)}
+.result-score-chip{display:inline-flex;align-items:baseline;gap:8px;padding:10px 22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:9999px;margin-top:8px}
+.result-score-chip .num{font-size:26px;font-weight:900;color:var(--teal);letter-spacing:-.01em}
+.result-score-chip .total{font-size:14px;font-weight:600;color:rgba(255,255,255,.75)}
+
+.result-body{background:var(--cream);padding:80px 0 96px}
+.result-body .wrap{max-width:820px}
+.result-block{background:#fff;border-radius:24px;padding:36px;box-shadow:0 16px 40px rgba(43,41,107,.06);margin-bottom:20px;border:1px solid var(--line)}
+.result-block .block-eyebrow{display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:14px}
+.result-block h3{font-size:22px;font-weight:700;color:var(--navy);letter-spacing:-.005em;margin-bottom:14px;line-height:1.2}
+.result-block h3 em{font-style:normal;color:var(--teal)}
+.result-block p{font-size:16px;line-height:1.6;color:var(--ink);opacity:.86}
+.result-block p + p{margin-top:12px}
+
+.result-list{list-style:none;margin-top:8px}
+.result-list li{padding:12px 0;font-size:16px;line-height:1.5;color:var(--ink);border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+.result-list li:last-child{border-bottom:none}
+.result-list li::before{content:"→";color:var(--teal);font-weight:700;flex:0 0 auto;line-height:1.5}
+.result-list.numbered{counter-reset:mov}
+.result-list.numbered li{counter-increment:mov;padding-left:0}
+.result-list.numbered li::before{content:counter(mov);color:#fff;background:var(--teal);width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:0 0 28px}
+
+.agentes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:6px}
+.agente-card{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:22px 20px}
+.agente-card .tag{display:inline-block;padding:3px 10px;background:var(--teal);color:var(--navy);border-radius:9999px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+.agente-card h4{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:-.005em}
+.agente-card p{font-size:14px;line-height:1.5;color:var(--ink);opacity:.78}
+
+.curso-block{background:var(--navy);color:#fff;border-radius:24px;padding:36px;margin-bottom:20px;position:relative;overflow:hidden}
+.curso-block::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(43,188,182,.22),transparent 70%);pointer-events:none}
+.curso-block .block-eyebrow{color:var(--teal);position:relative;z-index:2}
+.curso-block h3{color:#fff;position:relative;z-index:2}
+.curso-block h3 em{color:var(--teal)}
+.curso-block p{color:rgba(255,255,255,.85);font-size:16px;line-height:1.6;margin-bottom:22px;position:relative;z-index:2}
+.curso-block .btn-cta-curso{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--navy);font-weight:700;font-size:15px;padding:14px 26px;border-radius:12px;text-decoration:none;letter-spacing:.04em;text-transform:uppercase;transition:all .15s ease;position:relative;z-index:2}
+.curso-block .btn-cta-curso:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(43,188,182,.3)}
+
+.email-aviso{text-align:center;margin-top:32px;padding:20px 24px;background:rgba(43,188,182,.1);border:1px dashed rgba(43,188,182,.4);border-radius:16px;font-size:14px;line-height:1.5;color:var(--ink)}
+.email-aviso strong{color:var(--navy);font-weight:700}
+.email-aviso .ico{display:inline-block;margin-right:6px}
+
+.especialista-cta{text-align:center;margin-top:20px}
+.especialista-cta a{color:var(--teal);font-weight:700;text-decoration:underline;font-size:15px}
+
+/* ====== Markdown da análise (Claude v2) ====== */
+.analise-markdown{background:#fff;border-radius:24px;padding:36px 40px;box-shadow:0 16px 40px rgba(43,41,107,.06);margin-bottom:28px;border:1px solid var(--line)}
+.analise-markdown h2{font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.005em;margin:34px 0 14px;line-height:1.22;padding-bottom:8px;border-bottom:2px solid rgba(43,188,182,.18)}
+.analise-markdown h2:first-child{margin-top:0}
+.analise-markdown p{font-size:16px;line-height:1.65;color:var(--ink);opacity:.88;margin:10px 0}
+.analise-markdown strong{color:var(--navy);font-weight:700}
+.analise-markdown ul,.analise-markdown ol{margin:14px 0 18px;padding-left:0;list-style:none}
+.analise-markdown ul li,.analise-markdown ol li{position:relative;padding:10px 0 10px 32px;font-size:15.5px;line-height:1.55;color:var(--ink);border-bottom:1px solid rgba(15,15,45,.06)}
+.analise-markdown ul li:last-child,.analise-markdown ol li:last-child{border-bottom:none}
+.analise-markdown ul li::before{content:"→";position:absolute;left:6px;top:10px;color:var(--teal);font-weight:700}
+.analise-markdown ol{counter-reset:movnum}
+.analise-markdown ol li{counter-increment:movnum;padding-left:44px;min-height:34px}
+.analise-markdown ol li::before{content:counter(movnum);position:absolute;left:0;top:8px;color:#fff;background:var(--teal);width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.analise-markdown a{color:var(--teal);text-decoration:underline;font-weight:600}
+.analise-markdown em{font-style:italic;color:var(--gray);font-weight:400;font-size:13.5px}
+
+/* ====== Aviso de fallback (Claude falhou) ====== */
+.aviso-fallback{margin-bottom:24px;padding:14px 18px;background:rgba(43,188,182,.08);border:1px dashed rgba(43,188,182,.35);border-radius:12px;font-size:13.5px;color:var(--ink);line-height:1.5}
+.aviso-fallback strong{color:var(--navy);font-weight:700}
+
+/* ====== Card primário · Live (sempre fixo) ====== */
+.next-step-title{font-size:clamp(22px,3.2vw,28px);font-weight:900;color:var(--navy);line-height:1.18;margin-bottom:10px;letter-spacing:-.01em}
+.next-step-title em{color:var(--teal);font-style:normal}
+.next-step-sub{font-size:15px;color:var(--ink);opacity:.78;line-height:1.55;margin-bottom:24px}
+
+.live-card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(43,188,182,.18);border:1px solid rgba(43,188,182,.28);margin-bottom:18px}
+.live-head{background:linear-gradient(135deg,var(--teal) 0%,#1a8c87 100%);padding:28px 30px 24px;color:#fff;position:relative;overflow:hidden}
+.live-head::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 85% 20%,rgba(255,255,255,.12),transparent 50%);pointer-events:none}
+.live-head>*{position:relative;z-index:2}
+.live-tag{display:inline-block;background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;border-radius:9999px;margin-bottom:12px}
+.live-title{font-size:clamp(22px,2.6vw,26px);font-weight:900;line-height:1.18;color:#fff;letter-spacing:-.005em}
+.live-kicker{font-size:13.5px;font-weight:300;margin-top:8px;opacity:.92}
+.live-body{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid rgba(43,41,107,.06)}
+.live-col{padding:20px 22px;border-right:1px solid rgba(43,41,107,.06)}
+.live-col:last-child{border-right:none}
+.live-col-label{display:block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.live-col p{font-size:13.5px;color:var(--ink);opacity:.86;line-height:1.55;margin:0}
+.live-cta{padding:22px 28px 26px;text-align:center}
+.live-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:280px;padding:16px 28px;background:var(--teal);color:var(--navy);font-weight:700;font-size:15px;text-decoration:none;border-radius:12px;box-shadow:0 8px 22px rgba(43,188,182,.32);transition:transform .15s ease,box-shadow .15s ease;text-transform:uppercase;letter-spacing:.04em}
+.live-btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(43,188,182,.45);background:#26a9a4}
+.live-cta-sub{display:block;margin-top:10px;font-size:12.5px;color:var(--ink);opacity:.65}
+
+/* ====== Bridge (transição Live → segundo curso) ====== */
+.funnel-bridge{margin:6px 0 14px;padding:14px 18px;background:rgba(43,41,107,.04);border-left:3px solid var(--navy);border-radius:0 10px 10px 0;font-size:14px;color:var(--navy);line-height:1.6}
+.funnel-bridge strong{font-weight:700}
+
+/* ====== Card secundário (segundo curso · 3 variantes) ====== */
+.segundo-card{background:#fff;border-radius:14px;padding:22px 26px;border:1px solid rgba(43,41,107,.1);transition:all .15s ease}
+.segundo-card[data-variant="default"]{border:2px solid var(--teal);box-shadow:0 12px 28px rgba(43,188,182,.18)}
+.segundo-card[data-variant="pioneiro"]{border:1.5px solid rgba(43,41,107,.2)}
+.segundo-card[data-variant="dev"]{border:1.5px solid rgba(43,188,182,.4);background:linear-gradient(180deg,#fff 0%,rgba(127,224,220,.05) 100%)}
+.segundo-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.segundo-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:4px 12px;border-radius:9999px;color:#fff}
+.segundo-card[data-variant="default"] .segundo-tag{background:var(--teal);color:var(--navy)}
+.segundo-card[data-variant="pioneiro"] .segundo-tag{background:var(--teal)}
+.segundo-card[data-variant="dev"] .segundo-tag{background:var(--teal-soft);color:var(--navy)}
+.segundo-title{font-size:18px;font-weight:800;color:var(--navy);margin:0;letter-spacing:-.005em}
+.segundo-desc{font-size:14.5px;color:var(--ink);opacity:.84;line-height:1.6;margin:0 0 14px}
+.segundo-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--navy);text-decoration:none;padding:10px 18px;border-radius:10px;background:var(--teal);transition:all .15s ease;text-transform:uppercase;letter-spacing:.04em}
+.segundo-link:hover{background:#26a9a4;transform:translateY(-1px);box-shadow:0 8px 20px rgba(43,188,182,.28)}
+.segundo-card[data-variant="dev"] .segundo-link{background:transparent;color:var(--teal);border:1.5px solid var(--teal)}
+.segundo-card[data-variant="dev"] .segundo-link:hover{background:rgba(43,188,182,.08);transform:translateY(-1px)}
+
+/* ====== Calendly fallback (microcopy condicional) ====== */
+.calendly-fallback{margin-top:18px;padding:14px 18px;background:rgba(15,15,45,.03);border-radius:12px;font-size:13.5px;color:var(--ink);opacity:.85;line-height:1.55;text-align:center}
+.calendly-fallback a{color:var(--navy);text-decoration:underline;font-weight:600}
+.calendly-fallback a:hover{color:var(--teal)}
+
+/* ====== FOOTER ====== */
+footer{background:var(--ink);color:rgba(255,255,255,.72);padding:36px 0 28px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:12px}
+.foot-inner .foot-logo img,.foot-inner .foot-logo svg{height:22px;width:auto;display:block;opacity:.9}
+.foot-inner .foot-copy{color:rgba(255,255,255,.55);letter-spacing:.04em}
+.foot-inner a{color:rgba(255,255,255,.72);text-decoration:none;transition:color .15s}
+.foot-inner a:hover{color:var(--teal)}
+.foot-sep{color:rgba(255,255,255,.25);margin:0 10px}
+
+/* ====== Toast + Overlay ====== */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);background:var(--pink);color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;z-index:100;transition:transform .3s ease;max-width:90%;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.loading-overlay{position:fixed;inset:0;background:rgba(30,29,79,.92);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:90;backdrop-filter:blur(8px)}
+.loading-overlay.active{display:flex}
+.spinner{width:56px;height:56px;border:4px solid rgba(255,255,255,.2);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{color:#fff;font-size:15px;font-weight:600;letter-spacing:.04em}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width:960px){
+  .topbar{padding:10px 20px;font-size:11px}
+  .wrap{padding:0 20px}
+  .hero{padding:24px 0 80px}
+  .hero-grid{grid-template-columns:1fr;gap:40px;padding:40px 0 0}
+  .hero-copy h1{font-size:42px}
+  .a-motif.hero-right{right:-120px;bottom:-160px;width:400px;height:340px;opacity:.18}
+  .result-hero h1{font-size:36px}
+  .result-hero h1 .emoji{font-size:40px}
+  .form-card{padding:32px 24px;border-radius:22px}
+  .result-block{padding:28px 22px;border-radius:20px}
+  .curso-block{padding:28px 22px;border-radius:20px}
+  .form-section{padding:40px 0 72px}
+  .result-body{padding:56px 0 72px}
+  .foot-inner{flex-direction:column;align-items:flex-start;gap:12px;text-align:left}
+  .live-body{grid-template-columns:1fr}
+  .live-col{border-right:none;border-bottom:1px solid rgba(43,41,107,.06)}
+  .live-col:last-child{border-bottom:none}
+  .live-btn{min-width:0;width:100%;font-size:14px;padding:14px 20px}
+  .analise-markdown{padding:28px 22px;border-radius:20px}
+  .segundo-card{padding:20px 20px}
+}
+@media (max-width:480px){
+  .hero-copy h1{font-size:34px}
+  .form-card{padding:28px 20px}
+  .form-card .form-title{font-size:24px}
+  .result-hero h1{font-size:30px}
+  .result-hero h1 .emoji{font-size:34px;display:block;margin-bottom:8px}
+  .btn{font-size:14px;padding:14px 20px}
+}
+
+/* iOS: evitar zoom no focus */
+@supports (-webkit-touch-callout:none){
+  .input-group input,.input-group select,.input-group textarea{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>Diagnóstico de maturidade IA · <strong>5 minutos · gratuito</strong></span>
+  <a href="https://www.aimana.ai" target="_blank" rel="noopener">aimana.ai →</a>
+</div>
+
+<!-- ================= TELA 1 — HERO + CADASTRO ================= -->
+<section class="tela active" id="tela1" aria-labelledby="t1-titulo">
+  <section class="hero">
+    <svg class="a-motif hero-right" viewBox="0 0 520 460" aria-hidden="true"><path d="M80 420 L80 140 Q80 60 160 60 L340 60 Q420 60 420 140 L420 380 M220 200 L220 420 M220 200 L420 200"></path></svg>
+
+    <div class="wrap">
+      <div class="hero-nav">
+        <div class="aimana">
+          <img src="../assets/logo-aimana-branco.svg" alt="AIMANA" onerror="this.outerHTML='<svg viewBox=\'0 0 860.88 147\' xmlns=\'http://www.w3.org/2000/svg\' style=\'height:28px;width:auto\' aria-label=\'AIMANA\'><g fill=\'#ffffff\'><path d=\'M91.5,0 C137.8,0 171.7,39 171.7,73.5 C171.7,108 137.8,147 91.5,147 C45.2,147 11.3,108 11.3,73.5 C11.3,39 45.2,0 91.5,0 Z M91.5,25 C65.7,25 39.3,50.4 39.3,73.5 C39.3,96.6 65.7,122 91.5,122 C117.3,122 143.7,96.6 143.7,73.5 C143.7,50.4 117.3,25 91.5,25 Z\'/><text x=\'198\' y=\'98\' font-family=\'Titillium Web, sans-serif\' font-weight=\'700\' font-size=\'88\' letter-spacing=\'-2\'>AIMANA</text></g></svg>'">
+        </div>
+        <div class="hero-partner">
+          <span class="partner-dot" aria-hidden="true"></span>
+          <span class="partner-text">Convenção Técnica<strong>Unimed · 2026</strong></span>
+        </div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Diagnóstico · 5 minutos · resultado no seu e-mail</span>
+          <h1>Quanto sua área <em>avança em IA</em>?</h1>
+          <p class="lead">Responda 15 perguntas rápidas e receba um diagnóstico personalizado de maturidade em IA, com ferramentas, agentes e próximo salto pro seu contexto.</p>
+          <div class="meta">
+            <span class="pill solid">5 minutos</span>
+            <span class="pill">15 perguntas</span>
+            <span class="pill">Resultado por e-mail</span>
+          </div>
+        </div>
+
+        <div class="form-card" style="margin:0">
+          <span class="form-eyebrow">Comece agora</span>
+          <h2 class="form-title" id="t1-titulo">Seu <em>cadastro</em></h2>
+          <p class="form-subtitle">Só pra enviar seu diagnóstico personalizado depois. Sem spam.</p>
+
+          <form id="formCadastro" novalidate>
+            <div class="input-group" data-campo="nome">
+              <label for="nome">Nome completo <span class="obrig">*</span></label>
+              <input type="text" id="nome" name="nome" autocomplete="name" required maxlength="120" placeholder="Como você quer ser chamado">
+              <div class="input-erro">Preencha seu nome.</div>
+            </div>
+
+            <div class="input-group" data-campo="email">
+              <label for="email">E-mail corporativo <span class="obrig">*</span></label>
+              <input type="email" id="email" name="email" autocomplete="email" inputmode="email" required maxlength="160" placeholder="voce@suaempresa.com.br">
+              <div class="input-erro">Preencha um e-mail válido.</div>
+            </div>
+
+            <div class="input-group" data-campo="whatsapp">
+              <label for="whatsapp">WhatsApp <span class="obrig">*</span></label>
+              <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" inputmode="tel" required maxlength="20" placeholder="(11) 9XXXX-XXXX">
+              <div class="input-erro">Preencha um WhatsApp com DDD.</div>
+            </div>
+
+            <div class="input-group" data-campo="empresa">
+              <label for="empresa">Empresa <span class="obrig">*</span></label>
+              <input type="text" id="empresa" name="empresa" autocomplete="organization" required maxlength="120" placeholder="Nome da empresa onde você trabalha">
+              <div class="input-erro">Preencha o nome da empresa.</div>
+            </div>
+
+            <div class="input-group" data-campo="cargo">
+              <label for="cargo">Cargo <span class="obrig">*</span></label>
+              <input type="text" id="cargo" name="cargo" autocomplete="organization-title" required maxlength="120" placeholder="Ex: Diretor de TI, Gerente de RH, Analista sênior">
+              <div class="input-erro">Preencha seu cargo.</div>
+            </div>
+
+            <div class="input-group" data-campo="porte">
+              <label for="porte">Porte da empresa <span class="obrig">*</span></label>
+              <select id="porte" name="porte" required>
+                <option value="">Selecione o número de colaboradores</option>
+                <option value="ate_50">Até 50 colaboradores</option>
+                <option value="51_200">51 a 200 colaboradores</option>
+                <option value="201_1000">201 a 1.000 colaboradores</option>
+                <option value="mais_1000">Mais de 1.000 colaboradores</option>
+              </select>
+              <div class="input-erro">Selecione o porte.</div>
+            </div>
+
+            <div class="lgpd-box">
+              <input type="checkbox" id="lgpdCheck" aria-describedby="lgpdDesc">
+              <label for="lgpdCheck" id="lgpdDesc">Autorizo a <strong>AIMANA</strong> a usar minhas respostas para gerar meu diagnóstico personalizado e entrar em contato sobre cursos e conteúdos relacionados. <a href="https://www.aimana.ai/privacidade" target="_blank" rel="noopener">Ver política de privacidade</a>.</label>
+            </div>
+          </form>
+
+          <div class="botoes-nav">
+            <button type="button" class="btn btn-primary" id="btnTela1" disabled>Começar diagnóstico →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ================= TELA 2 — P1 a P6 ================= -->
+<section class="tela" id="tela2" aria-labelledby="t2-titulo">
+  <section class="form-section">
+    <div class="wrap">
+      <div class="progress-wrap" id="progressWrap2">
+        <div class="progress-label">
+          <span>Passo 2 de 4 · Seu uso de IA</span>
+          <span class="pct">25%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+      </div>
+
+      <div class="form-card">
+        <span class="form-eyebrow">Bloco 1 de 3</span>
+        <h2 class="form-title" id="t2-titulo">Seu <em>uso de IA</em></h2>
+        <p class="form-subtitle">Perguntas sobre como você usa IA no seu dia a dia.</p>
+        <div id="telaDyn2"></div>
+        <div class="botoes-nav">
+          <button type="button" class="btn btn-secondary" data-voltar="1">← Voltar</button>
+          <button type="button" class="btn btn-primary" id="btnTela2">Avançar →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ================= TELA 3 — P7 a P11 + P14 ================= -->
+<section class="tela" id="tela3" aria-labelledby="t3-titulo">
+  <section class="form-section">
+    <div class="wrap">
+      <div class="progress-wrap" id="progressWrap3">
+        <div class="progress-label">
+          <span>Passo 3 de 4 · Seu contexto</span>
+          <span class="pct">50%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+      </div>
+
+      <div class="form-card">
+        <span class="form-eyebrow">Bloco 2 de 3</span>
+        <h2 class="form-title" id="t3-titulo">Seu contexto <em>organizacional</em></h2>
+        <p class="form-subtitle">Agora sobre o que acontece na empresa e no seu time.</p>
+        <div id="telaDyn3"></div>
+        <div class="botoes-nav">
+          <button type="button" class="btn btn-secondary" data-voltar="2">← Voltar</button>
+          <button type="button" class="btn btn-primary" id="btnTela3">Avançar →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ================= TELA 4 — P12, P13, P15 ================= -->
+<section class="tela" id="tela4" aria-labelledby="t4-titulo">
+  <section class="form-section">
+    <div class="wrap">
+      <div class="progress-wrap" id="progressWrap4">
+        <div class="progress-label">
+          <span>Passo 4 de 4 · Ambições</span>
+          <span class="pct">75%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+      </div>
+
+      <div class="form-card">
+        <span class="form-eyebrow">Último bloco</span>
+        <h2 class="form-title" id="t4-titulo">Seus desafios e <em>ambições</em></h2>
+        <p class="form-subtitle">Últimas perguntas — isso personaliza as recomendações.</p>
+        <div id="telaDyn4"></div>
+        <div class="botoes-nav">
+          <button type="button" class="btn btn-secondary" data-voltar="3">← Voltar</button>
+          <button type="button" class="btn btn-primary" id="btnEnviar">Receber meu diagnóstico →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ================= TELA 5 — RESULTADO ================= -->
+<section class="tela" id="tela5" aria-labelledby="t5-titulo">
+  <section class="hero result-hero">
+    <svg class="a-motif result-top" viewBox="0 0 320 260" aria-hidden="true"><path d="M60 240 L60 110 Q60 60 110 60 L220 60 Q270 60 270 110 L270 220 M150 150 L150 240 M150 150 L270 150"></path></svg>
+
+    <div class="wrap">
+      <div class="hero-nav">
+        <div class="aimana">
+          <img src="../assets/logo-aimana-branco.svg" alt="AIMANA" onerror="this.outerHTML='<svg viewBox=\'0 0 860.88 147\' xmlns=\'http://www.w3.org/2000/svg\' style=\'height:28px;width:auto\' aria-label=\'AIMANA\'><g fill=\'#ffffff\'><path d=\'M91.5,0 C137.8,0 171.7,39 171.7,73.5 C171.7,108 137.8,147 91.5,147 C45.2,147 11.3,108 11.3,73.5 C11.3,39 45.2,0 91.5,0 Z M91.5,25 C65.7,25 39.3,50.4 39.3,73.5 C39.3,96.6 65.7,122 91.5,122 C117.3,122 143.7,96.6 143.7,73.5 C143.7,50.4 117.3,25 91.5,25 Z\'/><text x=\'198\' y=\'98\' font-family=\'Titillium Web, sans-serif\' font-weight=\'700\' font-size=\'88\' letter-spacing=\'-2\'>AIMANA</text></g></svg>'">
+        </div>
+        <div></div>
+      </div>
+
+      <div style="padding:56px 0 0;max-width:720px;position:relative;z-index:2">
+        <div class="result-badge">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="resBadgeLabel">Seu nível é</span>
+        </div>
+        <h1 id="t5-titulo" tabindex="-1"><span class="emoji" id="resEmoji">🎯</span><em id="resNivel">—</em></h1>
+        <div class="result-score-chip">
+          <span class="num" id="resScore">0</span>
+          <span class="total">/ 100 pontos de maturidade IA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="result-body">
+    <div class="wrap">
+
+      <!-- Aviso discreto caso Claude tenha falhado (JS controla display) -->
+      <div class="aviso-fallback" id="avisoFallback" style="display:none">
+        <strong>Análise reduzida nesta tela.</strong> A análise completa, com leituras detalhadas e plano passo a passo, será enviada pro seu e-mail em 1–2 minutos.
+      </div>
+
+      <!-- Análise personalizada (markdown do Claude renderizado em HTML) -->
+      <div class="analise-markdown" id="analiseMarkdown">
+        <!-- Conteúdo injetado por JS: renderMarkdownClaude() OU renderFallback() -->
+      </div>
+
+      <!-- BLOCO CURSO — sempre montado por JS (Live fixa + 1 de 3 variantes) -->
+      <div id="blocoCurso" style="margin-top:8px">
+        <span class="block-eyebrow" style="display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:10px">Cursos AIMANA recomendados pra você</span>
+        <h3 class="next-step-title" style="font-size:clamp(22px,3.2vw,28px);font-weight:900;color:var(--navy);line-height:1.18;margin-bottom:10px;letter-spacing:-.01em">Vem pra o <em style="color:var(--teal);font-style:normal">Curso IA no Sistema Unimed (12/05)</em>. É o começo natural do que o diagnóstico apontou.</h3>
+        <p class="next-step-sub" id="costuraLive">Antes de qualquer formação paga, o próximo passo natural é ver o panorama ao vivo com a AIMANA.</p>
+
+        <!-- Card primário: Curso IA no Sistema Unimed 12/05 (fixo em todas as variantes) -->
+        <article class="live-card" aria-labelledby="liveTitle">
+          <header class="live-head">
+            <span class="live-tag">12 de Maio · curso gratuito · online</span>
+            <h4 class="live-title" id="liveTitle">Curso IA no Sistema Unimed</h4>
+            <p class="live-kicker">90 minutos · aberta pra toda a rede Unimed · com AIMANA, parceira oficial Anthropic</p>
+          </header>
+          <div class="live-body">
+            <div class="live-col">
+              <span class="live-col-label">Panorama</span>
+              <p>Onde a IA já entrou no Sistema Unimed — e por onde começar a partir de onde você está hoje.</p>
+            </div>
+            <div class="live-col">
+              <span class="live-col-label">Aplicações prontas</span>
+              <p>3 casos aplicados que você leva pro time ainda na mesma semana.</p>
+            </div>
+            <div class="live-col">
+              <span class="live-col-label">Q&amp;A aberto</span>
+              <p>Pergunta específica do seu cenário. AIMANA responde ao vivo.</p>
+            </div>
+          </div>
+          <footer class="live-cta">
+            <a class="live-btn" id="ctaLive" href="#" target="_blank" rel="noopener">Garanta sua vaga no Curso IA no Sistema Unimed →</a>
+            <span class="live-cta-sub">É grátis e toma 90 minutos do seu dia.</span>
+          </footer>
+        </article>
+
+        <!-- Bridge (texto varia por variante — JS controla) -->
+        <p class="funnel-bridge" id="bridgeTexto">—</p>
+
+        <!-- Card secundário (1 de 3 variantes — JS controla data-variant e conteúdo) -->
+        <article class="segundo-card" id="segundoCursoCard" data-variant="default">
+          <div class="segundo-head">
+            <span class="segundo-tag" id="segundoTag">—</span>
+            <h4 class="segundo-title" id="segundoTitle">—</h4>
+          </div>
+          <p class="segundo-desc" id="segundoDesc">—</p>
+          <a class="segundo-link" id="segundoLink" href="#" target="_blank" rel="noopener">—</a>
+        </article>
+
+        <!-- Microcopy Calendly condicional -->
+        <div class="calendly-fallback" id="calendlyFallback" style="display:none">
+          Prefere conversar antes de qualquer curso? Agende 30 min com o Tales, CEO AIMANA:
+          <a id="calendlyLink" href="#" target="_blank" rel="noopener">calendly.com/tales-campos-aimana</a>
+        </div>
+      </div>
+
+      <!-- Aviso e-mail -->
+      <div class="email-aviso" style="margin-top:32px">
+        <span class="ico" aria-hidden="true">📩</span>
+        <strong>Análise completa a caminho do seu e-mail.</strong><br>
+        Em 1–2 minutos você recebe uma análise mais profunda, com agentes detalhados e passo a passo pro seu contexto. Checa também caixa de promoções/spam.
+      </div>
+
+    </div>
+  </section>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="foot-logo">
+        <img src="../assets/logo-aimana-branco.svg" alt="AIMANA" onerror="this.outerHTML='<svg viewBox=\'0 0 860.88 147\' xmlns=\'http://www.w3.org/2000/svg\' style=\'height:22px;width:auto;opacity:.9\' aria-label=\'AIMANA\'><g fill=\'#ffffff\'><path d=\'M91.5,0 C137.8,0 171.7,39 171.7,73.5 C171.7,108 137.8,147 91.5,147 C45.2,147 11.3,108 11.3,73.5 C11.3,39 45.2,0 91.5,0 Z M91.5,25 C65.7,25 39.3,50.4 39.3,73.5 C39.3,96.6 65.7,122 91.5,122 C117.3,122 143.7,96.6 143.7,73.5 C143.7,50.4 117.3,25 91.5,25 Z\'/><text x=\'198\' y=\'98\' font-family=\'Titillium Web, sans-serif\' font-weight=\'700\' font-size=\'88\' letter-spacing=\'-2\'>AIMANA</text></g></svg>'">
+      </div>
+      <div class="foot-copy">
+        © 2026 AIMANA · AI First, Human Always
+        <span class="foot-sep">·</span>
+        Framework: Accenture, Gartner, Microsoft, MIT Sloan, Mollick (2024)
+      </div>
+      <div>
+        <a href="https://www.aimana.ai/privacidade" target="_blank" rel="noopener">Política de privacidade</a>
+        <span class="foot-sep">·</span>
+        <a href="https://www.aimana.ai" target="_blank" rel="noopener">aimana.ai</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+<!-- Overlay de envio -->
+<div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
+  <div class="spinner"></div>
+  <div class="loading-text">Enviando seu diagnóstico...</div>
+</div>
+
+<script>
+/* ============================================================
+ * PAYLOAD · SEPARAÇÃO PII vs. ANÁLISE (pra documentar no Make)
+ * ============================================================
+ * O payload enviado ao webhook Make tem estrutura aninhada:
+ *
+ *   {
+ *     meta:    { timestamp, evento_origem_lead, evento_nome, lgpd_consent, lgpd_timestamp },
+ *     pii:     { nome, email, whatsapp }                              ← NÃO passar pro Claude
+ *     analise: { empresa, cargo, porte, P1..P15, score, nivel,
+ *                emoji, curso_recomendado, link_curso }               ← passar pro Claude
+ *   }
+ *
+ * No blueprint do Make (Frente 2):
+ *   1. Webhook recebe payload completo.
+ *   2. Módulo "Set Variable" para PII → enviar só pro Pipedrive (Create/Update Person)
+ *      e pro Resend (enviar e-mail com diagnóstico).
+ *   3. Módulo "Set Variable" para ANÁLISE → payload reduzido ao chamar Claude
+ *      (empresa + cargo + porte + respostas + score/nivel). Sem nome/email/whatsapp.
+ *   4. Retorno do Claude (análise rica) volta pro Resend pra montar o e-mail final.
+ *
+ * Campos livres (P12/bloqueio, P13/expectativa) também podem conter PII acidental
+ * (cooperativa citada, nome de pessoa). O placeholder no textarea orienta o usuário
+ * a evitar. O Make ainda pode aplicar uma regex de sanitização adicional antes
+ * do Claude, como segunda linha de defesa.
+ * ============================================================ */
+
+// ============================================================
+// CONFIG DO EVENTO — editar aqui para reaproveitar em outro evento
+// ============================================================
+const EVENTO_CONFIG = {
+  evento_nome: "Convenção Técnica Unimed 2026",
+  evento_origem_lead: "convencao_unimed_2026",
+  termo_empresa: "empresa",
+  utm_campaign: "unimed2026",
+  utm_medium_default: "tela5",
+  // URL real do webhook Make (cenário "AIMANA — Diagnóstico Unimed 2026", Módulo 1)
+  webhook_make_url: "https://hook.us2.make.com/s4a8uqb27smtqnjolte3tgeflclksjtg",
+  // 4 placeholders principais (v3 · matriz_recomendacao_curso_v3.md §0) — usuária troca antes do Dia 2
+  LINK_LIVE:                "/cursos/ia-no-sistema-unimed",                // Curso IA no Sistema Unimed 12/05 (sempre)
+  LINK_AI_COWORKER_UNIMED:  "/cursos/ai-coworker-unimed",  // default (não-dev, ≤ Orquestrador)
+  LINK_AI_CHAMPIONS:        "/contato",        // Pioneiro não-dev
+  LINK_FILA_CLAUDE_CODE:    "/contato",    // dev (qualquer nível)
+  // Calendly HARDCODED (não é placeholder — é URL fixa da Convenção)
+  CALENDLY_TALES: "https://calendly.com/tales-campos-aimana/30min?month=2026-04"
+};
+
+// ============================================================
+// PERFIS — texto exibido na tela 5 (baseado em logica_formulario_maturidade.md §5)
+// Estes textos são FALLBACK/placeholder. Na Frente 2 (prompt Claude v2) o objeto
+// `analise` é preenchido com análise personalizada vinda do Claude.
+// ============================================================
+const PERFIS = {
+  "Curioso": {
+    emoji: "🌱",
+    leitura_nivel: "Você percebe que IA vai mudar o jogo e já ouviu mil histórias de quem 'economizou o dia' com ela — mas ainda não sente o efeito no seu próprio trabalho. Isso é normal: é o ponto de partida da grande maioria dos líderes hoje. A boa notícia é que este é o salto mais rápido da jornada.",
+    dominio: [
+      "Você já enxerga IA como pauta estratégica — muita gente ainda está no 'isso é moda'.",
+      "Tem abertura pra aprender e ambição de aplicar no seu contexto.",
+      "Entende que sair de fora desse movimento custa mais que entrar."
+    ],
+    proximos_movimentos: [
+      "Crie um hábito diário: 1 tarefa da sua rotina rodando com IA por 15 dias.",
+      "Teste 2 ferramentas (ChatGPT + Claude) e compare pro seu tipo de trabalho.",
+      "Escolha 1 processo do seu time que você sabe que pode simplificar com IA."
+    ],
+    agentes: [
+      { nome: "Resumo de reuniões", descricao: "Transformar áudio/transcrição em ata com decisões e próximos passos." },
+      { nome: "Assistente de e-mail", descricao: "Rascunho e resposta de e-mails recorrentes no seu tom." },
+      { nome: "Buscador interno", descricao: "Perguntar em linguagem natural em vez de abrir 5 pastas atrás de um documento." }
+    ],
+    curso: {
+      nome: "Curso gratuito \"IA no Sistema Unimed\"",
+      porque: "Você está no momento certo pra ter uma base clara do que IA é e não é — sem tecniquês. Essa live te dá o mapa inicial.",
+      link_key: "Curioso"
+    }
+  },
+  "Explorador": {
+    emoji: "🧭",
+    leitura_nivel: "Você já testou IA, já se surpreendeu com alguns resultados e sente que há muito mais ali — mas ainda é uso pontual, sem método. Seu time olha pra você como alguém que 'mexe com isso', mas não tem um processo claro pra escalar. O salto aqui é transformar descoberta em hábito produtivo.",
+    dominio: [
+      "Você tem repertório prático — sabe o que IA faz bem e o que ela erra.",
+      "Consegue explicar o valor pra quem ainda não usa.",
+      "Já identificou 2 ou 3 tarefas que mudaram desde que IA entrou."
+    ],
+    proximos_movimentos: [
+      "Escolha 1 processo do seu time e padronize o prompt — documente pra reaproveitar.",
+      "Indique pra liderança uma ferramenta paga que justifique o investimento.",
+      "Monte 1 mini-piloto com 2 a 3 colegas rodando o mesmo fluxo com IA."
+    ],
+    agentes: [
+      { nome: "Gerador de relatórios", descricao: "Transformar dados em narrativa executiva com estrutura padronizada." },
+      { nome: "Triador de demandas", descricao: "Classificar e priorizar fila de solicitações do seu time com critérios seus." },
+      { nome: "Analista de dados ad-hoc", descricao: "Explorar plan

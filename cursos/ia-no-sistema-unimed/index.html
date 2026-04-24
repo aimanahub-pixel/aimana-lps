@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Curso IA no Sistema Unimed · AIMANA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#2b296b;
+    --ink:#0f0f2d;
+    --blue:#2c479e;
+    --teal:#2bbcb6;
+    --teal-soft:#7fe0dc;
+    --sky:#58c9f4;
+    --cream:#f7f4ec;
+    --gray:#8a8aa3;
+    --line:rgba(15,15,45,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Titillium Web',system-ui,sans-serif;color:var(--ink);background:#fff;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ====== TOPBAR ====== */
+  .topbar{background:var(--ink);color:#fff;padding:10px 32px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+  .topbar a{color:var(--teal);text-decoration:none}
+  .topbar a:hover{text-decoration:underline}
+
+  /* ====== HERO ====== */
+  .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:28px 0 140px}
+  .hero-nav{display:flex;justify-content:space-between;align-items:center}
+  .hero-nav .aimana img{height:26px}
+  .hero-nav .hero-partner{display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);font-weight:600}
+  .hero-nav .partner-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(43,188,182,.25)}
+  .hero-nav .partner-text{line-height:1.3;text-align:right}
+  .hero-nav .partner-text strong{display:block;font-weight:700;color:#fff;font-size:11px;letter-spacing:.18em}
+
+  .hero-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:56px;align-items:center;padding:56px 0 0;position:relative;z-index:2}
+  .hero-grid .photo-slot{margin-right:-80px;border-radius:24px;box-shadow:0 30px 60px rgba(0,0,0,.3)}
+  .hero-copy .eyebrow{display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:28px}
+  .hero-copy h1{font-size:64px;line-height:.95;font-weight:900;letter-spacing:-.015em;text-transform:uppercase;margin-bottom:28px}
+  .hero-copy h1 em{font-style:normal;color:var(--teal)}
+  .hero-copy .lead{font-size:20px;line-height:1.45;color:rgba(255,255,255,0.82);max-width:520px;margin-bottom:32px;font-weight:300}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
+  .pill{display:inline-flex;align-items:center;padding:7px 16px;border-radius:9999px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.1);color:#fff}
+  .pill.solid{background:var(--teal);color:var(--navy);font-weight:700}
+  .cta{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:var(--navy);font-weight:700;font-size:17px;padding:18px 32px;border-radius:9999px;border:none;text-decoration:none;transition:transform .15s, box-shadow .15s}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(43,188,182,.3)}
+  .cta-ghost{color:#fff;text-decoration:underline;font-size:14px;margin-left:24px;opacity:.82}
+
+  /* "a" line motif */
+  .a-motif{position:absolute;pointer-events:none;stroke:var(--teal);stroke-width:10;fill:none;opacity:.55}
+  .a-motif.hero-left{left:-30px;top:40%;width:320px;height:260px}
+  .a-motif.hero-right{right:-80px;bottom:-120px;width:520px;height:460px;opacity:.22}
+
+  /* photo container — exibe a imagem inteira, sem crop */
+  .photo-slot{position:relative;border-radius:20px;overflow:hidden;line-height:0}
+  .photo-slot img{width:100%;height:auto;display:block;object-fit:contain}
+
+  .hero-bottom{padding:72px 0 56px;position:relative;z-index:2}
+  .hero-bottom .hosts-line{font-size:14px;color:rgba(255,255,255,0.65);letter-spacing:.04em}
+
+  /* ====== LOGOS BAND · Empresas que confiam na AIMANA ====== */
+  .logos-band{padding:40px 0;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden}
+  .logos-band .logos-eyebrow{display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:700;margin-bottom:44px}
+  .logos-band .logos-eyebrow em{font-style:normal;color:var(--teal)}
+  .logos-track-wrap{overflow:hidden;position:relative;width:100%;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%)}
+  .logos-track{display:flex;gap:80px;align-items:center;width:max-content;animation:logos-scroll 48s linear infinite}
+  .logos-track:hover{animation-play-state:paused}
+  .logos-track img{height:150px;width:auto;flex:0 0 auto;object-fit:contain;opacity:.65;filter:brightness(0) invert(1);transition:opacity .2s,filter .2s;user-select:none;-webkit-user-drag:none}
+  .logos-track img:hover{opacity:1;filter:brightness(0) invert(1)}
+  @keyframes logos-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ====== SECTION BASE ====== */
+  section{padding:120px 0;position:relative;overflow:hidden}
+  section.cream{background:var(--cream)}
+  section.navy{background:var(--navy);color:#fff}
+  h2{font-size:56px;line-height:1.02;font-weight:900;letter-spacing:-.01em;text-transform:uppercase}
+  section.cream h2, section.cream p, section.cream li{color:var(--ink)}
+  section.cream h2 em{color:var(--teal)}
+  section.navy h2 em{color:var(--teal)}
+  h2 em{font-style:normal}
+  .eyebrow-dark{display:inline-block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:28px}
+  .lead-text{font-size:20px;line-height:1.55;max-width:680px;margin-top:24px;font-weight:300}
+
+  /* ====== OPENING ====== */
+  .opening-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+  .a-motif.opening{right:-40px;top:-40px;width:280px;height:220px;stroke:var(--teal);opacity:.35}
+
+  /* ====== GET ====== */
+  .get-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:56px;border-top:1px solid var(--line)}
+  .get-list li{padding:28px 0;border-bottom:1px solid var(--line);font-size:19px;line-height:1.45;display:flex;gap:20px;align-items:flex-start}
+  .get-list li .n{flex:0 0 auto;font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.08em;min-width:36px;padding-top:4px}
+  .get-list li .txt{color:var(--ink);font-weight:400}
+  .get-list li .txt strong{font-weight:700;color:var(--navy)}
+
+  /* ====== HOSTS ====== */
+  .hosts-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px}
+  .host{background:#fff;border-radius:24px;padding:40px;display:flex;gap:28px;align-items:flex-start}
+  section.navy .host{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1)}
+  .host .avatar{flex:0 0 auto;width:140px;height:140px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;color:#fff;font-size:36px;font-weight:700;border:4px solid #fff}
+  section.navy .host .avatar{border-color:rgba(255,255,255,0.2)}
+  .host .avatar img{width:100%;height:100%;object-fit:cover}
+  .host h3{font-size:24px;font-weight:700;margin-bottom:4px;color:var(--navy)}
+  section.navy .host h3{color:#fff}
+  .host .role{font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+  .host p{font-size:16px;line-height:1.55;color:var(--ink);opacity:.85}
+  section.navy .host p{color:rgba(255,255,255,0.78);opacity:1}
+
+  /* ====== FORM ====== */
+  .form-card{max-width:580px;margin:56px auto 0;background:#fff;border-radius:28px;padding:44px;box-shadow:0 28px 56px rgba(43,41,107,.1)}
+  section.navy .form-card{color:var(--ink)}
+  .form-card label{display:block;font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:18px;color:var(--navy);text-transform:uppercase}
+  .form-card input,.form-card select,.form-card textarea{width:100%;padding:14px 16px;margin-top:8px;font-family:inherit;font-size:15px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:400;text-transform:none;letter-spacing:0}
+  .form-card input:focus,.form-card select:focus,.form-card textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,188,182,.15)}
+  .form-card textarea{min-height:96px;resize:vertical}
+  .form-card .checkbox{display:flex;align-items:flex-start;gap:12px;font-size:12px;margin:20px 0;font-weight:400;text-transform:none;color:var(--ink);letter-spacing:0}
+  .form-card .checkbox input{width:auto;margin:3px 0 0}
+  .form-card button{width:100%;background:var(--teal);color:var(--navy);font-size:17px;font-weight:700;padding:18px;border:none;border-radius:12px;margin-top:8px;transition:background .15s}
+  .form-card button:hover{background:#26a9a4}
+  .form-card .micro{text-align:center;color:var(--gray);font-size:12px;margin-top:14px;text-transform:none;letter-spacing:0;font-weight:400}
+
+  /* ====== FOOTER ====== */
+  footer{background:var(--ink);color:rgba(255,255,255,0.72);padding:64px 0 32px}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:48px;margin-bottom:48px}
+  .foot-grid .aimana-foot img{height:28px;margin-bottom:20px}
+  .foot-grid .tag{font-size:13px;line-height:1.55;max-width:380px}
+  .foot-grid h4{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;font-weight:700}
+  .foot-grid a{display:block;font-size:14px;color:rgba(255,255,255,0.72);text-decoration:none;margin-bottom:8px;transition:color .15s}
+  .foot-grid a:hover{color:var(--teal)}
+  .foot-context{display:flex;align-items:center;gap:14px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.08);font-size:12px;letter-spacing:.08em;color:rgba(255,255,255,0.5)}
+  .foot-context img{height:24px;opacity:.85}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;font-size:12px;color:rgba(255,255,255,0.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  /* ====== RESPONSIVE ====== */
+  @media (max-width:960px){
+    .topbar{padding:10px 20px}
+    .wrap{padding:0 20px}
+    .hero-grid,.opening-grid,.hosts-grid,.get-list,.foot-grid{grid-template-columns:1fr;gap:40px}
+    .logos-band{padding:48px 0}.logos-track img{height:32px}.logos-track{gap:52px}
+    .get-list li{font-size:17px}
+    .hero-copy h1{font-size:48px}
+    h2{font-size:36px}
+    section{padding:80px 0}
+    .host{flex-direction:column;align-items:center;text-align:center}
+    .photo-slot{min-height:340px}
+  }
+</style>
+</head>
+<body class="edit-mode">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span>Curso online gratuito · 12 de maio · 19h</span>
+  <a href="#inscricao">Inscreva-se →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="a-motif hero-right" viewBox="0 0 520 460"><path d="M80 420 L80 140 Q80 60 160 60 L340 60 Q420 60 420 140 L420 380 M220 200 L220 420 M220 200 L420 200"></path></svg>
+
+  <div class="wrap">
+    <div class="hero-nav">
+      <div class="aimana"><img src="assets/logo-aimana-branco.svg" alt="AIMANA" onerror="this.outerHTML='&lt;span style=\'font-size:20px;font-weight:700;letter-spacing:.12em;color:#fff\'&gt;aimana&lt;/span&gt;'"></div>
+      <div></div>
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Curso online · 12 de maio · 19h</span>
+        <h1>IA no <em>Sistema</em><br>Unimed</h1>
+        <p class="lead">Curso gratuito, com certificado, focado em como a IA está entrando no Sistema Unimed. Para liderança e analistas sêniores que querem sair do discurso e começar a decidir o que fazer dentro da cooperativa.</p>
+        <div class="meta">
+          <span class="pill solid">Gratuito</span>
+          <span class="pill">Com certificado</span>
+          <span class="pill">100% online</span>
+          <span class="pill">12/05 · 19h</span>
+        </div>
+        <a href="#inscricao" class="cta">Garantir minha vaga</a>
+      </div>
+
+      <div class="photo-slot">
+        <img src="assets/nano-banana/curso-hero.jpg" alt="Cooperativista Unimed usando IA" onerror="this.parentElement.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS BAND · Enterprises que confiam na AIMANA -->
+<section class="logos-band">
+  <div class="wrap">
+    <span class="logos-eyebrow">Empresas que confiam <em>na AIMANA</em></span>
+  </div>
+  <div class="logos-track-wrap">
+    <div class="logos-track">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/1.png" alt="Itaú">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/2.png" alt="Mondelez">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/3.png" alt="Marista">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/4.png" alt="Banco do Brasil">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/5.png" alt="Vivo">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/6.png" alt="Zucchetti">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/7.png" alt="Unimed">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/8.png" alt="Mapfre">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/9.png" alt="Certsign">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/10.png" alt="Colcci">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/11.png" alt="MetLife">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/12.png" alt="Reclame Aqui">
+      <!-- Duplicados para loop infinito -->
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/1.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/2.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/3.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/4.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/5.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/6.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/7.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/8.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/9.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/10.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/11.png" alt="" aria-hidden="true">
+      <img src="https://www.aimana.ai/Logos%20Clientes%20sem%20fundo/12.png" alt="" aria-hidden="true">
+    </div>
+  </div>
+</section>
+
+<!-- OPENING -->
+<section class="cream">
+  <svg class="a-motif opening" viewBox="0 0 280 220"><path d="M40 200 L40 90 Q40 40 90 40 L190 40 Q240 40 240 90 L240 180 M120 120 L120 200 M120 120 L240 120"></path></svg>
+  <div class="wrap">
+    <div class="opening-grid">
+      <div>
+        <span class="eyebrow-dark">Por que agora</span>
+        <h2><span style="letter-spacing: -0.01em;">+500 Lideranças Unimed&nbsp;</span><span style="letter-spacing: -0.01em; color: rgb(43, 188, 182);">capacitadas em ia</span></h2>
+        <p class="lead-text" style="color: rgb(15, 15, 45);">A Aimana conhece os desafios do sistema Unimed, já realizou formações e treinamentos em diferentes Unimeds em Minas Gerais, Santa Cataria, Mato Grosso e Mercorsul.</p><p class="lead-text"><br></p></div></div></div></section><section><div class="wrap"><h2>6 entregas <em>práticas</em></h2>
+    <ul class="get-list">
+      <li><span class="n">01</span><span class="txt"><strong>Mapa realista da IA no Sistema Unimed hoje.</strong></span></li>
+      <li><span class="n">02</span><span class="txt"><strong>Casos reais de IA em cooperativas de saúde.</strong></span></li>
+      <li><span class="n">03</span><span class="txt"><strong>Como usar Claude, Granola e agentes</strong> no dia a dia da cooperativa.</span></li>
+      <li><span class="n">04</span><span class="txt"><strong>Roteiro prático</strong> de por onde começar na sua Unimed.</span></li>
+      <li><span class="n">05</span><span class="txt"><strong>Q&amp;A ao vivo</strong> com Luiz Otero e Edson Cascais.</span></li>
+      <li><span class="n">06</span><span class="txt"><strong>Certificado</strong> de participação para capacitação interna.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- HOSTS -->
+<section class="navy">
+  <svg class="a-motif" style="top:60px;left:-20px;width:260px;height:220px;opacity:.18" viewBox="0 0 280 220"><path d="M40 200 L40 90 Q40 40 90 40 L190 40 Q240 40 240 90 L240 180 M120 120 L120 200 M120 120 L240 120"></path></svg>
+  <div class="wrap">
+    <span class="eyebrow">Quem conduz</span>
+    <h2>Conheça os <em>especialistas</em></h2>
+    <div class="hosts-grid">
+      <div class="host">
+        <div class="avatar"><img src="assets/luiz-otero.jpg" alt="Luiz Otero" onerror="this.parentElement.textContent='LO'"></div>
+        <div>
+          <h3>Luiz Otero</h3>
+          <div class="role">CEO AIMANA</div>
+          <p>Lidera a AIMANA, empresa de IA com cases ativos em cooperativas do Sistema Unimed. Traduz IA para liderança executiva sem perder profundidade técnica.</p>
+        </div>
+      </div>
+      <div class="host">
+        <div class="avatar"><img src="assets/edson-cascais.jpg" alt="Edson Cascais" onerror="this.parentElement.textContent='EC'"></div>
+        <div>
+          <h3>Edson Cascais Boa Jr.</h3>
+          <div class="role">Advisor AIMANA · 27 anos Sistema Unimed</div>
+          <p>Ex-superintendente do Grupo Unimed SC. Contratou e implementou o primeiro programa de letramento em IA em uma Unimed antes de entrar como advisor da AIMANA.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="inscricao" class="cream">
+  <div class="wrap" style="text-align:center">
+    <span class="eyebrow-dark">Inscrição</span>
+    <h2>Sua vaga no <em>Curso IA</em><br>no Sistema Unimed</h2>
+    <p class="lead-text" style="margin-left:auto;margin-right:auto">Gratuito · com certificado · 100% online · 12 de maio · 19h.</p>
+    <form class="form-card" onsubmit="event.preventDefault(); alert('Preview · formulário desconectado.');">
+      <label>Nome completo<input type="text" required="" placeholder="Seu nome"></label>
+      <label>Email corporativo<input type="email" required="" placeholder="voce@unimed.coop.br"></label>
+      <label>Sua Unimed<input type="text" required="" placeholder="Ex.: Unimed Florianópolis, Unimed do Brasil…"></label>
+      <label>Cargo<input type="text" required="" placeholder="Ex.: Superintendente, Gerente de RH…"></label>
+      <label class="checkbox"><input type="checkbox" required=""><span>Concordo em receber comunicações da AIMANA sobre o Curso IA no Sistema Unimed e próximas turmas.</span></label>
+      <button type="submit">Garantir minha vaga →</button>
+      <p class="micro">Após se inscrever, você recebe o link da transmissão por email.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="aimana-foot"><img src="assets/logo-aimana-branco.svg" alt="AIMANA" onerror="this.onerror=null;this.src='assets/logo-aimana-branco.png'"></div>
+        <p class="tag">AI first, human always. Construímos soluções de IA aplicada para cooperativas de saúde, indústrias e organizações que querem sair do discurso e entrar na prática.</p>
+      </div>
+      <div>
+        <h4>Curso</h4>
+        <a href="#inscricao">Inscrição</a>
+        <a href="#">Política do evento</a>
+        <a href="#">Contato</a>
+      </div>
+      <div>
+        <h4>Empresa</h4>
+        <a href="https://aimana.ai" target="_blank" rel="noopener">aimana.ai</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Fale com o time</a>
+      </div>
+    </div>
+    <div class="foot-context">
+      <span>Curso focado no contexto do Sistema Unimed · não é formação oficial do Sistema Unimed</span>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 AIMANA · Todos os direitos reservados</span>
+      <span>AI FIRST, HUMAN ALWAYS</span>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+</body></html>
