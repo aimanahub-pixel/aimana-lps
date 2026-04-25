@@ -641,24 +641,36 @@
     <span class="eyebrow-dark">Inscrição</span>
     <h2>Sua vaga no <em>AI Coworker Unimed</em><br>começa aqui</h2>
     <p class="lead-text" style="margin-left:auto;margin-right:auto">Preencha o formulário. Nosso time responde em até 1 dia útil com próximos passos, condição aplicável e calendário da turma.</p>
-    <form class="form-card" onsubmit="event.preventDefault(); alert('Preview · formulário desconectado.');">
-      <label>Nome completo<input type="text" required="" placeholder="Seu nome"></label>
-      <label>Email corporativo<input type="email" required="" placeholder="voce@unimed.coop.br"></label>
-      <label>Telefone<input type="tel" required="" placeholder="(DDD) 00000-0000"></label>
-      <label>Sua Unimed<input type="text" required="" placeholder="Ex.: Unimed Florianópolis, Unimed do Brasil…"></label>
-      <label>Cargo<input type="text" required="" placeholder="Ex.: Superintendente, Gerente de RH…"></label>
+    <form class="form-card" id="formCadastro" novalidate>
+      <label>Nome completo<input type="text" name="nome" required placeholder="Seu nome" maxlength="120" autocomplete="name"></label>
+      <label>Email corporativo<input type="email" name="email" required placeholder="voce@unimed.coop.br" maxlength="160" autocomplete="email"></label>
+      <label>Telefone<input type="tel" name="telefone" required placeholder="(DDD) 00000-0000" maxlength="20" autocomplete="tel"></label>
+      <label>Sua Unimed<input type="text" name="unimed" required placeholder="Ex.: Unimed Florianópolis, Unimed do Brasil…" maxlength="160"></label>
+      <label>Cargo<input type="text" name="cargo" required placeholder="Ex.: Superintendente, Gerente de RH…" maxlength="120" autocomplete="organization-title"></label>
       <label>Modalidade de interesse
-        <select>
-          <option>Individual (R$ 3.500)</option>
-          <option>Grupo 3 a 4 pessoas (R$ 2.800 por pessoa)</option>
-          <option>Turma corporativa (falar com o time)</option>
+        <select name="modalidade" required>
+          <option value="">Selecione uma modalidade</option>
+          <option value="individual_3500">Individual (R$ 3.500)</option>
+          <option value="grupo_2800">Grupo 3 a 4 pessoas (R$ 2.800 por pessoa)</option>
+          <option value="turma_corporativa">Turma corporativa (falar com o time)</option>
         </select>
       </label>
-      <label>Contexto da sua Unimed (opcional)<textarea placeholder="Conte brevemente o momento da sua cooperativa com IA, se quiser."></textarea></label>
-      <label class="checkbox"><input type="checkbox" required=""><span>Concordo em receber comunicações da AIMANA sobre o AI Coworker Unimed e próximas turmas.</span></label>
-      <button type="submit">Quero me inscrever →</button>
-      <p class="micro">Após enviar, você recebe confirmação em segundos. Nosso time responde em até 1 dia útil.</p>
+      <label>Contexto da sua Unimed (opcional)<textarea name="contexto" placeholder="Conte brevemente o momento da sua cooperativa com IA, se quiser." maxlength="800"></textarea></label>
+      <label class="checkbox"><input type="checkbox" name="lgpd_consent" required><span>Concordo em receber comunicações da AIMANA sobre o AI Coworker Unimed e próximas turmas.</span></label>
+      <input type="hidden" name="form_type" value="cadastro_curso">
+      <input type="hidden" name="course_slug" value="ai-coworker-unimed">
+      <button type="submit" id="btnSubmit">Quero me inscrever →</button>
+      <p class="micro" id="formMicro">Após enviar, você recebe confirmação em segundos. Nosso time responde em até 1 dia útil.</p>
     </form>
+    <div class="form-card" id="formSuccess" style="display:none;text-align:center">
+      <h3 style="margin:0 0 12px">Inscrição recebida ✓</h3>
+      <p style="margin:0">Em alguns minutos você receberá um email com a confirmação. Nosso time responde em até 1 dia útil com os próximos passos.</p>
+    </div>
+    <div class="form-card" id="formError" style="display:none;text-align:center;border-color:#c00">
+      <h3 style="margin:0 0 12px;color:#c00">Não conseguimos enviar</h3>
+      <p style="margin:0 0 12px">Tente novamente em instantes. Se persistir, escreve pra <a href="mailto:contato@aimana.ai">contato@aimana.ai</a>.</p>
+      <button type="button" onclick="document.getElementById('formError').style.display='none';document.getElementById('formCadastro').style.display='';">Tentar de novo</button>
+    </div>
   </div>
 </section>
 
@@ -701,5 +713,83 @@
 
 
 
+
+
+<script>
+/* ============================================================
+ * FORM SUBMIT — AIMANA Unimed 2026 (Cadastro Cursos)
+ * POST JSON ao webhook Make. Loading + success/error state.
+ * ============================================================ */
+(function(){
+  var WEBHOOK_URL = "https://hook.us2.make.com/y29l81gh0t1xmm4mkae4mxzqu2mqwu2a"; // <-- trocar antes do deploy
+
+  function getUTMs(){
+    var p = new URLSearchParams(location.search);
+    return {
+      utm_source:   p.get("utm_source")   || "",
+      utm_medium:   p.get("utm_medium")   || "",
+      utm_campaign: p.get("utm_campaign") || "",
+      utm_content:  p.get("utm_content")  || "",
+      utm_term:     p.get("utm_term")     || ""
+    };
+  }
+
+  var form    = document.getElementById("formCadastro");
+  var btn     = document.getElementById("btnSubmit");
+  var success = document.getElementById("formSuccess");
+  var errBox  = document.getElementById("formError");
+  var micro   = document.getElementById("formMicro");
+  if (!form) return;
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if (!form.checkValidity()){ form.reportValidity(); return; }
+
+    var fd = new FormData(form);
+    var payload = {
+      meta: {
+        timestamp:   new Date().toISOString(),
+        landing_url: location.href,
+        referrer:    document.referrer || "",
+        user_agent:  navigator.userAgent
+      },
+      utm:  getUTMs(),
+      form: {}
+    };
+    fd.forEach(function(v,k){
+      payload.form[k] = (k === "lgpd_consent") ? true : v;
+    });
+    if (!("lgpd_consent" in payload.form)) payload.form.lgpd_consent = false;
+
+    btn.disabled = true;
+    var oldLabel = btn.textContent;
+    btn.textContent = "Enviando...";
+
+    fetch(WEBHOOK_URL, {
+      method:  "POST",
+      mode:    "cors",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(payload)
+    })
+    .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+    .then(function(){
+      form.style.display = "none";
+      if (micro) micro.style.display = "none";
+      success.style.display = "";
+      success.scrollIntoView({behavior:"smooth", block:"center"});
+    })
+    .catch(function(err){
+      console.error("[form] submit failed:", err);
+      form.style.display = "none";
+      if (micro) micro.style.display = "none";
+      errBox.style.display = "";
+    })
+    .finally(function(){
+      btn.disabled = false;
+      btn.textContent = oldLabel;
+    });
+  });
+})();
+</script>
 
 </body></html>
