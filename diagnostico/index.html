@@ -541,14 +541,14 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:36px 0 28px}
       <!-- BLOCO CURSO — sempre montado por JS (Live fixa + 1 de 3 variantes) -->
       <div id="blocoCurso" style="margin-top:8px">
         <span class="block-eyebrow" style="display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:10px">Cursos AIMANA recomendados pra você</span>
-        <h3 class="next-step-title" style="font-size:clamp(22px,3.2vw,28px);font-weight:900;color:var(--navy);line-height:1.18;margin-bottom:10px;letter-spacing:-.01em">Vem pra o <em style="color:var(--teal);font-style:normal">Curso IA no Sistema Unimed (12/05)</em>. É o começo natural do que o diagnóstico apontou.</h3>
+        <h3 class="next-step-title" style="font-size:clamp(22px,3.2vw,28px);font-weight:900;color:var(--navy);line-height:1.18;margin-bottom:10px;letter-spacing:-.01em">Vem pra <em style="color:var(--teal);font-style:normal">Live de 13/Mai</em>. É o começo natural do que o diagnóstico apontou.</h3>
         <p class="next-step-sub" id="costuraLive">Antes de qualquer formação paga, o próximo passo natural é ver o panorama ao vivo com a AIMANA.</p>
 
-        <!-- Card primário: Curso IA no Sistema Unimed 12/05 (fixo em todas as variantes) -->
+        <!-- Card primário: Live 13/Mai (fixo em todas as variantes) -->
         <article class="live-card" aria-labelledby="liveTitle">
           <header class="live-head">
-            <span class="live-tag">12 de Maio · curso gratuito · online</span>
-            <h4 class="live-title" id="liveTitle">Curso IA no Sistema Unimed</h4>
+            <span class="live-tag">13 de Maio · ao vivo · gratuita</span>
+            <h4 class="live-title" id="liveTitle">Live IA no dia a dia do líder</h4>
             <p class="live-kicker">90 minutos · aberta pra toda a rede Unimed · com AIMANA, parceira oficial Anthropic</p>
           </header>
           <div class="live-body">
@@ -566,7 +566,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:36px 0 28px}
             </div>
           </div>
           <footer class="live-cta">
-            <a class="live-btn" id="ctaLive" href="#" target="_blank" rel="noopener">Garanta sua vaga no Curso IA no Sistema Unimed →</a>
+            <a class="live-btn" id="ctaLive" href="#" target="_blank" rel="noopener">Garanta sua vaga na Live 13/Mai →</a>
             <span class="live-cta-sub">É grátis e toma 90 minutos do seu dia.</span>
           </footer>
         </article>
@@ -671,10 +671,10 @@ const EVENTO_CONFIG = {
   // URL real do webhook Make (cenário "AIMANA — Diagnóstico Unimed 2026", Módulo 1)
   webhook_make_url: "https://hook.us2.make.com/s4a8uqb27smtqnjolte3tgeflclksjtg",
   // 4 placeholders principais (v3 · matriz_recomendacao_curso_v3.md §0) — usuária troca antes do Dia 2
-  LINK_LIVE:                "/cursos/ia-no-sistema-unimed",                // Curso IA no Sistema Unimed 12/05 (sempre)
-  LINK_AI_COWORKER_UNIMED:  "/cursos/ai-coworker-unimed",  // default (não-dev, ≤ Orquestrador)
-  LINK_AI_CHAMPIONS:        "/contato",        // Pioneiro não-dev
-  LINK_FILA_CLAUDE_CODE:    "/contato",    // dev (qualquer nível)
+  LINK_LIVE:                "{{LINK_LIVE}}",                // Live 13/Mai (sempre)
+  LINK_AI_COWORKER_UNIMED:  "{{LINK_AI_COWORKER_UNIMED}}",  // default (não-dev, ≤ Orquestrador)
+  LINK_AI_CHAMPIONS:        "{{LINK_AI_CHAMPIONS}}",        // Pioneiro não-dev
+  LINK_FILA_CLAUDE_CODE:    "{{LINK_FILA_CLAUDE_CODE}}",    // dev (qualquer nível)
   // Calendly HARDCODED (não é placeholder — é URL fixa da Convenção)
   CALENDLY_TALES: "https://calendly.com/tales-campos-aimana/30min?month=2026-04"
 };
@@ -704,7 +704,7 @@ const PERFIS = {
       { nome: "Buscador interno", descricao: "Perguntar em linguagem natural em vez de abrir 5 pastas atrás de um documento." }
     ],
     curso: {
-      nome: "Curso gratuito \"IA no Sistema Unimed\"",
+      nome: "Live gratuita \"IA no dia a dia do líder\"",
       porque: "Você está no momento certo pra ter uma base clara do que IA é e não é — sem tecniquês. Essa live te dá o mapa inicial.",
       link_key: "Curioso"
     }
@@ -725,4 +725,1094 @@ const PERFIS = {
     agentes: [
       { nome: "Gerador de relatórios", descricao: "Transformar dados em narrativa executiva com estrutura padronizada." },
       { nome: "Triador de demandas", descricao: "Classificar e priorizar fila de solicitações do seu time com critérios seus." },
-      { nome: "Analista de dados ad-hoc", descricao: "Explorar plan
+      { nome: "Analista de dados ad-hoc", descricao: "Explorar planilhas e responder perguntas sem precisar abrir Power BI." }
+    ],
+    curso: {
+      nome: "AI Coworker",
+      porque: "Você já usa, mas sozinho. O AI Coworker te dá método pra virar referência dentro da empresa, com suporte real e rituais de aplicação.",
+      link_key: "Explorador"
+    }
+  },
+  "Praticante": {
+    emoji: "⚙️",
+    leitura_nivel: "IA não é mais novidade no seu dia — é ferramenta. Parte do time já te acompanha, mas cada um faz do seu jeito. A empresa começa a olhar IA com seriedade, porém ainda falta governança, padrão e métrica. O desafio agora é escalar sem virar bagunça.",
+    dominio: [
+      "Você tem consistência: IA faz parte do seu fluxo, não é experimento.",
+      "Parte do seu time já aplica IA por conta própria — há cultura inicial.",
+      "Você consegue desenhar e executar um piloto estruturado."
+    ],
+    proximos_movimentos: [
+      "Crie uma política simples de IA pro seu time (o que pode, o que não pode, com quais ferramentas).",
+      "Escolha 1 processo crítico pra automatizar com agente dedicado, não só com prompt.",
+      "Meça impacto: horas economizadas, erros reduzidos, tempo de ciclo — em 1 indicador só."
+    ],
+    agentes: [
+      { nome: "Agente de SLA", descricao: "Monitorar fila de atendimento/projeto e alertar quando houver risco de estouro." },
+      { nome: "Redator de documentos formais", descricao: "Contratos, propostas e relatórios com templates e validação automática." },
+      { nome: "Conciliador de dados", descricao: "Cruzar planilhas/sistemas diferentes e sinalizar divergências sem intervenção manual." }
+    ],
+    curso: {
+      nome: "AI Champions",
+      porque: "Você tem maturidade técnica. Falta virar multiplicador com método — é o que o AI Champions entrega: você sai com um agente rodando e um time treinado.",
+      link_key: "Praticante"
+    }
+  },
+  "Orquestrador": {
+    emoji: "🎯",
+    leitura_nivel: "Sua área opera com IA como vetor de performance. Tem quadro, tem cadência, tem governança. A pergunta não é mais 'vale a pena?' mas 'onde IA gera vantagem competitiva de verdade?'. A armadilha aqui é confundir volume de experimentos com impacto estratégico.",
+    dominio: [
+      "Você tem roadmap de IA, não só ideias avulsas.",
+      "Seu time opera com padrões e há governança visível.",
+      "Você mede impacto e sabe priorizar o que escala."
+    ],
+    proximos_movimentos: [
+      "Revise o portfólio de iniciativas de IA e corte o que não tem métrica clara.",
+      "Amplie para além da sua área: identifique 1 processo interfuncional e lidere a conversa.",
+      "Monte um conselho interno de IA pra sustentar o ritmo e compartilhar aprendizado."
+    ],
+    agentes: [
+      { nome: "Orquestrador multi-agente", descricao: "Coordenar 3 ou 4 agentes especialistas em um processo de ponta a ponta." },
+      { nome: "Copiloto de decisão executiva", descricao: "Consolidar métricas, contexto e recomendar com trilha de auditoria." },
+      { nome: "Agente de governança", descricao: "Monitorar uso de IA no time, custos, riscos e compliance em tempo real." }
+    ],
+    curso: {
+      nome: "AI Leaders + demo plataforma",
+      porque: "Seu desafio já é estratégico. O AI Leaders + demo da nossa plataforma te dá visão sistêmica e ferramentas pra orquestrar IA em escala.",
+      link_key: "Orquestrador"
+    }
+  },
+  "Pioneiro": {
+    emoji: "🚀",
+    leitura_nivel: "Você não aplica IA — você define como IA é aplicada na sua empresa e cria padrão interno. Outras áreas pedem seu apoio. O desafio agora é outro: manter vantagem num mercado que muda toda semana, e não cair na armadilha de achar que já chegou.",
+    dominio: [
+      "Você desenha arquitetura de IA na sua empresa, não só consome.",
+      "Seu time virou referência e é procurado por outras áreas.",
+      "Você consegue conversar com fornecedor e com conselho no mesmo dia."
+    ],
+    proximos_movimentos: [
+      "Documente o que você construiu — case externo ajuda a consolidar posição.",
+      "Estabeleça parceria estratégica com quem constrói, não só com quem consome IA.",
+      "Antecipe a próxima onda: avalie agentes autônomos e modelos fine-tunados no seu domínio."
+    ],
+    agentes: [
+      { nome: "Agente proprietário de domínio", descricao: "Fine-tunado no vocabulário e nos casos de uso exclusivos da sua empresa." },
+      { nome: "Sistema de agentes autônomos", descricao: "Múltiplos agentes com memória compartilhada operando processos críticos." },
+      { nome: "Observability de IA", descricao: "Stack próprio pra medir qualidade, custo e drift dos agentes em produção." }
+    ],
+    curso: {
+      nome: "Parceria estratégica AIMANA + Anthropic",
+      porque: "Você passou do aprender. O próximo salto é parceria: construir com a gente a próxima camada de IA da sua empresa, com suporte Anthropic por trás.",
+      link_key: "Pioneiro"
+    }
+  }
+};
+
+// ============================================================
+// PERGUNTAS — definições com pontuação
+// ============================================================
+const PERGUNTAS_TELA2 = [
+  {
+    id: "P1", titulo: "Há quanto tempo você usa IA com alguma regularidade no trabalho?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Ainda não uso", pontos: 0 },
+      { valor: "Comecei nos últimos 3 meses", pontos: 3 },
+      { valor: "Há 3 a 12 meses", pontos: 6 },
+      { valor: "Há mais de 1 ano, com consistência", pontos: 8 },
+      { valor: "Sou referência pros meus colegas", pontos: 10 }
+    ]
+  },
+  {
+    id: "P2", titulo: "Com que frequência você usa IA no trabalho?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Raramente ou nunca", pontos: 0 },
+      { valor: "Algumas vezes por mês", pontos: 2 },
+      { valor: "Algumas vezes por semana", pontos: 5 },
+      { valor: "Quase todos os dias", pontos: 8 },
+      { valor: "Várias vezes por dia, virou fluxo natural", pontos: 10 }
+    ]
+  },
+  {
+    id: "P3", titulo: "Quais ferramentas de IA você já usou no trabalho?",
+    hint: "Marque todas que se aplicam.",
+    tipo: "checkbox", pontua: true, maxSelecao: null,
+    opcoes: [
+      { valor: "ChatGPT" },
+      { valor: "Claude (Anthropic)" },
+      { valor: "Gemini (Google)" },
+      { valor: "Copilot Microsoft 365 (Word, Excel, Teams)" },
+      { valor: "GitHub Copilot ou Cursor" },
+      { valor: "Perplexity" },
+      { valor: "Notion AI" },
+      { valor: "NotebookLM" },
+      { valor: "Ferramentas de imagem (Midjourney, DALL·E, Firefly)" },
+      { valor: "Ferramentas de áudio/vídeo (Descript, HeyGen, ElevenLabs)" },
+      { valor: "Agentes ou automações (Zapier AI, Make, n8n, custom)" },
+      { valor: "Nenhuma ainda", exclusiva: true }
+    ]
+  },
+  {
+    id: "P4", titulo: "Sua empresa paga ferramentas de IA que você usa no trabalho?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Não uso nenhuma ferramenta de IA", pontos: 0 },
+      { valor: "Uso contas pessoais ou gratuitas", pontos: 2 },
+      { valor: "Uso conta que eu mesmo pago, porque a empresa não oferece", pontos: 4 },
+      { valor: "Empresa paga pra algumas pessoas-chave", pontos: 6 },
+      { valor: "Empresa paga pra mim e pro meu time", pontos: 8 },
+      { valor: "Empresa fornece múltiplas ferramentas integradas", pontos: 10 }
+    ]
+  },
+  {
+    id: "P5", titulo: "Qual foi o uso MAIS AVANÇADO que você já fez com IA?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Tirar dúvidas e pesquisar assuntos", pontos: 2 },
+      { valor: "Rascunhar textos, e-mails, apresentações", pontos: 4 },
+      { valor: "Analisar documentos, planilhas ou dados", pontos: 6 },
+      { valor: "Rodar um processo ou rotina recorrente (ex: resumir reuniões, triar e-mails)", pontos: 8 },
+      { valor: "Criar um agente ou fluxo automatizado próprio", pontos: 9 },
+      { valor: "Orquestrar múltiplos agentes em processos complexos", pontos: 10 }
+    ]
+  },
+  {
+    id: "P6", titulo: "Para que você mais usa IA hoje?",
+    hint: "Marque até 3 opções.",
+    tipo: "checkbox", pontua: false, maxSelecao: 3,
+    opcoes: [
+      { valor: "Pesquisar e tirar dúvidas" },
+      { valor: "Escrever textos, e-mails, apresentações" },
+      { valor: "Resumir documentos e reuniões" },
+      { valor: "Analisar dados e planilhas" },
+      { valor: "Criar imagens, designs ou mídia" },
+      { valor: "Traduzir ou adaptar conteúdo" },
+      { valor: "Planejar projetos ou tomar decisões" },
+      { valor: "Automatizar tarefas repetitivas" },
+      { valor: "Programar ou revisar código" },
+      { valor: "Construir agentes ou fluxos próprios" }
+    ]
+  }
+];
+
+const PERGUNTAS_TELA3 = [
+  {
+    id: "P7", titulo: "Quantas pessoas do seu time usam IA no trabalho?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Só eu — ou ninguém ainda", pontos: 0 },
+      { valor: "Poucas pessoas, pontualmente", pontos: 3 },
+      { valor: "Boa parte do time, sem padrão", pontos: 6 },
+      { valor: "Quase todos, com método", pontos: 8 },
+      { valor: "100%, e temos rituais de aprendizado", pontos: 10 }
+    ]
+  },
+  {
+    id: "P8", titulo: "Algum processo da sua área roda com IA de forma recorrente?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Não, é tudo uso pontual", pontos: 0 },
+      { valor: "Estamos experimentando", pontos: 3 },
+      { valor: "Um ou dois processos já rodam", pontos: 6 },
+      { valor: "Vários processos", pontos: 8 },
+      { valor: "IA é parte da operação padrão", pontos: 10 }
+    ]
+  },
+  {
+    id: "P9", titulo: "Sua empresa tem política ou orientação formal sobre uso de IA?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Não existe nada formal", pontos: 0 },
+      { valor: "Está em discussão", pontos: 3 },
+      { valor: "Existe orientação informal", pontos: 5 },
+      { valor: "Política formal, aplicada e revisada", pontos: 10 }
+    ]
+  },
+  {
+    id: "P10", titulo: "Como sua liderança se posiciona sobre IA hoje?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Ainda não é prioridade", pontos: 0 },
+      { valor: "Falam sobre, mas sem investimento", pontos: 3 },
+      { valor: "Interesse real, com iniciativas pontuais", pontos: 6 },
+      { valor: "Patrocínio ativo, com budget e responsável", pontos: 10 }
+    ]
+  },
+  {
+    id: "P11", titulo: "Quando você pensa em IA na sua área nos próximos 12 meses, o que vem?",
+    tipo: "radio", pontua: true,
+    opcoes: [
+      { valor: "Ainda não pensei muito", pontos: 0 },
+      { valor: "Algumas ideias soltas", pontos: 3 },
+      { valor: "Projetos em mente", pontos: 6 },
+      { valor: "Roadmap definido e em execução", pontos: 10 }
+    ]
+  },
+  {
+    id: "P14", titulo: "Qual seu papel na decisão de contratar IA na empresa?",
+    hint: "Essa pergunta não pontua — ajuda a gente a personalizar.",
+    tipo: "radio", pontua: false,
+    opcoes: [
+      { valor: "Decido diretamente" },
+      { valor: "Participo da decisão" },
+      { valor: "Influencio a decisão" },
+      { valor: "Só usuário final" }
+    ]
+  }
+];
+
+const PERGUNTAS_TELA4 = [
+  {
+    id: "P12", titulo: "Qual o maior bloqueio pra IA evoluir na sua área hoje?",
+    tipo: "radio", pontua: false,
+    opcoes: [
+      { valor: "Não saber por onde começar" },
+      { valor: "Falta de tempo ou prioridade" },
+      { valor: "Falta de letramento do time" },
+      { valor: "Segurança, LGPD ou dados sensíveis" },
+      { valor: "Sem patrocínio da liderança" },
+      { valor: "Custo ou ROI não claros" },
+      { valor: "Ainda não vi valor na prática" }
+    ]
+  },
+  {
+    id: "P13", titulo: "Qual UM resultado você quer ter com IA nos próximos 90 dias?",
+    hint: "Escreva em uma ou duas frases — na sua linguagem. Dica: evite citar nomes de pessoas ou empresas específicas.",
+    tipo: "textarea", pontua: false, maxLen: 500, minLen: 3,
+    placeholder: "Ex: não sei por onde começar / minha equipe resiste ao uso / faltam dados organizados / quero reduzir em 30% o tempo de preparação de reuniões."
+  },
+  {
+    id: "P15", titulo: "Qual a sua urgência por resultados com IA?",
+    hint: "Essa pergunta não pontua — ajuda a gente a personalizar.",
+    tipo: "radio", pontua: false,
+    opcoes: [
+      { valor: "Próximos 30 dias" },
+      { valor: "Próximos 90 dias" },
+      { valor: "Este ano" },
+      { valor: "Sem prazo definido" }
+    ]
+  }
+];
+
+// ============================================================
+// ESTADO
+// ============================================================
+const STATE = {
+  telaAtual: 1,
+  respostas: {
+    nome: "", email: "", whatsapp: "", empresa: "", cargo: "", porte: "",
+    P1: null, P2: null, P3: [], P4: null, P5: null, P6: [],
+    P7: null, P8: null, P9: null, P10: null, P11: null, P14: null,
+    P12: null, P13: "", P15: null
+  },
+  score: 0, nivel: "", emoji: "",
+  lgpd_consent: false,
+  lgpd_timestamp: null,
+  // Funil v3 — computados em calcularDiagnostico()
+  eh_dev: false,
+  segundo_curso: null,       // { nome, modo, link, placeholder }
+  mostrar_calendly: false,
+  // analise_markdown: string retornada pelo Claude v2 (6 seções — sem a de cursos).
+  // Na Frente 2, Make injeta isso após o webhook. Frente 1 usa fallback de PERFIS.
+  analise_markdown: null,
+  // analise (objeto estruturado) — fallback legado usado se o Claude falhar.
+  analise: null
+};
+
+// ============================================================
+// HELPERS
+// ============================================================
+function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+function qsa(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+// ============================================================
+// RENDER DE PERGUNTAS
+// ============================================================
+function renderPergunta(p) {
+  const hint = p.hint ? `<span class="pergunta-hint">${escapeHtml(p.hint)}</span>` : '';
+  let body = '';
+
+  if (p.tipo === 'radio' || p.tipo === 'checkbox') {
+    body = '<div class="opcoes" role="' + (p.tipo === 'radio' ? 'radiogroup' : 'group') + '">';
+    p.opcoes.forEach((op, idx) => {
+      const inputId = `${p.id}_${idx}`;
+      const inputType = p.tipo;
+      const name = p.tipo === 'radio' ? p.id : p.id + '_multi';
+      const exclData = op.exclusiva ? ' data-exclusiva="1"' : '';
+      body += `
+        <label class="opcao" data-tipo="${inputType}" data-pergunta="${p.id}" data-valor="${escapeHtml(op.valor)}"${exclData}>
+          <input type="${inputType}" name="${name}" id="${inputId}" value="${escapeHtml(op.valor)}">
+          <span class="marker" aria-hidden="true"></span>
+          <span class="label-text">${escapeHtml(op.valor)}</span>
+        </label>`;
+    });
+    body += '</div>';
+  } else if (p.tipo === 'textarea') {
+    body = `<textarea id="${p.id}_field" maxlength="${p.maxLen || 500}" placeholder="${escapeHtml(p.placeholder || '')}" data-pergunta="${p.id}" rows="3"></textarea>`;
+  }
+
+  return `
+    <div class="pergunta" id="pergunta_${p.id}">
+      <span class="pergunta-titulo">${escapeHtml(p.titulo)}</span>
+      ${hint}
+      ${body}
+    </div>`;
+}
+
+function renderTelas() {
+  qs('#telaDyn2').innerHTML = PERGUNTAS_TELA2.map(renderPergunta).join('');
+  qs('#telaDyn3').innerHTML = PERGUNTAS_TELA3.map(renderPergunta).join('');
+  qs('#telaDyn4').innerHTML = PERGUNTAS_TELA4.map(renderPergunta).join('');
+
+  // Listeners para opções
+  qsa('.opcao').forEach(label => {
+    label.addEventListener('click', e => {
+      if (e.target.tagName === 'INPUT') return;
+      e.preventDefault();
+      const input = qs('input', label);
+      const pergunta = label.dataset.pergunta;
+      const tipo = label.dataset.tipo;
+      const valor = label.dataset.valor;
+
+      if (tipo === 'radio') {
+        qsa(`.opcao[data-pergunta="${pergunta}"]`).forEach(l => {
+          l.classList.remove('selecionada');
+          qs('input', l).checked = false;
+        });
+        input.checked = true;
+        label.classList.add('selecionada');
+        STATE.respostas[pergunta] = valor;
+      } else {
+        const pergunta_def = [...PERGUNTAS_TELA2, ...PERGUNTAS_TELA3, ...PERGUNTAS_TELA4].find(x => x.id === pergunta);
+
+        if (label.dataset.exclusiva === "1") {
+          if (!input.checked) {
+            qsa(`.opcao[data-pergunta="${pergunta}"]`).forEach(l => {
+              qs('input', l).checked = false;
+              l.classList.remove('selecionada');
+            });
+            input.checked = true;
+            label.classList.add('selecionada');
+          } else {
+            input.checked = false;
+            label.classList.remove('selecionada');
+          }
+        } else {
+          qsa(`.opcao[data-pergunta="${pergunta}"][data-exclusiva="1"]`).forEach(l => {
+            qs('input', l).checked = false;
+            l.classList.remove('selecionada');
+          });
+          if (!input.checked) {
+            const contandoExcl = qsa(`.opcao[data-pergunta="${pergunta}"] input:checked`).length;
+            if (pergunta_def.maxSelecao && contandoExcl >= pergunta_def.maxSelecao) {
+              showToast(`Máximo de ${pergunta_def.maxSelecao} opções.`);
+              return;
+            }
+            input.checked = true;
+            label.classList.add('selecionada');
+          } else {
+            input.checked = false;
+            label.classList.remove('selecionada');
+          }
+        }
+
+        const novoSel = qsa(`.opcao[data-pergunta="${pergunta}"] input:checked`).map(i => i.value);
+        STATE.respostas[pergunta] = novoSel;
+      }
+
+      const blocoPergunta = qs(`#pergunta_${pergunta}`);
+      if (blocoPergunta) blocoPergunta.classList.remove('erro');
+    });
+  });
+
+  // Listener de textarea (P13)
+  qsa('textarea[data-pergunta]').forEach(ta => {
+    ta.addEventListener('input', e => {
+      STATE.respostas[e.target.dataset.pergunta] = e.target.value.trim();
+      const bloco = qs(`#pergunta_${e.target.dataset.pergunta}`);
+      if (bloco) bloco.classList.remove('erro');
+    });
+  });
+}
+
+// ============================================================
+// VALIDAÇÃO
+// ============================================================
+function validarCadastro() {
+  let ok = true;
+  const email = qs('#email').value.trim();
+  const whatsapp = qs('#whatsapp').value.trim();
+
+  const campos = ['nome', 'email', 'whatsapp', 'empresa', 'cargo', 'porte'];
+  campos.forEach(c => {
+    const grupo = qs(`.input-group[data-campo="${c}"]`);
+    const input = qs(`#${c}`);
+    grupo.classList.remove('erro');
+    if (!input.value.trim()) {
+      grupo.classList.add('erro');
+      ok = false;
+    }
+  });
+
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    qs('.input-group[data-campo="email"]').classList.add('erro');
+    ok = false;
+  }
+  if (whatsapp && whatsapp.replace(/\D/g,'').length < 10) {
+    qs('.input-group[data-campo="whatsapp"]').classList.add('erro');
+    ok = false;
+  }
+
+  // LGPD
+  if (!qs('#lgpdCheck').checked) {
+    showToast('É necessário aceitar a política de privacidade para continuar.');
+    ok = false;
+  }
+
+  if (ok) {
+    STATE.respostas.nome = qs('#nome').value.trim();
+    STATE.respostas.email = email;
+    STATE.respostas.whatsapp = whatsapp;
+    STATE.respostas.empresa = qs('#empresa').value.trim();
+    STATE.respostas.cargo = qs('#cargo').value.trim();
+    STATE.respostas.porte = qs('#porte').value;
+    STATE.lgpd_consent = true;
+    STATE.lgpd_timestamp = new Date().toISOString();
+  } else {
+    const primEr = qs('.input-group.erro input, .input-group.erro select');
+    if (primEr) primEr.focus();
+  }
+  return ok;
+}
+
+function validarPerguntas(lista) {
+  let ok = true;
+  let primeiroErro = null;
+  lista.forEach(p => {
+    const bloco = qs(`#pergunta_${p.id}`);
+    bloco.classList.remove('erro');
+    const val = STATE.respostas[p.id];
+    let vazio = false;
+
+    if (p.tipo === 'radio') vazio = !val;
+    else if (p.tipo === 'checkbox') vazio = !val || val.length === 0;
+    else if (p.tipo === 'textarea') vazio = !val || val.length < (p.minLen || 1);
+
+    if (vazio) {
+      bloco.classList.add('erro');
+      ok = false;
+      if (!primeiroErro) primeiroErro = bloco;
+    }
+  });
+  if (!ok && primeiroErro) {
+    primeiroErro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  return ok;
+}
+
+// ============================================================
+// NAVEGAÇÃO
+// ============================================================
+function irParaTela(n) {
+  qsa('.tela').forEach(t => t.classList.remove('active'));
+  qs(`#tela${n}`).classList.add('active');
+  STATE.telaAtual = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => {
+    const titulo = qs(`#tela${n} .form-title, #tela${n} h1`);
+    if (titulo && titulo.focus) titulo.focus();
+  }, 250);
+}
+
+// ============================================================
+// FUNIL v3 — normalização de cargo, seleção do 2º curso, Calendly, UTM
+// Ref: matriz_recomendacao_curso_v3.md §3
+// ============================================================
+
+// Detecta perfil dev/técnico a partir do texto livre de "cargo".
+// Match case-insensitive por substring. Exclusões têm precedência sobre keywords dev.
+function normalizarCargo(cargoTexto) {
+  if (!cargoTexto) return false;
+  const lower = String(cargoTexto).toLowerCase();
+
+  const devKeywords = [
+    'desenvolved','programa','engenheir','devops','sre',
+    'fullstack','backend','frontend','front-end','back-end',
+    'cientista de dados','data scien','data engineer','ml engineer',
+    'machine learning','qa','tester','arquiteto de software',
+    'tech lead','engineering manager','plataform','infra','cloud engineer'
+  ];
+
+  const exclusoes = [
+    'civil','clínic','medic','médic','enferm','farmacêut','farmaceut',
+    'saúde pública','saude publica','administrativ','comercial','vendas',
+    'recursos humanos','rh','financ','contábil','contabil',
+    'atendimento ao cliente','regulação','regulacao',
+    'programa de residência','programa de residencia','programa trainee',
+    'atendimento ao ti','auxiliar de limpeza','assistente de'
+  ];
+
+  const casouDev = devKeywords.some(k => lower.includes(k));
+  const casouExclusao = exclusoes.some(k => lower.includes(k));
+
+  return casouDev && !casouExclusao;
+}
+
+// Atalho semântico pedido no escopo.
+function eh_dev(cargo) { return normalizarCargo(cargo); }
+
+// Precedência: dev → Pioneiro → default. Dev sempre vence (mesmo se Pioneiro).
+function escolherSegundoCurso({ cargo, nivel, score }) {
+  if (eh_dev(cargo)) {
+    return {
+      nome: "Claude Code",
+      nomeCompleto: "Claude Code (lista de espera AIMANA)",
+      modo: "waitlist",
+      link: EVENTO_CONFIG.LINK_FILA_CLAUDE_CODE,
+      placeholder: true,
+      variante: "dev"
+    };
+  }
+  if (nivel === "Pioneiro" || score >= 81) {
+    return {
+      nome: "AI Champions",
+      nomeCompleto: "AI Champions",
+      modo: "lp_curso",
+      link: EVENTO_CONFIG.LINK_AI_CHAMPIONS,
+      placeholder: true,
+      variante: "pioneiro"
+    };
+  }
+  return {
+    nome: "AI Coworker Unimed",
+    nomeCompleto: "AI Coworker Unimed",
+    modo: "lp_curso",
+    link: EVENTO_CONFIG.LINK_AI_COWORKER_UNIMED,
+    placeholder: true,
+    variante: "default"
+  };
+}
+
+// Calendly aparece condicionalmente na Tela 5: Diretor/C-level OU Pioneiro OU urgência 30 dias.
+function deveMostrarCalendly({ cargo, score, urgencia }) {
+  const c = (cargo || "").toLowerCase();
+  const ehLideranca = /(diret|c-level|chief|cxo|ceo|cto|cio|cfo|coo|cmo|presidente|vice[- ]?presidente|vp\b)/.test(c);
+  const ehPioneiro = score >= 81;
+  const urgente30 = (urgencia || "").toLowerCase().includes("30 dias");
+  return ehLideranca || ehPioneiro || urgente30;
+}
+
+// Helper de UTM. utmContent varia por bloco; medium padrão é "tela5".
+function comUtm(link, utmContent, utmMedium) {
+  if (!link || link.startsWith("{{")) return link; // placeholder ainda não trocado
+  if (link.indexOf("calendly.com") >= 0) {
+    // Calendly exige preservar ?month=... então anexamos com & sempre
+    const sep = link.indexOf("?") >= 0 ? "&" : "?";
+    const params = [
+      "utm_source=diagnostico",
+      "utm_medium=" + encodeURIComponent(utmMedium || EVENTO_CONFIG.utm_medium_default),
+      "utm_campaign=" + encodeURIComponent(EVENTO_CONFIG.utm_campaign)
+    ];
+    if (utmContent) params.push("utm_content=" + encodeURIComponent(utmContent));
+    return link + sep + params.join("&");
+  }
+  try {
+    const url = new URL(link);
+    url.searchParams.set("utm_source", "diagnostico");
+    url.searchParams.set("utm_medium", utmMedium || EVENTO_CONFIG.utm_medium_default);
+    url.searchParams.set("utm_campaign", EVENTO_CONFIG.utm_campaign);
+    if (utmContent) url.searchParams.set("utm_content", utmContent);
+    if (STATE.nivel) url.searchParams.set("utm_term", STATE.nivel.toLowerCase());
+    return url.toString();
+  } catch (e) {
+    // fallback (ex.: link relativo ou inválido)
+    const sep = link.indexOf("?") >= 0 ? "&" : "?";
+    const params = [
+      "utm_source=diagnostico",
+      "utm_medium=" + encodeURIComponent(utmMedium || EVENTO_CONFIG.utm_medium_default),
+      "utm_campaign=" + encodeURIComponent(EVENTO_CONFIG.utm_campaign)
+    ];
+    if (utmContent) params.push("utm_content=" + encodeURIComponent(utmContent));
+    return link + sep + params.join("&");
+  }
+}
+
+// ============================================================
+// PARSER MARKDOWN MÍNIMO (inline) — cobre o subset do Claude v2
+// Suporta: ## H2, **bold**, listas - e 1., [texto](url), parágrafos.
+// Decisão: parser inline em vez de CDN (~45 linhas, zero dependência).
+// ============================================================
+function parseMarkdown(md) {
+  if (!md) return "";
+  const linhas = String(md).replace(/\r\n/g, "\n").split("\n");
+  let out = [];
+  let buf = [];                 // buffer de linhas do parágrafo atual
+  let listaAtual = null;        // 'ul' | 'ol' | null
+  let itensLista = [];
+
+  const inlineRender = (txt) => {
+    let s = escapeHtml(txt);
+    // [texto](url)  — rodar ANTES do **bold** pra não conflitar
+    s = s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, t, u) =>
+      `<a href="${u}" target="_blank" rel="noopener">${t}</a>`);
+    // **bold**
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    // _italic_ (para o "(complexidade: ...)" do template Claude)
+    s = s.replace(/(^|[^_])_([^_\n]+)_(?!_)/g, "$1<em>$2</em>");
+    return s;
+  };
+
+  const flushParagrafo = () => {
+    if (buf.length) {
+      const joined = buf.map(l => l.trim()).filter(Boolean).join(" ");
+      if (joined) out.push(`<p>${inlineRender(joined)}</p>`);
+      buf = [];
+    }
+  };
+  const flushLista = () => {
+    if (listaAtual && itensLista.length) {
+      const itensHtml = itensLista.map(it => `<li>${inlineRender(it)}</li>`).join("");
+      out.push(`<${listaAtual}>${itensHtml}</${listaAtual}>`);
+    }
+    listaAtual = null;
+    itensLista = [];
+  };
+
+  for (let i = 0; i < linhas.length; i++) {
+    const linha = linhas[i];
+    const trim = linha.trim();
+
+    // linha em branco → fecha parágrafo e lista
+    if (!trim) { flushParagrafo(); flushLista(); continue; }
+
+    // ## Header
+    const mh2 = /^##\s+(.+)$/.exec(trim);
+    if (mh2) {
+      flushParagrafo(); flushLista();
+      out.push(`<h2>${inlineRender(mh2[1])}</h2>`);
+      continue;
+    }
+
+    // Lista não-ordenada: "- item" (aceita também "* item")
+    const mUl = /^[-*]\s+(.+)$/.exec(trim);
+    if (mUl) {
+      flushParagrafo();
+      if (listaAtual !== "ul") { flushLista(); listaAtual = "ul"; }
+      itensLista.push(mUl[1]);
+      continue;
+    }
+
+    // Lista ordenada: "1. item"
+    const mOl = /^\d+\.\s+(.+)$/.exec(trim);
+    if (mOl) {
+      flushParagrafo();
+      if (listaAtual !== "ol") { flushLista(); listaAtual = "ol"; }
+      itensLista.push(mOl[1]);
+      continue;
+    }
+
+    // Continuação de item de lista (linha indentada)
+    if (listaAtual && /^\s{2,}/.test(linha) && itensLista.length) {
+      itensLista[itensLista.length - 1] += " " + trim;
+      continue;
+    }
+
+    // Parágrafo comum
+    if (listaAtual) flushLista();
+    buf.push(linha);
+  }
+
+  flushParagrafo();
+  flushLista();
+  return out.join("\n");
+}
+
+// ============================================================
+// SCORE
+// ============================================================
+function pontosP3(lista) {
+  const n = (lista || []).filter(x => x && x !== "Nenhuma ainda").length;
+  if (n === 0) return 0;
+  if (n <= 2) return 3;
+  if (n <= 4) return 6;
+  if (n <= 6) return 8;
+  return 10;
+}
+
+function pontosRadio(pid, resposta) {
+  const todas = [...PERGUNTAS_TELA2, ...PERGUNTAS_TELA3];
+  const pergunta = todas.find(p => p.id === pid);
+  if (!pergunta || !pergunta.pontua) return 0;
+  const op = pergunta.opcoes.find(o => o.valor === resposta);
+  return op ? op.pontos : 0;
+}
+
+function calcularDiagnostico() {
+  const r = STATE.respostas;
+  const pontos = {
+    P1:  pontosRadio('P1',  r.P1),
+    P2:  pontosRadio('P2',  r.P2),
+    P3:  pontosP3(r.P3),
+    P4:  pontosRadio('P4',  r.P4),
+    P5:  pontosRadio('P5',  r.P5),
+    P7:  pontosRadio('P7',  r.P7),
+    P8:  pontosRadio('P8',  r.P8),
+    P9:  pontosRadio('P9',  r.P9),
+    P10: pontosRadio('P10', r.P10),
+    P11: pontosRadio('P11', r.P11)
+  };
+  const score = Object.values(pontos).reduce((a,b) => a+b, 0);
+  let nivel, emoji;
+  if (score <= 20)      { nivel = "Curioso";      emoji = "🌱"; }
+  else if (score <= 40) { nivel = "Explorador";   emoji = "🧭"; }
+  else if (score <= 60) { nivel = "Praticante";   emoji = "⚙️"; }
+  else if (score <= 80) { nivel = "Orquestrador"; emoji = "🎯"; }
+  else                  { nivel = "Pioneiro";     emoji = "🚀"; }
+  STATE.score = score;
+  STATE.nivel = nivel;
+  STATE.emoji = emoji;
+
+  // Monta objeto `analise` — FRENTE 1: usa PERFIS (fallback).
+  // FRENTE 2: Make chamará Claude e sobrescreverá STATE.analise_markdown antes de renderResultado().
+  const perfil = PERFIS[nivel];
+  STATE.analise = {
+    nivel_emoji: emoji,
+    nivel_nome: nivel,
+    score: score,
+    leitura_nivel: perfil.leitura_nivel,
+    dominio: perfil.dominio.slice(),
+    proximos_movimentos: perfil.proximos_movimentos.slice(),
+    agentes: perfil.agentes.map(a => ({ nome: a.nome, descricao: a.descricao }))
+  };
+
+  // --- FUNIL v3 ---------------------------------------------------
+  // Resolve 2º curso (dev → Claude Code, Pioneiro → AI Champions, default → AI Coworker Unimed).
+  // A decisão é do form, não do Claude.
+  STATE.eh_dev = eh_dev(r.cargo);
+  STATE.segundo_curso = escolherSegundoCurso({
+    cargo: r.cargo,
+    nivel: nivel,
+    score: score
+  });
+  STATE.mostrar_calendly = deveMostrarCalendly({
+    cargo: r.cargo,
+    score: score,
+    urgencia: r.P15
+  });
+
+  return { score, nivel, emoji, pontos };
+}
+
+// ============================================================
+// RESULTADO (tela 5)
+// ============================================================
+function renderResultado() {
+  const a = STATE.analise;
+  if (!a) return;
+
+  // ---------- HERO (sempre) ----------
+  qs('#resEmoji').textContent = a.nivel_emoji;
+  qs('#resNivel').textContent = a.nivel_nome;
+  qs('#resScore').textContent = a.score;
+
+  // ---------- ANÁLISE (markdown Claude OU fallback PERFIS) ----------
+  const cont = qs('#analiseMarkdown');
+  const aviso = qs('#avisoFallback');
+  if (STATE.analise_markdown) {
+    // Frente 2: Claude entregou markdown (6 seções, sem curso).
+    cont.innerHTML = parseMarkdown(STATE.analise_markdown);
+    aviso.style.display = 'none';
+  } else {
+    // Frente 1 (ou Claude falhou): monta Tela 5 reduzida a partir de PERFIS.
+    cont.innerHTML = renderFallbackMarkdown(a);
+    aviso.style.display = '';
+  }
+
+  // ---------- BLOCO CURSO (sempre montado por JS) ----------
+  renderBlocoCurso();
+}
+
+// Fallback: monta um HTML mínimo a partir do objeto PERFIS quando o Claude falha.
+function renderFallbackMarkdown(a) {
+  const partes = [];
+  if (a.leitura_nivel) {
+    partes.push(`<h2>Leitura do seu nível</h2><p>${escapeHtml(a.leitura_nivel)}</p>`);
+  }
+  if (a.dominio && a.dominio.length) {
+    partes.push('<h2>O que você já domina</h2><ul>' +
+      a.dominio.map(d => `<li>${escapeHtml(d)}</li>`).join('') + '</ul>');
+  }
+  if (a.proximos_movimentos && a.proximos_movimentos.length) {
+    partes.push('<h2>Próximos movimentos</h2><ol>' +
+      a.proximos_movimentos.map(d => `<li>${escapeHtml(d)}</li>`).join('') + '</ol>');
+  }
+  if (a.agentes && a.agentes.length) {
+    partes.push('<h2>Agentes que fazem sentido pra você</h2><ul>' +
+      a.agentes.map(ag => `<li><strong>${escapeHtml(ag.nome)}</strong> — ${escapeHtml(ag.descricao)}</li>`).join('') + '</ul>');
+  }
+  return partes.join('\n');
+}
+
+// Monta Live fixa + 1 de 3 variantes do segundo curso + Calendly condicional.
+function renderBlocoCurso() {
+  const sc = STATE.segundo_curso;
+  if (!sc) return;
+
+  // Live 13/Mai (sempre)
+  const linkLive = comUtm(EVENTO_CONFIG.LINK_LIVE, "live_card");
+  qs('#ctaLive').href = linkLive || "#";
+
+  // Costura pro 2º curso — tom por variante, personalizada com P13 quando tiver
+  const p13 = (STATE.respostas.P13 || "").trim();
+  let costura = "";
+  let tag = "", titulo = "", desc = "", linkLabel = "";
+
+  if (sc.variante === "dev") {
+    tag = "Lista de espera · perfil técnico";
+    titulo = "Claude Code — primeira turma brasileira AIMANA";
+    desc = "A AIMANA está montando a primeira turma brasileira de Claude Code, dedicada a devs que querem IA operando no fluxo de código — não em aba de navegador. Entrar na fila sinaliza seu perfil; quando a turma abrir, você é chamada primeiro.";
+    linkLabel = "Entrar na fila de espera →";
+    costura = "Como seu perfil é técnico, a AIMANA tem um próximo passo específico pra você depois da Live.";
+  } else if (sc.variante === "pioneiro") {
+    tag = "Programa de multiplicadores · nível Pioneiro";
+    titulo = "AI Champions — forme a próxima leva da sua área";
+    desc = p13
+      ? `Você já opera IA sozinha. AI Champions é onde você forma a próxima leva de multiplicadores da sua área com método AIMANA e um agente real rodando — conectado direto à expectativa que você descreveu: "${p13.slice(0, 140)}${p13.length > 140 ? '…' : ''}".`
+      : "Você já opera IA sozinha. AI Champions é onde você forma a próxima leva de multiplicadores da sua área com método AIMANA e um agente real rodando — conectado direto à sua expectativa do evento.";
+    linkLabel = "Conhecer o AI Champions →";
+    costura = "A Live abre o panorama. O passo seguinte pro seu nível é formar multiplicadores, não aprender a usar.";
+  } else {
+    tag = "Recomendado pra você · degrau depois da Live";
+    titulo = "AI Coworker Unimed — da Live ao agente rodando";
+    desc = p13
+      ? `O degrau depois da Live: onde você constrói, com mentoria AIMANA, os agentes da expectativa que você descreveu — "${p13.slice(0, 140)}${p13.length > 140 ? '…' : ''}" — rodando na sua área em até 90 dias.`
+      : "O degrau depois da Live: onde você constrói, com mentoria AIMANA, os primeiros agentes da sua área rodando em até 90 dias. Cadência quinzenal, método aplicado ao Sistema Unimed.";
+    linkLabel = "Conhecer o AI Coworker Unimed →";
+    costura = "A Live abre o panorama. Esse é o degrau de implementação pro seu nível.";
+  }
+
+  // Se o link ainda é placeholder, ajusta o label pra não mentir.
+  const linkResolvido = comUtm(sc.link, "segundo_curso_card");
+  const placeholderLink = !linkResolvido || (typeof linkResolvido === "string" && linkResolvido.startsWith("{{"));
+  if (placeholderLink) {
+    linkLabel = sc.variante === "dev"
+      ? "Lista de espera em breve · aviso por e-mail"
+      : "Detalhes em breve · aviso por e-mail";
+  }
+
+  // Aplica no DOM
+  qs('#bridgeTexto').textContent = costura;
+  const card = qs('#segundoCursoCard');
+  card.setAttribute('data-variant', sc.variante);
+  qs('#segundoTag').textContent = tag;
+  qs('#segundoTitle').textContent = titulo;
+  qs('#segundoDesc').textContent = desc;
+  const elLink = qs('#segundoLink');
+  elLink.textContent = linkLabel;
+  if (placeholderLink) {
+    elLink.removeAttribute('href');
+    elLink.setAttribute('aria-disabled', 'true');
+    elLink.style.pointerEvents = 'none';
+    elLink.style.opacity = '.6';
+  } else {
+    elLink.href = linkResolvido;
+    elLink.removeAttribute('aria-disabled');
+    elLink.style.pointerEvents = '';
+    elLink.style.opacity = '';
+  }
+
+  // Calendly condicional (Diretor/C-level OU Pioneiro OU urgência 30 dias)
+  const calBox = qs('#calendlyFallback');
+  if (STATE.mostrar_calendly) {
+    const calLink = comUtm(EVENTO_CONFIG.CALENDLY_TALES, "falar_especialista");
+    qs('#calendlyLink').href = calLink;
+    calBox.style.display = '';
+  } else {
+    calBox.style.display = 'none';
+  }
+}
+
+// ============================================================
+// PAYLOAD + ENVIO
+// ============================================================
+function montarPayload() {
+  return {
+    meta: {
+      timestamp: new Date().toISOString(),
+      evento_origem_lead: EVENTO_CONFIG.evento_origem_lead,
+      evento_nome: EVENTO_CONFIG.evento_nome,
+      lgpd_consent: STATE.lgpd_consent,
+      lgpd_timestamp: STATE.lgpd_timestamp,
+      lgpd_text_version: "v1-2026-04"
+    },
+    // --- PII: NÃO enviar ao Claude. Apenas Pipedrive + Resend.
+    pii: {
+      nome: STATE.respostas.nome,
+      email: STATE.respostas.email,
+      whatsapp: STATE.respostas.whatsapp
+    },
+    // --- ANÁLISE: seguro para passar ao Claude
+    analise: {
+      empresa: STATE.respostas.empresa,
+      cargo: STATE.respostas.cargo,
+      porte: STATE.respostas.porte,
+      P1: STATE.respostas.P1,
+      P2: STATE.respostas.P2,
+      P3: STATE.respostas.P3,
+      P4: STATE.respostas.P4,
+      P5: STATE.respostas.P5,
+      P6: STATE.respostas.P6,
+      P7: STATE.respostas.P7,
+      P8: STATE.respostas.P8,
+      P9: STATE.respostas.P9,
+      P10: STATE.respostas.P10,
+      P11: STATE.respostas.P11,
+      P12: STATE.respostas.P12,
+      P13: STATE.respostas.P13,
+      P14: STATE.respostas.P14,
+      P15: STATE.respostas.P15,
+      score: STATE.score,
+      nivel: STATE.nivel,
+      emoji: STATE.emoji,
+      // --- FUNIL v3: decisão do form, Claude NUNCA sobrescreve ---
+      eh_dev: STATE.eh_dev,
+      segundo_curso_nome: STATE.segundo_curso ? STATE.segundo_curso.nomeCompleto : null,
+      segundo_curso_link: STATE.segundo_curso ? (comUtm(STATE.segundo_curso.link, "email_segundo_curso", "email") || STATE.segundo_curso.link) : null,
+      segundo_curso_modo: STATE.segundo_curso ? STATE.segundo_curso.modo : null,
+      segundo_curso_variante: STATE.segundo_curso ? STATE.segundo_curso.variante : null,
+      mostrar_calendly: STATE.mostrar_calendly,
+      link_live: comUtm(EVENTO_CONFIG.LINK_LIVE, "email_live", "email"),
+      link_calendly: STATE.mostrar_calendly ? comUtm(EVENTO_CONFIG.CALENDLY_TALES, "email_especialista", "email") : null
+    }
+  };
+}
+
+async function enviarWebhook(payload, tentativa = 1) {
+  const MAX_TENTATIVAS = 2;
+  try {
+    const resp = await fetch(EVENTO_CONFIG.webhook_make_url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true,
+      mode: 'cors'
+    });
+    if (!resp.ok && tentativa < MAX_TENTATIVAS) {
+      console.warn('Webhook retornou', resp.status, '— retry');
+      return enviarWebhook(payload, tentativa + 1);
+    }
+    // Frente 2: se o Make retornou markdown do Claude, hidrata STATE pra renderizar
+    if (resp.ok) {
+      try {
+        const body = await resp.json();
+        if (body && typeof body.analise_markdown === "string" && body.analise_markdown.trim()) {
+          STATE.analise_markdown = body.analise_markdown;
+        }
+      } catch (e) { /* resposta sem JSON — ok, segue com fallback */ }
+    }
+    return resp.ok;
+  } catch (err) {
+    console.error('Erro webhook:', err);
+    if (tentativa < MAX_TENTATIVAS) {
+      await new Promise(r => setTimeout(r, 1000));
+      return enviarWebhook(payload, tentativa + 1);
+    }
+    try {
+      const buf = JSON.parse(localStorage.getItem('aimana_leads_buffer') || '[]');
+      buf.push(payload);
+      localStorage.setItem('aimana_leads_buffer', JSON.stringify(buf));
+    } catch (e) { /* ignora */ }
+    return false;
+  }
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer;
+function showToast(msg) {
+  const t = qs('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// EVENTOS
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderTelas();
+
+  // LGPD gating — botão disabled até checkbox marcada
+  const lgpdCheck = qs('#lgpdCheck');
+  const btnTela1 = qs('#btnTela1');
+  lgpdCheck.addEventListener('change', () => {
+    btnTela1.disabled = !lgpdCheck.checked;
+  });
+
+  // Tela 1 → 2
+  btnTela1.addEventListener('click', () => {
+    if (validarCadastro()) irParaTela(2);
+  });
+
+  // Tela 2 → 3
+  qs('#btnTela2').addEventListener('click', () => {
+    if (validarPerguntas(PERGUNTAS_TELA2)) irParaTela(3);
+  });
+
+  // Tela 3 → 4
+  qs('#btnTela3').addEventListener('click', () => {
+    if (validarPerguntas(PERGUNTAS_TELA3)) irParaTela(4);
+  });
+
+  // Tela 4 → enviar → 5
+  qs('#btnEnviar').addEventListener('click', async () => {
+    if (!validarPerguntas(PERGUNTAS_TELA4)) return;
+    calcularDiagnostico();
+
+    qs('#loadingOverlay').classList.add('active');
+    const payload = montarPayload();
+
+    // Corrida: webhook (que pode hidratar STATE.analise_markdown) vs 2s de timeout.
+    // Se o Make responder rápido com o markdown do Claude, a Tela 5 já renderiza completa.
+    // Se timeout, renderiza fallback PERFIS e o webhook segue em background.
+    const envioPromise = enviarWebhook(payload);
+    const timeout = new Promise(r => setTimeout(() => r('timeout'), 2000));
+    await Promise.race([envioPromise, timeout]);
+
+    renderResultado();
+
+    qs('#loadingOverlay').classList.remove('active');
+    irParaTela(5);
+
+    envioPromise.then(ok => {
+      if (!ok) console.warn('Lead pode não ter sido enviado, bufferizado em localStorage.');
+      // Se o markdown chegou depois do render (timeout), re-renderiza a Tela 5 pra upgrade.
+      if (STATE.analise_markdown && qs('#avisoFallback').style.display !== 'none') {
+        renderResultado();
+      }
+    });
+  });
+
+  // Botões "voltar"
+  qsa('[data-voltar]').forEach(btn => {
+    btn.addEventListener('click', () => irParaTela(Number(btn.dataset.voltar)));
+  });
+});
+
+// Previne fechamento acidental no meio do form
+window.addEventListener('beforeunload', (e) => {
+  if (STATE.telaAtual > 1 && STATE.telaAtual < 5) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+</script>
+</body>
+</html>
