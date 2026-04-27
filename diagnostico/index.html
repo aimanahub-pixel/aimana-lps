@@ -541,15 +541,15 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:36px 0 28px}
       <!-- BLOCO CURSO — sempre montado por JS (Live fixa + 1 de 3 variantes) -->
       <div id="blocoCurso" style="margin-top:8px">
         <span class="block-eyebrow" style="display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:10px">Cursos AIMANA recomendados pra você</span>
-        <h3 class="next-step-title" style="font-size:clamp(22px,3.2vw,28px);font-weight:900;color:var(--navy);line-height:1.18;margin-bottom:10px;letter-spacing:-.01em">Vem pra <em style="color:var(--teal);font-style:normal">Live de 13/Mai</em>. É o começo natural do que o diagnóstico apontou.</h3>
+        <h3 class="next-step-title" style="font-size:clamp(22px,3.2vw,28px);font-weight:900;color:var(--navy);line-height:1.18;margin-bottom:10px;letter-spacing:-.01em">Vem pro <em style="color:var(--teal);font-style:normal">Curso IA no Sistema Unimed (12/05)</em>. É o começo natural do que o diagnóstico apontou.</h3>
         <p class="next-step-sub" id="costuraLive">Antes de qualquer formação paga, o próximo passo natural é ver o panorama ao vivo com a AIMANA.</p>
 
-        <!-- Card primário: Live 13/Mai (fixo em todas as variantes) -->
+        <!-- Card primário: Curso IA no Sistema Unimed 12/05 (fixo em todas as variantes) -->
         <article class="live-card" aria-labelledby="liveTitle">
           <header class="live-head">
-            <span class="live-tag">13 de Maio · ao vivo · gratuita</span>
-            <h4 class="live-title" id="liveTitle">Live IA no dia a dia do líder</h4>
-            <p class="live-kicker">90 minutos · aberta pra toda a rede Unimed · com AIMANA, parceira oficial Anthropic</p>
+            <span class="live-tag">12 de Maio · 19h · online · gratuito</span>
+            <h4 class="live-title" id="liveTitle">Curso IA no Sistema Unimed</h4>
+            <p class="live-kicker">Online com certificado · aberto a líderes e analistas Unimed · com AIMANA, parceira oficial Anthropic</p>
           </header>
           <div class="live-body">
             <div class="live-col">
@@ -566,8 +566,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.72);padding:36px 0 28px}
             </div>
           </div>
           <footer class="live-cta">
-            <a class="live-btn" id="ctaLive" href="#" target="_blank" rel="noopener">Garanta sua vaga na Live 13/Mai →</a>
-            <span class="live-cta-sub">É grátis e toma 90 minutos do seu dia.</span>
+            <a class="live-btn" id="ctaLive" href="#" target="_blank" rel="noopener">Garanta sua vaga no Curso 12/05 →</a>
+            <span class="live-cta-sub">É grátis, online e com certificado de participação.</span>
           </footer>
         </article>
 
@@ -671,7 +671,7 @@ const EVENTO_CONFIG = {
   // URL real do webhook Make (cenário "AIMANA — Diagnóstico Unimed 2026", Módulo 1)
   webhook_make_url: "https://hook.us2.make.com/1xokl1j4m1oejsgkxwjkvalfqioctwwh",
   // 4 placeholders principais (v3 · matriz_recomendacao_curso_v3.md §0) — usuária troca antes do Dia 2
-  LINK_LIVE:                "https://lp.aimana.ai/cursos/ia-no-sistema-unimed",                // Live 13/Mai (sempre)
+  LINK_LIVE:                "https://lp.aimana.ai/cursos/ia-no-sistema-unimed",                // Curso 12/05 (sempre)
   LINK_AI_COWORKER_UNIMED:  "https://lp.aimana.ai/cursos/ai-coworker-unimed",  // default (não-dev, ≤ Orquestrador)
   LINK_AI_CHAMPIONS:        "https://aimana.ai/contato",        // Pioneiro não-dev
   LINK_FILA_CLAUDE_CODE:    "https://aimana.ai/contato",    // dev (qualquer nível)
@@ -1563,7 +1563,7 @@ function renderBlocoCurso() {
   const sc = STATE.segundo_curso;
   if (!sc) return;
 
-  // Live 13/Mai (sempre)
+  // Curso 12/05 (sempre)
   const linkLive = comUtm(EVENTO_CONFIG.LINK_LIVE, "live_card");
   qs('#ctaLive').href = linkLive || "#";
 
