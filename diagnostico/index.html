@@ -1012,9 +1012,9 @@ const STATE = {
   eh_dev: false,
   segundo_curso: null,       // { nome, modo, link, placeholder }
   mostrar_calendly: false,
-  // analise_markdown: string retornada pelo Claude v2 (6 seções — sem a de cursos).
+  // analise_html: HTML pronto retornado pelo Claude v2 (6 seções — sem a de cursos).
   // Na Frente 2, Make injeta isso após o webhook. Frente 1 usa fallback de PERFIS.
-  analise_markdown: null,
+  analise_html: null,
   // analise (objeto estruturado) — fallback legado usado se o Claude falhar.
   analise: null
 };
@@ -1478,7 +1478,7 @@ function calcularDiagnostico() {
   STATE.emoji = emoji;
 
   // Monta objeto `analise` — FRENTE 1: usa PERFIS (fallback).
-  // FRENTE 2: Make chamará Claude e sobrescreverá STATE.analise_markdown antes de renderResultado().
+  // FRENTE 2: Make chamará Claude e sobrescreverá STATE.analise_html antes de renderResultado().
   const perfil = PERFIS[nivel];
   STATE.analise = {
     nivel_emoji: emoji,
@@ -1523,9 +1523,9 @@ function renderResultado() {
   // ---------- ANÁLISE (markdown Claude OU fallback PERFIS) ----------
   const cont = qs('#analiseMarkdown');
   const aviso = qs('#avisoFallback');
-  if (STATE.analise_markdown) {
-    // Frente 2: Claude entregou markdown (6 seções, sem curso).
-    cont.innerHTML = parseMarkdown(STATE.analise_markdown);
+  if (STATE.analise_html) {
+    // Frente 2: Claude entregou HTML pronto (6 seções, sem curso).
+    cont.innerHTML = STATE.analise_html;
     aviso.style.display = 'none';
   } else {
     // Frente 1 (ou Claude falhou): monta Tela 5 reduzida a partir de PERFIS.
@@ -1710,8 +1710,8 @@ async function enviarWebhook(payload, tentativa = 1) {
     if (resp.ok) {
       try {
         const body = await resp.json();
-        if (body && typeof body.analise_markdown === "string" && body.analise_markdown.trim()) {
-          STATE.analise_markdown = body.analise_markdown;
+        if (body && typeof body.analise_html === "string" && body.analise_html.trim()) {
+          STATE.analise_html = body.analise_html;
         }
       } catch (e) { /* resposta sem JSON — ok, segue com fallback */ }
     }
@@ -1779,7 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
     qs('#loadingOverlay').classList.add('active');
     const payload = montarPayload();
 
-    // Corrida: webhook (que pode hidratar STATE.analise_markdown) vs 2s de timeout.
+    // Corrida: webhook (que pode hidratar STATE.analise_html) vs 2s de timeout.
     // Se o Make responder rápido com o markdown do Claude, a Tela 5 já renderiza completa.
     // Se timeout, renderiza fallback PERFIS e o webhook segue em background.
     const envioPromise = enviarWebhook(payload);
@@ -1793,8 +1793,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     envioPromise.then(ok => {
       if (!ok) console.warn('Lead pode não ter sido enviado, bufferizado em localStorage.');
-      // Se o markdown chegou depois do render (timeout), re-renderiza a Tela 5 pra upgrade.
-      if (STATE.analise_markdown && qs('#avisoFallback').style.display !== 'none') {
+      // Se o HTML chegou depois do render (timeout), re-renderiza a Tela 5 pra upgrade.
+      if (STATE.analise_html && qs('#avisoFallback').style.display !== 'none') {
         renderResultado();
       }
     });
