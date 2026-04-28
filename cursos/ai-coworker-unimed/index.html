@@ -82,14 +82,14 @@
   .photo-slot.marker.has-image img{display:block;width:100%;height:auto;object-fit:contain}
 
   /* ====== LOGOS BAND · Enterprises que confiam na AIMANA ====== */
-  .logos-band{padding:72px 0;background:#fff;border-bottom:1px solid var(--line);overflow:hidden}
-  .logos-band .logos-eyebrow{display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:44px;opacity:.85}
+  .logos-band{padding:40px 0;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden}
+  .logos-band .logos-eyebrow{display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:700;margin-bottom:44px}
   .logos-band .logos-eyebrow em{font-style:normal;color:var(--teal)}
   .logos-track-wrap{overflow:hidden;position:relative;width:100%;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 8%,#000 92%,transparent 100%)}
   .logos-track{display:flex;gap:80px;align-items:center;width:max-content;animation:logos-scroll 48s linear infinite}
   .logos-track:hover{animation-play-state:paused}
-  .logos-track img{height:44px;width:auto;flex:0 0 auto;object-fit:contain;opacity:.82;filter:grayscale(35%);transition:opacity .2s,filter .2s;user-select:none;-webkit-user-drag:none}
-  .logos-track img:hover{opacity:1;filter:none}
+  .logos-track img{height:150px;width:auto;flex:0 0 auto;object-fit:contain;opacity:.65;filter:brightness(0) invert(1);transition:opacity .2s,filter .2s;user-select:none;-webkit-user-drag:none}
+  .logos-track img:hover{opacity:1;filter:brightness(0) invert(1)}
   @keyframes logos-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
   /* ====== SECTION BASE ====== */
@@ -357,7 +357,9 @@
   <svg class="a-motif opening" viewBox="0 0 280 220"><path d="M40 200 L40 90 Q40 40 90 40 L190 40 Q240 40 240 90 L240 180 M120 120 L120 200 M120 120 L240 120"></path></svg>
   <div class="wrap">
     <div class="opening-grid">
-      <div><font color="#2bbcb6"><span style="font-size: 12px; letter-spacing: 2.64px; text-transform: uppercase;"><b>preparados para a mudança</b></span></font><br><h2>Algumas Unimeds já <em>saíram na frente</em></h2>
+      <div>
+        <span class="eyebrow-dark">Preparados para a mudança</span>
+        <h2>Algumas Unimeds já <em>saíram na frente</em></h2>
         <p class="lead-text">As ferramentas de IA já estão rodando. A pergunta agora não é <strong>se</strong> a sua Unimed vai usar. É <strong>quem</strong> da sua cooperativa sai do discurso primeiro e começa a aplicar no dia a dia. O AI Coworker Unimed é desenhado pra isso: tirar o time do lugar do susto e colocar IA dentro da rotina real, com profundidade cooperativista.</p>
       </div>
       <div class="photo-slot">
@@ -560,9 +562,9 @@
         <div class="role-ph">AI PM Telus Digital</div>
       </div>
       <div class="host-ph filled">
-        <div class="avatar-ph"><img src="assets/gibram.jpeg" alt="Gibram Raul" onerror="this.parentElement.textContent='GR'"/></div>
-        <div class="name-ph">Gibram Raul</div>
-        <div class="role-ph">Founder Technium</div>
+        <div class="avatar-ph"><img src="assets/mario-campello.png" alt="Mario Campello" onerror="this.parentElement.textContent='MC'"/></div>
+        <div class="name-ph">Mario Campello</div>
+        <div class="role-ph">CEO Pandora</div>
       </div>
       <div class="host-ph filled">
         <div class="avatar-ph"><img src="assets/sergio.jpeg" alt="Sérgio Fernandes" onerror="this.parentElement.textContent='SF'"/></div>
