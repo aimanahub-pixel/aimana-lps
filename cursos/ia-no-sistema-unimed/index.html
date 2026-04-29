@@ -2,7 +2,7 @@
 <html lang="pt-BR"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Curso IA no Sistema Unimed · AIMANA</title>
+<title>AI Coworker Unimed · AIMANA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&amp;display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
     --sky:#58c9f4;
     --cream:#f7f4ec;
     --gray:#8a8aa3;
+    --green:#00995d;
     --line:rgba(15,15,45,0.12);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -49,23 +50,38 @@
   .meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px}
   .pill{display:inline-flex;align-items:center;padding:7px 16px;border-radius:9999px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.1);color:#fff}
   .pill.solid{background:var(--teal);color:var(--navy);font-weight:700}
+  .pill.green{background:var(--green);color:#fff;font-weight:700}
   .cta{display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:var(--navy);font-weight:700;font-size:17px;padding:18px 32px;border-radius:9999px;border:none;text-decoration:none;transition:transform .15s, box-shadow .15s}
   .cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(43,188,182,.3)}
-  .cta-ghost{color:#fff;text-decoration:underline;font-size:14px;margin-left:24px;opacity:.82}
+
+  /* hero date block */
+  .hero-date{display:inline-flex;align-items:center;gap:18px;padding:16px 24px;background:rgba(43,188,182,0.12);border:1px solid rgba(43,188,182,0.35);border-radius:16px;margin-bottom:28px}
+  .hero-date-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.7);font-weight:700;line-height:1.2;max-width:80px}
+  .hero-date-big{font-size:26px;font-weight:900;color:var(--teal);letter-spacing:-.01em;text-transform:uppercase;line-height:1}
 
   /* "a" line motif */
   .a-motif{position:absolute;pointer-events:none;stroke:var(--teal);stroke-width:10;fill:none;opacity:.55}
-  .a-motif.hero-left{left:-30px;top:40%;width:320px;height:260px}
   .a-motif.hero-right{right:-80px;bottom:-120px;width:520px;height:460px;opacity:.22}
 
-  /* photo container — exibe a imagem inteira, sem crop */
+  /* photo slot · placeholder visível + imagem (se existir) */
   .photo-slot{position:relative;border-radius:20px;overflow:hidden;line-height:0}
-  .photo-slot img{width:100%;height:auto;display:block;object-fit:contain}
+  .photo-slot.marker{border:2px dashed rgba(255,255,255,0.4);background:rgba(255,255,255,0.04);min-height:420px;display:flex;align-items:center;justify-content:center;padding:32px}
+  section.cream .photo-slot.marker,section:not(.navy):not(.hero) .photo-slot.marker{border:2px dashed rgba(15,15,45,0.25);background:rgba(15,15,45,0.03)}
+  .photo-slot.marker .marker-body{text-align:center;line-height:1.5;color:rgba(255,255,255,0.8);max-width:300px}
+  section.cream .photo-slot.marker .marker-body,section:not(.navy):not(.hero) .photo-slot.marker .marker-body{color:rgba(15,15,45,0.6)}
+  .photo-slot.marker .marker-icon{width:56px;height:56px;border-radius:50%;background:rgba(43,188,182,0.18);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--teal);font-size:24px}
+  section.cream .photo-slot.marker .marker-icon,section:not(.navy):not(.hero) .photo-slot.marker .marker-icon{background:rgba(43,188,182,0.15)}
+  .photo-slot.marker .marker-tag{display:inline-block;padding:4px 10px;background:var(--teal);color:var(--navy);border-radius:9999px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
+  .photo-slot.marker .marker-label{font-size:15px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;margin-bottom:8px}
+  section.cream .photo-slot.marker .marker-label,section:not(.navy):not(.hero) .photo-slot.marker .marker-label{color:var(--navy)}
+  .photo-slot.marker .marker-file{font-size:11px;font-family:ui-monospace,monospace;opacity:.7;margin-bottom:14px;word-break:break-all}
+  .photo-slot.marker .marker-brief{font-size:13px;line-height:1.55;opacity:.8;font-weight:300}
+  .photo-slot.marker img{display:none}
+  .photo-slot.marker.has-image{border:none;background:none;padding:0;min-height:auto}
+  .photo-slot.marker.has-image .marker-body{display:none}
+  .photo-slot.marker.has-image img{display:block;width:100%;height:auto;object-fit:contain}
 
-  .hero-bottom{padding:72px 0 56px;position:relative;z-index:2}
-  .hero-bottom .hosts-line{font-size:14px;color:rgba(255,255,255,0.65);letter-spacing:.04em}
-
-  /* ====== LOGOS BAND · Empresas que confiam na AIMANA ====== */
+  /* ====== LOGOS BAND · Enterprises que confiam na AIMANA ====== */
   .logos-band{padding:40px 0;background:var(--ink);border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden}
   .logos-band .logos-eyebrow{display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:700;margin-bottom:44px}
   .logos-band .logos-eyebrow em{font-style:normal;color:var(--teal)}
@@ -92,12 +108,93 @@
   .opening-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
   .a-motif.opening{right:-40px;top:-40px;width:280px;height:220px;stroke:var(--teal);opacity:.35}
 
-  /* ====== GET ====== */
-  .get-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:56px;border-top:1px solid var(--line)}
-  .get-list li{padding:28px 0;border-bottom:1px solid var(--line);font-size:19px;line-height:1.45;display:flex;gap:20px;align-items:flex-start}
-  .get-list li .n{flex:0 0 auto;font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.08em;min-width:36px;padding-top:4px}
-  .get-list li .txt{color:var(--ink);font-weight:400}
-  .get-list li .txt strong{font-weight:700;color:var(--navy)}
+  /* ====== FOR WHOM ====== */
+  .whom-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:64px}
+  .whom-card{padding:40px;border-radius:24px;background:#fff;border:1px solid var(--line)}
+  .whom-card h4{font-size:22px;font-weight:700;color:var(--navy);margin-bottom:18px;letter-spacing:-.005em}
+  .whom-card h4 .chk{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--teal);color:var(--navy);text-align:center;line-height:26px;font-size:15px;font-weight:700;margin-right:10px;vertical-align:middle}
+  .whom-card h4.no .chk{background:rgba(15,15,45,0.15);color:#fff}
+  .whom-card ul{list-style:none}
+  .whom-card li{padding:10px 0;font-size:16px;line-height:1.45;border-bottom:1px solid var(--line);color:var(--ink)}
+  .whom-card li:last-child{border:none}
+
+  /* ====== JOURNEY ====== */
+  .journey-intro{max-width:680px;margin-bottom:64px}
+  .journey-pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .journey-pills .pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:12px}
+  .journey-pills .pill strong{color:var(--teal);margin-right:6px}
+  .stages{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+  .stages-bottom{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+  .stage{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:28px 24px;position:relative;border-left:3px solid var(--teal)}
+  .stage.unimed{border-left-color:var(--green);background:rgba(0,153,93,0.08)}
+  .stage.demoday{border-left-color:#e91e90;background:rgba(233,30,144,0.08)}
+  .stage .num{font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.18em;margin-bottom:14px;text-transform:uppercase}
+  .stage.unimed .num{color:#3ddbb2}
+  .stage.demoday .num{color:#ff7bc3}
+  .stage h4{font-size:17px;font-weight:700;line-height:1.2;color:#fff;margin-bottom:10px;letter-spacing:-.005em}
+  .stage ul{list-style:none;padding:0;margin-top:10px}
+  .stage li{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.78);font-weight:300;padding:4px 0;padding-left:14px;position:relative}
+  .stage li::before{content:"→";position:absolute;left:0;color:var(--teal);font-weight:700;font-size:11px;top:5px}
+  .stage.unimed li::before{color:#3ddbb2}
+  .stage.demoday li::before{color:#ff7bc3}
+
+  /* aula dynamic (ritmo da aula) */
+  .aula-dynamic{margin-top:80px;padding-top:80px;border-top:1px solid rgba(255,255,255,0.12)}
+  .aula-dynamic .eyebrow{display:inline-block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);font-weight:700;padding:6px 14px;border:1px solid rgba(43,188,182,0.4);border-radius:9999px;margin-bottom:28px}
+  .aula-blocks{display:grid;grid-template-columns:1fr 1.5fr 2fr 1.5fr 1fr;gap:14px;margin-top:48px;border-radius:20px;overflow:hidden}
+  .aula-block{padding:28px 22px;background:rgba(255,255,255,0.06);position:relative}
+  .aula-block .duration{font-size:11px;letter-spacing:.22em;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:14px}
+  .aula-block h4{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-.005em;line-height:1.2}
+  .aula-block p{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.78);font-weight:300;margin-bottom:14px}
+  .aula-block .tag{font-size:11px;color:var(--teal);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  .aula-block.b1{background:rgba(88,201,244,0.18)}
+  .aula-block.b2{background:rgba(44,71,158,0.35)}
+  .aula-block.b3{background:rgba(43,188,182,0.28)}
+  .aula-block.b4{background:rgba(0,153,93,0.28)}
+  .aula-block.b5{background:rgba(233,30,144,0.25)}
+
+  /* journey-light: same structure, fundo branco */
+  section.journey-light{background:#fff;color:var(--ink)}
+  section.journey-light h2{color:var(--navy)}
+  section.journey-light h2 em{color:var(--teal)}
+  section.journey-light .eyebrow{color:var(--teal);border-color:rgba(43,188,182,0.45);background:rgba(43,188,182,0.08)}
+  section.journey-light .journey-pills .pill{background:rgba(43,41,107,0.04);border-color:rgba(43,41,107,0.14);color:var(--ink)}
+  section.journey-light .journey-pills .pill strong{color:var(--teal)}
+  section.journey-light .lead-text{color:var(--ink)!important;opacity:.82}
+  section.journey-light .stage{background:#f7f4ec;border:1px solid rgba(43,41,107,0.08);border-left:3px solid var(--teal)}
+  section.journey-light .stage.unimed{background:rgba(0,153,93,0.06);border-left-color:var(--green)}
+  section.journey-light .stage.demoday{background:rgba(233,30,144,0.06);border-left-color:#e91e90}
+  section.journey-light .stage h4{color:var(--navy)}
+  section.journey-light .stage li{color:var(--ink);opacity:.78}
+  section.journey-light .aula-dynamic{border-top:1px solid rgba(43,41,107,0.1)}
+  section.journey-light .aula-dynamic .eyebrow{background:rgba(43,188,182,0.1);border-color:rgba(43,188,182,0.4)}
+  section.journey-light .aula-block{background:rgba(43,41,107,0.04)}
+  section.journey-light .aula-block h4{color:var(--navy)}
+  section.journey-light .aula-block p{color:var(--ink);opacity:.78}
+  section.journey-light .aula-block.b1{background:rgba(88,201,244,0.12)}
+  section.journey-light .aula-block.b2{background:rgba(43,188,182,0.18)}
+  section.journey-light .aula-block.b3{background:rgba(0,153,93,0.14)}
+
+  /* placeholder host (smaller) */
+  .host-placeholders{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:28px}
+  .host-ph{background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.2);border-radius:18px;padding:20px 18px;text-align:center}
+  .host-ph.filled{border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06)}
+  .host-ph .avatar-ph{width:82px;height:82px;border-radius:50%;background:linear-gradient(135deg,rgba(43,188,182,0.35),rgba(44,71,158,0.35));margin:0 auto 14px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:24px;font-weight:700;border:2px dashed rgba(255,255,255,0.18);overflow:hidden}
+  .host-ph.filled .avatar-ph{border:3px solid rgba(255,255,255,0.2);background:none}
+  .host-ph .avatar-ph img{width:100%;height:100%;object-fit:cover;display:block}
+  .host-ph .name-ph{font-size:13px;font-weight:700;color:rgba(255,255,255,0.72);letter-spacing:.02em;margin-bottom:4px}
+  .host-ph.filled .name-ph{color:#fff;font-size:14px}
+  .host-ph .role-ph{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.12em;text-transform:uppercase}
+  .host-ph.filled .role-ph{color:var(--teal);font-weight:700}
+
+  /* ====== COMPONENTS BLOCK ====== */
+  .components{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:40px}
+  .comp-card{padding:32px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+  .comp-card .tag{display:inline-block;padding:4px 10px;border-radius:9999px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:var(--teal);color:var(--navy);margin-bottom:16px}
+  .comp-card .tag.green{background:var(--green);color:#fff}
+  .comp-card h4{font-size:22px;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:-.005em}
+  .comp-card p{font-size:15px;line-height:1.55;color:var(--ink);opacity:.82}
+  .comp-card .meta{display:flex;gap:14px;margin-top:16px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal)}
 
   /* ====== HOSTS ====== */
   .hosts-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:64px}
@@ -111,10 +208,38 @@
   .host .role{font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
   .host p{font-size:16px;line-height:1.55;color:var(--ink);opacity:.85}
   section.navy .host p{color:rgba(255,255,255,0.78);opacity:1}
+  .hosts-sub{margin-top:40px;padding:28px 32px;background:rgba(255,255,255,0.06);border-left:3px solid var(--green);border-radius:6px}
+  .hosts-sub .label{display:inline-block;padding:4px 10px;background:var(--green);color:#fff;border-radius:9999px;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+  .hosts-sub p{color:rgba(255,255,255,0.85);font-size:15px;line-height:1.55}
+
+  /* ====== PRICING ====== */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px}
+  .price-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:40px 32px;position:relative;display:flex;flex-direction:column}
+  .price-card.featured{background:var(--navy);color:#fff;border-color:var(--navy);transform:scale(1.02)}
+  .price-card.featured h4,.price-card.featured .price,.price-card.featured li{color:#fff}
+  .price-card .badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--navy);padding:6px 16px;border-radius:9999px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+  .price-card h4{font-size:22px;font-weight:700;color:var(--navy);margin-bottom:16px;letter-spacing:-.005em}
+  .price-card .price{font-size:44px;font-weight:900;color:var(--navy);letter-spacing:-.02em;line-height:1}
+  .price-card .sub{font-size:13px;color:var(--gray);margin-top:6px;margin-bottom:24px}
+  .price-card.featured .sub{color:rgba(255,255,255,0.7)}
+  .price-card ul{list-style:none;margin-bottom:28px;flex:1}
+  .price-card li{padding:10px 0;font-size:14px;line-height:1.45;border-bottom:1px solid var(--line);color:var(--ink);display:flex;gap:10px}
+  .price-card.featured li{border-color:rgba(255,255,255,0.12)}
+  .price-card li::before{content:"→";color:var(--teal);font-weight:700;flex:0 0 auto}
+  .price-card button{width:100%;background:var(--teal);color:var(--navy);font-size:15px;font-weight:700;padding:14px;border:none;border-radius:12px;letter-spacing:.02em}
+  .price-card.featured button{background:var(--teal);color:var(--navy)}
+  .price-note{text-align:center;margin-top:48px;padding:24px;background:#fff;border-radius:16px;font-size:14px;color:var(--ink);line-height:1.55;border:1px dashed rgba(43,188,182,0.4)}
+  .price-note strong{color:var(--navy)}
+  .price-note a{color:var(--teal);font-weight:700;text-decoration:underline}
+
+  /* ====== SESCOOP BADGE ====== */
+  .sescoop-badge{display:inline-flex;flex-direction:row;align-items:center;gap:16px;padding:12px 20px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:24px}
+  .sescoop-badge .sescoop-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);font-weight:600;line-height:1.35;text-align:left}
+  .sescoop-badge .sescoop-img{height:40px;width:auto;display:block}
 
   /* ====== FORM ====== */
   .form-card{max-width:580px;margin:56px auto 0;background:#fff;border-radius:28px;padding:44px;box-shadow:0 28px 56px rgba(43,41,107,.1)}
-  section.navy .form-card{color:var(--ink)}
+  section.cream .form-card{background:#fff}
   .form-card label{display:block;font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:18px;color:var(--navy);text-transform:uppercase}
   .form-card input,.form-card select,.form-card textarea{width:100%;padding:14px 16px;margin-top:8px;font-family:inherit;font-size:15px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font-weight:400;text-transform:none;letter-spacing:0}
   .form-card input:focus,.form-card select:focus,.form-card textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(43,188,182,.15)}
@@ -141,22 +266,23 @@
   @media (max-width:960px){
     .topbar{padding:10px 20px}
     .wrap{padding:0 20px}
-    .hero-grid,.opening-grid,.hosts-grid,.get-list,.foot-grid{grid-template-columns:1fr;gap:40px}
-    .logos-band{padding:48px 0}.logos-track img{height:32px}.logos-track{gap:52px}
-    .get-list li{font-size:17px}
-    .hero-copy h1{font-size:48px}
+    .hero-grid,.opening-grid,.hosts-grid,.whom-grid,.foot-grid{grid-template-columns:1fr;gap:40px}
+    .hero-grid .photo-slot{margin-right:0}
+    .stages,.components,.price-grid,.aula-blocks,.host-placeholders{grid-template-columns:1fr;gap:16px}
+    .hero-copy h1{font-size:44px}
     h2{font-size:36px}
     section{padding:80px 0}
+    .logos-band{padding:48px 0}.logos-track img{height:32px}.logos-track{gap:52px}
     .host{flex-direction:column;align-items:center;text-align:center}
-    .photo-slot{min-height:340px}
+    .price-card.featured{transform:none}
   }
 </style>
 </head>
-<body class="edit-mode">
+<body>
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <span>Curso online gratuito · 12 de maio · 19h</span>
+  <span>Turma 01 · início <strong style="color:var(--teal)">15 de junho de 2026</strong> · inscrições abertas</span>
   <a href="#inscricao">Inscreva-se →</a>
 </div>
 
@@ -172,20 +298,24 @@
 
     <div class="hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Curso online · 12 de maio · 19h</span>
-        <h1>IA no <em>Sistema</em><br>Unimed</h1>
-        <p class="lead">Curso gratuito, com certificado, focado em como a IA está entrando no Sistema Unimed. Para liderança e analistas sêniores que querem sair do discurso e começar a decidir o que fazer dentro da cooperativa.</p>
-        <div class="meta">
-          <span class="pill solid">Gratuito</span>
-          <span class="pill">Com certificado</span>
-          <span class="pill">100% online</span>
-          <span class="pill">12/05 · 19h</span>
+        <span class="eyebrow">Jornada prática de IA · 4 aulas + Sessões Unimed + Demoday</span>
+        <h1>AI Coworker<br><em>Unimed</em></h1>
+        <div class="hero-date">
+          <span class="hero-date-label">Próxima<br>Turma</span>
+          <span class="hero-date-big">15 · jun · 2026</span>
         </div>
-        <a href="#inscricao" class="cta">Garantir minha vaga</a>
+        <p class="lead">A primeira jornada de IA desenhada dentro da linguagem do cooperativismo de saúde. Para liderança e times que precisam sair do discurso e começar a aplicar IA na rotina da cooperativa.</p>
+        <div class="meta">
+          <span class="pill solid">Com certificado</span>
+          <span class="pill">100% online</span>
+          <span class="pill">Ao vivo + AimanaHub</span>
+          <span class="pill green">Sessões Unimed</span>
+        </div>
+        <a href="#inscricao" class="cta">Quero me inscrever</a>
       </div>
 
       <div class="photo-slot">
-        <img src="assets/nano-banana/curso-hero.jpg" alt="Cooperativista Unimed usando IA" onerror="this.parentElement.style.display='none'">
+        <img src="assets/nano-banana/coworker-hero.jpg" alt="Cooperativista Unimed usando AI Coworker" style="width:100%;height:auto;display:block;border-radius:20px">
       </div>
     </div>
   </div>
@@ -194,7 +324,7 @@
 <!-- LOGOS BAND · Enterprises que confiam na AIMANA -->
 <section class="logos-band">
   <div class="wrap">
-    <span class="logos-eyebrow">Empresas que confiam <em>na AIMANA</em></span>
+    <span class="logos-eyebrow">Enterprises que confiam <em>na AIMANA</em></span>
   </div>
   <div class="logos-track-wrap">
     <div class="logos-track">
@@ -233,33 +363,186 @@
   <div class="wrap">
     <div class="opening-grid">
       <div>
-        <span class="eyebrow-dark">Por que agora</span>
-        <h2><span style="letter-spacing: -0.01em;">+500 Lideranças Unimed&nbsp;</span><span style="letter-spacing: -0.01em; color: rgb(43, 188, 182);">capacitadas em ia</span></h2>
-        <p class="lead-text" style="color: rgb(15, 15, 45);">A Aimana conhece os desafios do sistema Unimed, já realizou formações e treinamentos em diferentes Unimeds em Minas Gerais, Santa Catarina, Mato Grosso e Mercosul.</p><p class="lead-text"><br></p></div>
-      <div class="photo-slot">
-        <img src="assets/nano-banana/curso-opening.jpg" alt="Líderes Unimed em capacitação AIMANA" onerror="this.parentElement.style.display='none'">
+        <span class="eyebrow-dark">Preparados para a mudança</span>
+        <h2>+500 Lideranças Unimed <em>capacitadas em IA</em></h2>
+        <p class="lead-text">A Aimana conhece os desafios do sistema Unimed, já realizou formações e treinamentos em diferentes Unimeds em Minas Gerais, Santa Catarina, Mato Grosso e Mercosul.</p>
+        <div class="sescoop-badge">
+          <span class="sescoop-label">Empresa<br>cadastrada</span>
+          <img src="assets/sescoop-logo.png" alt="Sescoop" class="sescoop-img">
+        </div>
       </div>
-    </div></div></section><section><div class="wrap"><h2>6 entregas <em>práticas</em></h2>
-    <ul class="get-list">
-      <li><span class="n">01</span><span class="txt"><strong>Mapa realista da IA no Sistema Unimed hoje.</strong></span></li>
-      <li><span class="n">02</span><span class="txt"><strong>Casos reais de IA em cooperativas de saúde.</strong></span></li>
-      <li><span class="n">03</span><span class="txt"><strong>Como usar Claude, Granola e agentes</strong> no dia a dia da cooperativa.</span></li>
-      <li><span class="n">04</span><span class="txt"><strong>Roteiro prático</strong> de por onde começar na sua Unimed.</span></li>
-      <li><span class="n">05</span><span class="txt"><strong>Q&amp;A ao vivo</strong> com Luiz Otero e Edson Cascais.</span></li>
-      <li><span class="n">06</span><span class="txt"><strong>Certificado</strong> de participação para capacitação interna.</span></li>
-    </ul>
+      <div class="photo-slot">
+        <img src="assets/nano-banana/coworker-opening.jpg" alt="Liderança cooperativista aplicando IA" style="width:100%;height:auto;display:block;border-radius:20px">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow-dark">Pra quem é</span>
+    <h2>Pensado para o time que já decidiu que <em>não vai ficar para trás</em></h2>
+    <p class="lead-text">Superintendentes, gerentes e analistas de cooperativas do Sistema Unimed. Gente que toma decisão, gente que vai implementar, gente que não pode aprender IA só na teoria.</p>
+    <div class="whom-grid">
+      <div class="whom-card">
+        <h4><span class="chk">✓</span>É pra você se:</h4>
+        <ul>
+          <li>Constrói processos em uma cooperativa do Sistema Unimed.</li>
+          <li>Já viu IA funcionando em algum lugar e quer aplicar na sua Unimed.</li>
+          <li>Precisa decidir onde começar sem apostar errado.</li>
+          <li>Quer uma linguagem própria para levar ao conselho e aos pares.</li>
+          <li>Está disposto a fazer dever de casa entre aulas.</li>
+        </ul>
+      </div>
+      <div class="whom-card">
+        <h4 class="no"><span class="chk">×</span>Não é pra você se:</h4>
+        <ul>
+          <li>Procura um curso teórico de IA sem aplicação direta.</li>
+          <li>Quer assistir passivamente, sem aplicar em projeto próprio.</li>
+          <li>Busca solução plug-and-play pronta, sem ajuste de contexto.</li>
+          <li>Não tem abertura pra implementar nada na cooperativa nos próximos 90 dias.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="journey-light">
+  <svg class="a-motif" style="top:60px;left:-20px;width:260px;height:220px;opacity:.12" viewBox="0 0 280 220"><path d="M40 200 L40 90 Q40 40 90 40 L190 40 Q240 40 240 90 L240 180 M120 120 L120 200 M120 120 L240 120"></path></svg>
+  <div class="wrap">
+    <div class="journey-intro">
+      <span class="eyebrow">A jornada</span>
+      <h2>4 aulas + <em>2 Sessões Unimed</em><br>+ 1 Demoday</h2>
+      <p class="lead-text">Do primeiro teste até um projeto aplicado apresentado para a banca do Sistema. Conteúdos focados na realidade de quem atua na Unimed.</p>
+    </div>
+
+    <div class="stages">
+      <div class="stage">
+        <div class="num">01</div>
+        <h4>IA no seu trabalho</h4>
+        <ul>
+          <li>Copilotos: Claude, ChatGPT, Copilot, Gemini</li>
+          <li>Primeiros prompts no contexto real do participante</li>
+          <li>Identificar tarefas que IA resolve melhor que você</li>
+        </ul>
+      </div>
+      <div class="stage">
+        <div class="num">02</div>
+        <h4>Redesenho de tarefas com IA</h4>
+        <ul>
+          <li>Engenharia de prompts avançada para negócios</li>
+          <li>Templates reutilizáveis por função</li>
+          <li>Exercício: redesenhar 3 tarefas reais do time</li>
+        </ul>
+      </div>
+      <div class="stage">
+        <div class="num">03</div>
+        <h4>Aplicação avançada e agentes</h4>
+        <ul>
+          <li>Workflows multi-step com IA</li>
+          <li>Introdução a agentes: Claude Cowork</li>
+          <li>Exercício: automatizar um processo do time</li>
+        </ul>
+      </div>
+      <div class="stage">
+        <div class="num">04</div>
+        <h4>Medição, impacto e escala</h4>
+        <ul>
+          <li>Como medir horas economizadas por pessoa</li>
+          <li>Fluxo AI First replicável no time</li>
+          <li>Governança e compliance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stages-bottom">
+      <div class="stage unimed">
+        <div class="num">05 · Sessão Unimed</div>
+        <h4>Encontro exclusivo cooperativas</h4>
+        <ul>
+          <li>Cases de aplicação de IA na UNIMED</li>
+          <li>Acompanhamento dos projetos em aplicação</li>
+          <li>Resolução coletiva de bloqueios técnicos</li>
+          <li>Troca entre pares sobre contexto cooperativista</li>
+        </ul>
+      </div>
+      <div class="stage unimed">
+        <div class="num">06 · Sessão Unimed</div>
+        <h4>Encontro exclusivo cooperativas</h4>
+        <ul>
+          <li>Revisão final dos projetos cooperativistas</li>
+          <li>Governança e aplicação de regulamentações no uso de IA</li>
+          <li>Soluções escaláveis em cooperativas médicas</li>
+        </ul>
+      </div>
+      <div class="stage demoday">
+        <div class="num">07 · Demoday</div>
+        <h4>Projeto próprio para a banca</h4>
+        <ul>
+          <li>Cada participante apresenta sua solução aplicada</li>
+          <li>Métricas de impacto real documentadas</li>
+          <li>Feedback de especialistas e lideranças na área</li>
+          <li>Celebração dos resultados do time</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- AULA DYNAMIC -->
+    <div class="aula-dynamic">
+      <span class="eyebrow">Dinâmica da experiência</span>
+      <h2>Teoria mínima · <em>prática máxima</em></h2>
+      <p class="lead-text">Nenhuma aula é palestra. Cada participante sai com algo pronto para usar no dia seguinte.</p>
+
+      <div class="aula-blocks" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="aula-block b1">
+          <h4>Contexto + demo ao vivo</h4>
+          <div class="tag">Conceito aplicado</div>
+        </div>
+        <div class="aula-block b2">
+          <h4>Mão na massa no seu trabalho real</h4>
+          <div class="tag">Prática com suporte</div>
+        </div>
+        <div class="aula-block b3">
+          <h4>Compartilhamento + missão da semana</h4>
+          <div class="tag">Feedback coletivo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="components" style="margin-top:80px">
+      <div class="comp-card">
+        <span class="tag">Plataforma</span>
+        <h4>AimanaHub · acesso durante toda a jornada</h4>
+        <p>Biblioteca de prompts, gravações de todas as aulas e Sessões Unimed, cases dos Especialistas AIMANA e trilhas extras. Se perder uma aula ao vivo, recupera no seu tempo sem perder carga horária.</p>
+        <div class="meta"><span>Acesso completo</span><span>·</span><span>Mobile e desktop</span></div>
+      </div>
+      <div class="comp-card">
+        <span class="tag green">Certificado</span>
+        <h4>Certificado AIMANA · AI Coworker Unimed</h4>
+        <p>Emitido ao final do Demoday. Elegível para programas internos de capacitação profissional das cooperativas do Sistema Unimed.</p>
+        <div class="meta"><span>Final da jornada</span><span>·</span><span>Conteúdo aplicado</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BREAK -->
+<section style="padding:0;background:var(--cream)">
+  <div class="wrap" style="padding:80px 32px 80px">
+    <div class="photo-slot">
+      <img src="assets/nano-banana/coworker-bancada.jpg" alt="Time cooperativista em bancada" style="width:100%;height:auto;display:block;border-radius:20px">
+    </div>
   </div>
 </section>
 
 <!-- HOSTS -->
 <section class="navy">
-  <svg class="a-motif" style="top:60px;left:-20px;width:260px;height:220px;opacity:.18" viewBox="0 0 280 220"><path d="M40 200 L40 90 Q40 40 90 40 L190 40 Q240 40 240 90 L240 180 M120 120 L120 200 M120 120 L240 120"></path></svg>
   <div class="wrap">
     <span class="eyebrow">Quem conduz</span>
-    <h2>Conheça os <em>especialistas</em></h2>
-    <div class="hosts-grid">
-      <div class="host">
-        <div class="avatar"><img src="assets/luiz-otero.jpg" alt="Luiz Otero" onerror="this.parentElement.textContent='LO'"></div>
+    <h2>Experts <em>AIMANA</em></h2>
+    <p class="lead-text" style="color:rgba(255,255,255,0.82);margin-bottom:8px">As aulas na Aimana são conduzidas por especialistas de mercado, que trazem toda a sua experiência para a sala de aula.</p><div class="hosts-grid"><div class="host"><div class="avatar"><img src="assets/luiz-otero.jpg" alt="Luiz Otero" onerror="this.parentElement.textContent='LO'"></div>
         <div>
           <h3>Luiz Otero</h3>
           <div class="role">CEO AIMANA</div>
@@ -275,29 +558,130 @@
         </div>
       </div>
     </div>
+
+    <div class="host-placeholders">
+      <div class="host-ph filled">
+        <div class="avatar-ph"><img src="assets/barbara%20vallim.jpeg" alt="Bárbara Vallim" onerror="this.parentElement.textContent='BV'"/></div>
+        <div class="name-ph">Bárbara Vallim</div>
+        <div class="role-ph">CEO Hera Build</div>
+      </div>
+      <div class="host-ph filled">
+        <div class="avatar-ph"><img src="assets/andre%20luiz.jpeg" alt="André Santos" onerror="this.parentElement.textContent='AS'"/></div>
+        <div class="name-ph">André Santos</div>
+        <div class="role-ph">AI PM Telus Digital</div>
+      </div>
+      <div class="host-ph filled">
+        <div class="avatar-ph"><img src="assets/mario-campello.png" alt="Mario Campello" onerror="this.parentElement.textContent='MC'"/></div>
+        <div class="name-ph">Mario Campello</div>
+        <div class="role-ph">CEO Pandora</div>
+      </div>
+      <div class="host-ph filled">
+        <div class="avatar-ph"><img src="assets/sergio.jpeg" alt="Sérgio Fernandes" onerror="this.parentElement.textContent='SF'"/></div>
+        <div class="name-ph">Sérgio Fernandes</div>
+        <div class="role-ph">CEO Leadh</div>
+      </div>
+      <div class="host-ph filled">
+        <div class="avatar-ph"><img src="assets/rafael_cunha.jpeg" alt="Rafael Cunha" onerror="this.parentElement.textContent='RC'"/></div>
+        <div class="name-ph">Rafael Cunha</div>
+        <div class="role-ph">AI Senior Manager Nomad</div>
+      </div>
+    </div>
+
+    <div class="hosts-sub">
+      <span class="label">Especialistas Unimed convidados</span>
+      <p>Além da bancada AIMANA, cada turma recebe especialistas convidados de cooperativas do Sistema Unimed para as Sessões Unimed e o Demoday. Nomes divulgados antes do início da turma.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="cream">
+  <div class="wrap">
+    <span class="eyebrow-dark">Modalidades</span>
+    <h2>Escolha a melhor oferta<br><em>para a sua realidade</em></h2>
+    <p class="lead-text">Individual, grupo ou turma corporativa dedicada para a sua Unimed. Todas as modalidades incluem as 4 aulas core, 2 Sessões Unimed, acesso à AimanaHub, Demoday e certificado.</p>
+    <div style="text-align:center">
+      <div class="sescoop-badge">
+        <span class="sescoop-label">Empresa<br>cadastrada</span>
+        <img src="assets/sescoop-logo.png" alt="Sescoop" class="sescoop-img">
+      </div>
+    </div>
+
+    <div class="price-grid">
+      <div class="price-card">
+        <h4>Individual</h4>
+        <div class="price">R$ 3.500</div>
+        <div class="sub">por pessoa</div>
+        <ul>
+          <li>4 aulas core ao vivo</li>
+          <li>2 Sessões Unimed</li>
+          <li>Acesso AimanaHub</li>
+          <li>Demoday com banca</li>
+          <li>Certificado AIMANA</li>
+        </ul>
+        <button>Quero individual</button>
+      </div>
+      <div class="price-card featured">
+        <span class="badge">Mais vendido</span>
+        <h4>Grupo · 3 a 4 pessoas</h4>
+        <div class="price">R$ 2.800</div>
+        <div class="sub">por pessoa · grupo de 3 ou 4</div>
+        <ul>
+          <li>Tudo do individual</li>
+          <li>Troca estruturada entre pares</li>
+          <li>Dever de casa coletivo entre aulas</li>
+          <li>Economia de R$ 700 por pessoa</li>
+        </ul>
+        <button>Quero em grupo</button>
+      </div>
+      <div class="price-card">
+        <h4>Turma corporativa</h4>
+        <div class="price" style="font-size:22px;padding-top:10px">Fale com o time</div>
+        <div class="sub">turma exclusiva para a sua Unimed</div>
+        <ul>
+          <li>Turma dedicada da sua Unimed</li>
+          <li>Agenda e calendário próprios</li>
+          <li>Customização por contexto</li>
+          <li>Banca de dirigentes no Demoday</li>
+          <li>Condição por volume</li>
+        </ul>
+        <button>Falar com o time</button>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- FORM -->
-<section id="inscricao" class="cream">
+<section id="inscricao">
   <div class="wrap" style="text-align:center">
     <span class="eyebrow-dark">Inscrição</span>
-    <h2>Sua vaga no <em>Curso IA</em><br>no Sistema Unimed</h2>
-    <p class="lead-text" style="margin-left:auto;margin-right:auto">Gratuito · com certificado · 100% online · 12 de maio · 19h.</p>
+    <h2>Sua vaga no <em>AI Coworker Unimed</em><br>começa aqui</h2>
+    <p class="lead-text" style="margin-left:auto;margin-right:auto">Preencha o formulário. Nosso time responde em até 1 dia útil com próximos passos, condição aplicável e calendário da turma.</p>
     <form class="form-card" id="formCadastro" novalidate>
       <label>Nome completo<input type="text" name="nome" required placeholder="Seu nome" maxlength="120" autocomplete="name"></label>
       <label>Email corporativo<input type="email" name="email" required placeholder="voce@unimed.coop.br" maxlength="160" autocomplete="email"></label>
+      <label>Telefone<input type="tel" name="telefone" required placeholder="(DDD) 00000-0000" maxlength="20" autocomplete="tel"></label>
       <label>Sua Unimed<input type="text" name="unimed" required placeholder="Ex.: Unimed Florianópolis, Unimed do Brasil…" maxlength="160"></label>
       <label>Cargo<input type="text" name="cargo" required placeholder="Ex.: Superintendente, Gerente de RH…" maxlength="120" autocomplete="organization-title"></label>
-      <label class="checkbox"><input type="checkbox" name="lgpd_consent" required><span>Concordo em receber comunicações da AIMANA sobre o Curso IA no Sistema Unimed e próximas turmas.</span></label>
+      <label>Modalidade de interesse
+        <select name="modalidade" required>
+          <option value="">Selecione uma modalidade</option>
+          <option value="individual_3500">Individual (R$ 3.500)</option>
+          <option value="grupo_2800">Grupo 3 a 4 pessoas (R$ 2.800 por pessoa)</option>
+          <option value="turma_corporativa">Turma corporativa (falar com o time)</option>
+        </select>
+      </label>
+      <label>Contexto da sua Unimed (opcional)<textarea name="contexto" placeholder="Conte brevemente o momento da sua cooperativa com IA, se quiser." maxlength="800"></textarea></label>
+      <label class="checkbox"><input type="checkbox" name="lgpd_consent" required><span>Concordo em receber comunicações da AIMANA sobre o AI Coworker Unimed e próximas turmas.</span></label>
       <input type="hidden" name="form_type" value="cadastro_curso">
-      <input type="hidden" name="course_slug" value="ia-no-sistema-unimed">
-      <button type="submit" id="btnSubmit">Garantir minha vaga →</button>
-      <p class="micro" id="formMicro">Após se inscrever, você recebe o link da transmissão por email.</p>
+      <input type="hidden" name="course_slug" value="ai-coworker-unimed">
+      <button type="submit" id="btnSubmit">Quero me inscrever →</button>
+      <p class="micro" id="formMicro">Após enviar, você recebe confirmação em segundos. Nosso time responde em até 1 dia útil.</p>
     </form>
     <div class="form-card" id="formSuccess" style="display:none;text-align:center">
       <h3 style="margin:0 0 12px">Inscrição recebida ✓</h3>
-      <p style="margin:0">Em alguns minutos você receberá um email com o link da transmissão e os próximos passos.</p>
+      <p style="margin:0">Em alguns minutos você receberá um email com a confirmação. Nosso time responde em até 1 dia útil com os próximos passos.</p>
     </div>
     <div class="form-card" id="formError" style="display:none;text-align:center;border-color:#c00">
       <h3 style="margin:0 0 12px;color:#c00">Não conseguimos enviar</h3>
@@ -316,9 +700,10 @@
         <p class="tag">AI first, human always. Construímos soluções de IA aplicada para cooperativas de saúde, indústrias e organizações que querem sair do discurso e entrar na prática.</p>
       </div>
       <div>
-        <h4>Curso</h4>
+        <h4>Jornada</h4>
         <a href="#inscricao">Inscrição</a>
-        <a href="#">Política do evento</a>
+        <a href="#">AimanaHub</a>
+        <a href="/cursos/ia-no-sistema-unimed">Curso gratuito 12/05</a>
         <a href="#">Contato</a>
       </div>
       <div>
@@ -329,7 +714,7 @@
       </div>
     </div>
     <div class="foot-context">
-      <span>Curso focado no contexto do Sistema Unimed · não é formação oficial do Sistema Unimed</span>
+      <span>AI Coworker desenhado para o contexto do Sistema Unimed · não é formação oficial do Sistema Unimed</span>
     </div>
     <div class="foot-bottom">
       <span>© 2026 AIMANA · Todos os direitos reservados</span>
