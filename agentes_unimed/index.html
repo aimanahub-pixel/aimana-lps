@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMANA — Sugestões de Agentes IA · Unimed</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap');
+
+:root {
+  --navy: #2b296b;
+  --teal: #2bbcb6;
+  --blue: #2c479e;
+  --sky: #58c9f4;
+  --aqua: #028c8e;
+  --pink: #ef5ba1;
+  --lavender: #6167af;
+  --warm-gray: #f0edeb;
+  --light: #f7f5f3;
+  --gray: #3c3c3c;
+  --mid-gray: #8a8a8a;
+  --white: #ffffff;
+  --unimed-green: #00995D;
+  --font: 'Titillium Web', sans-serif;
+  --radius: 12px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--warm-gray);
+  color: var(--navy);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: var(--navy);
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-logo { height: 24px; }
+
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.15);
+}
+
+.header h1 {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+
+.header h1 span {
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+}
+
+.header h1 .sistema-unimed {
+  color: var(--unimed-green);
+  font-weight: 600;
+}
+
+/* ===== HEADER CTA ===== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cta-header {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--aqua) 100%);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(43, 188, 182, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.cta-header:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(43, 188, 182, 0.5);
+}
+
+.cta-header:active {
+  transform: translateY(0);
+}
+
+/* ===== MODAL ===== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 41, 107, 0.6);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  padding: 36px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 20px;
+  color: var(--mid-gray);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-close:hover {
+  background: var(--warm-gray);
+  color: var(--navy);
+}
+
+.modal h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.modal p {
+  font-size: 14px;
+  color: var(--mid-gray);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.form-field {
+  margin-bottom: 14px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.form-field input {
+  font-family: var(--font);
+  font-size: 14px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  background: var(--light);
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-field input:focus {
+  border-color: var(--teal);
+  background: var(--white);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-submit {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--teal) 0%, var(--aqua) 100%);
+  border: none;
+  padding: 14px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(43, 188, 182, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(43, 188, 182, 0.5);
+}
+
+.modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.modal-feedback {
+  font-size: 13px;
+  margin-top: 12px;
+  text-align: center;
+  color: var(--aqua);
+  display: none;
+}
+
+.modal-feedback.show {
+  display: block;
+}
+
+.modal-feedback.error {
+  color: var(--pink);
+}
+
+@media (max-width: 768px) {
+  .header { flex-direction: column; gap: 16px; align-items: flex-start; }
+  .header-right { width: 100%; justify-content: flex-end; }
+  .cta-header { padding: 10px 16px; font-size: 13px; }
+  .form-row { grid-template-columns: 1fr; }
+  .modal { padding: 28px 22px; }
+}
+
+/* ===== TOOLBAR ===== */
+.toolbar {
+  background: var(--white);
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: sticky;
+  top: 80px;
+  z-index: 99;
+  flex-wrap: wrap;
+}
+
+.view-toggle {
+  display: flex;
+  background: var(--warm-gray);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.view-btn {
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: var(--mid-gray);
+  background: transparent;
+  white-space: nowrap;
+}
+
+.view-btn.active {
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.view-btn:not(.active):hover {
+  color: var(--navy);
+  background: rgba(43,41,107,0.06);
+}
+
+.stats {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+.stat-pill .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-p { background: var(--teal); }
+.dot-m { background: var(--blue); }
+.dot-g { background: var(--navy); }
+
+/* ===== SEARCH ===== */
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  font-family: var(--font);
+  font-size: 14px;
+  padding: 10px 16px 10px 40px;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  background: var(--light);
+  color: var(--navy);
+  width: 260px;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--teal);
+}
+
+.search-box::before {
+  content: '⌕';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--mid-gray);
+}
+
+/* ===== MAIN ===== */
+.main {
+  padding: 32px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .header, .toolbar, .main { padding-left: 16px; padding-right: 16px; }
+  .search-box input { width: 100%; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .stats { justify-content: center; }
+}
+
+/* ===== GROUP ===== */
+.group {
+  margin-bottom: 40px;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(0,0,0,0.06);
+}
+
+.group-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.group-header h2 {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--navy);
+  flex: 1;
+}
+
+.group-count {
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--mid-gray);
+  background: var(--warm-gray);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ===== CARD GRID ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== AGENT CARD ===== */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 22px 22px 18px;
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+  cursor: default;
+  position: relative;
+}
+
+.card:hover {
+  border-color: rgba(43,188,182,0.3);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--navy);
+  line-height: 1.3;
+  flex: 1;
+}
+
+/* Complexity badge */
+.complexity-badge {
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cb-pronto {
+  background: rgba(43,188,182,0.12);
+  color: var(--aqua);
+}
+
+.cb-customizado {
+  background: rgba(44,71,158,0.1);
+  color: var(--blue);
+}
+
+.cb-desenvolvimento {
+  background: rgba(43,41,107,0.08);
+  color: var(--navy);
+}
+
+/* Area badge (shown in complexity view) */
+.area-badge {
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--mid-gray);
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.card-impact {
+  font-weight: 600;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  background: var(--light);
+  color: var(--aqua);
+}
+
+/* Left accent stripe */
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+}
+
+.card.t-pronto::before { background: var(--teal); }
+.card.t-customizado::before { background: var(--blue); }
+.card.t-desenvolvimento::before { background: var(--navy); }
+
+/* ===== LEGEND ===== */
+.legend {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px 28px;
+  margin-bottom: 32px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.legend-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--navy);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.legend-swatch {
+  width: 24px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+.ls-pronto { background: var(--teal); }
+.ls-customizado { background: var(--blue); }
+.ls-desenvolvimento { background: var(--navy); }
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--mid-gray);
+}
+
+.empty-state .emoji { font-size: 48px; margin-bottom: 16px; }
+.empty-state h3 { font-weight: 600; font-size: 18px; margin-bottom: 8px; color: var(--navy); }
+.empty-state p { font-weight: 300; font-size: 14px; }
+
+/* ===== ANIMATION ===== */
+.group { animation: fadeUp 0.35s ease both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTE0OCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgdmlld0JveD0iMCAwIDg2MC44OCAxNDcuMDAwMDAyIiBoZWlnaHQ9IjE5NiIgcHJlc2VydmVBc3BlY3RSYXRpbz0ieE1pZFlNaWQgbWVldCIgdmVyc2lvbj0iMS4wIj48ZGVmcz48Y2xpcFBhdGggaWQ9ImYwYTA2NWFiYTIiPjxwYXRoIGQ9Ik0gMi44NDc2NTYgMi44MjQyMTkgTCAxMjQuMDM5MDYyIDIuODI0MjE5IEwgMTI0LjAzOTA2MiAxNDYgTCAyLjg0NzY1NiAxNDYgWiBNIDIuODQ3NjU2IDIuODI0MjE5ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImRiOTI2OWM3MDQiPjxwYXRoIGQ9Ik0gODAuODE2NDA2IDMyLjkyOTY4OCBDIDg0LjI5Mjk2OSAzMi45Mjk2ODggODcuNTcwMzEyIDM0LjI4MTI1IDkwLjAzNTE1NiAzNi43NDYwOTQgQyA5Mi41IDM5LjIwNzAzMSA5My44NTkzNzUgNDIuNDg0Mzc1IDkzLjg1OTM3NSA0NS45NjA5MzggTCA5My44OTg0MzggOTYuMzM5ODQ0IEwgNTEuMzI4MTI1IDExMy45ODA0NjkgTCA1MC45NTMxMjUgMTE0LjEzNjcxOSBDIDQ4Ljk1MzEyNSAxMTUuMDMxMjUgNDYuODU5Mzc1IDExNS40ODgyODEgNDQuODUxNTYyIDExNS40ODgyODEgQyA0My45Njg3NSAxMTUuNDg4MjgxIDQzLjA5Mzc1IDExNS4zOTg0MzggNDIuMjYxNzE5IDExNS4yMjI2NTYgQyAzOS4yODEyNSAxMTQuNTc0MjE5IDM3LjA1NDY4OCAxMTMuNDE0MDYyIDM1LjQ2ODc1IDExMS42NzU3ODEgQyAzMy44OTg0MzggMTA5Ljk1NzAzMSAzMi45OTIxODggMTA3LjQyNTc4MSAzMi45ODQzNzUgMTA0LjczMDQ2OSBMIDMyLjk0NTMxMiA0Ny42MDkzNzUgQyAzMi45NDUzMTIgNDMuNjk5MjE5IDM0LjQ2NDg0NCA0MC4wMjM0MzggMzcuMjI2NTYyIDM3LjI1IEMgMzkuOTg0Mzc1IDM0LjQ4MDQ2OSA0My42NjAxNTYgMzIuOTYwOTM4IDQ3LjU3NDIxOSAzMi45NDkyMTkgTCA4MC43OTY4NzUgMzIuOTIxODc1IFogTSA4MC43NzczNDQgMi44MjQyMTkgTCA0Ny41NjY0MDYgMi44NTU0NjkgQyAzNS42MDU0NjkgMi44NjcxODggMjQuMzcxMDk0IDcuNTIzNDM4IDE1LjkyOTY4OCAxNS45ODQzNzUgQyA3LjQ4ODI4MSAyNC40NDkyMTkgMi44Mzk4NDQgMzUuNjgzNTk0IDIuODQ3NjU2IDQ3LjYyODkwNiBMIDIuODg2NzE5IDEwNC43NTM5MDYgQyAyLjg5ODQzOCAxMTUuMDIzNDM4IDYuNTgyMDMxIDEyNC42OTUzMTIgMTMuMjY5NTMxIDEzMi4wMDc4MTIgQyAxOS4xMTcxODggMTM4LjM5NDUzMSAyNi43MDcwMzEgMTQyLjY0NDUzMSAzNS44NDM3NSAxNDQuNjI4OTA2IEMgMzguODQzNzUgMTQ1LjI4NTE1NiA0MS44NzUgMTQ1LjYwNTQ2OSA0NC45MjE4NzUgMTQ1LjYwNTQ2OSBDIDUxLjAzMTI1IDE0NS42MDU0NjkgNTcuMTY3OTY5IDE0NC4yOTI5NjkgNjMuMDE5NTMxIDE0MS43MTA5MzggTCA5My45MTc5NjkgMTI4LjkwNjI1IEwgOTMuOTI5Njg4IDE0My45MTQwNjIgQyA5My45Mjk2ODggMTQ0Ljk1NzAzMSA5NC43NzM0MzggMTQ1LjgwMDc4MSA5NS44MDQ2ODggMTQ1LjgxMjUgTCA5NS45OTYwOTQgMTQ1LjgxMjUgTCAxMjIuMTM2NzE5IDE0NS43OTI5NjkgQyAxMjMuMTkxNDA2IDE0NS43OTI5NjkgMTI0LjAzNTE1NiAxNDQuOTM3NSAxMjQuMDM1MTU2IDE0My44OTQ1MzEgTCAxMjMuOTUzMTI1IDQ1Ljk0MTQwNiBDIDEyMy45NDUzMTIgMzEuMDQyOTY5IDExNi40Mzc1IDE3LjMwODU5NCAxMDMuMjE0ODQ0IDkuMDM1MTU2IEMgOTYuNTMxMjUgNC44NDM3NSA4OC43MTQ4NDQgMi44MjQyMTkgODAuODE2NDA2IDIuODI0MjE5IFogTSA4MC43NzczNDQgMi44MjQyMTkgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iOWQ4OWYxMWVhMiI+PHBhdGggZD0iTSAwLjg0NzY1NiAwLjgyNDIxOSBMIDEyMi4wMzkwNjIgMC44MjQyMTkgTCAxMjIuMDM5MDYyIDE0My44ODY3MTkgTCAwLjg0NzY1NiAxNDMuODg2NzE5IFogTSAwLjg0NzY1NiAwLjgyNDIxOSAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJjYzFkMmY0MGJhIj48cGF0aCBkPSJNIDc4LjgxNjQwNiAzMC45Mjk2ODggQyA4Mi4yOTI5NjkgMzAuOTI5Njg4IDg1LjU3MDMxMiAzMi4yODEyNSA4OC4wMzUxNTYgMzQuNzQ2MDk0IEMgOTAuNSAzNy4yMDcwMzEgOTEuODU5Mzc1IDQwLjQ4NDM3NSA5MS44NTkzNzUgNDMuOTYwOTM4IEwgOTEuODk4NDM4IDk0LjMzOTg0NCBMIDQ5LjMyODEyNSAxMTEuOTgwNDY5IEwgNDguOTUzMTI1IDExMi4xMzY3MTkgQyA0Ni45NTMxMjUgMTEzLjAzMTI1IDQ0Ljg1OTM3NSAxMTMuNDg4MjgxIDQyLjg1MTU2MiAxMTMuNDg4MjgxIEMgNDEuOTY4NzUgMTEzLjQ4ODI4MSA0MS4wOTM3NSAxMTMuMzk4NDM4IDQwLjI2MTcxOSAxMTMuMjIyNjU2IEMgMzcuMjgxMjUgMTEyLjU3NDIxOSAzNS4wNTQ2ODggMTExLjQxNDA2MiAzMy40Njg3NSAxMDkuNjc1NzgxIEMgMzEuODk4NDM4IDEwNy45NTcwMzEgMzAuOTkyMTg4IDEwNS40MjU3ODEgMzAuOTg0Mzc1IDEwMi43MzA0NjkgTCAzMC45NDUzMTIgNDUuNjA5Mzc1IEMgMzAuOTQ1MzEyIDQxLjY5OTIxOSAzMi40NjQ4NDQgMzguMDIzNDM4IDM1LjIyNjU2MiAzNS4yNSBDIDM3Ljk4NDM3NSAzMi40ODA0NjkgNDEuNjYwMTU2IDMwLjk2MDkzOCA0NS41NzQyMTkgMzAuOTQ5MjE5IEwgNzguNzk2ODc1IDMwLjkyMTg3NSBaIE0gNzguNzc3MzQ0IDAuODI0MjE5IEwgNDUuNTY2NDA2IDAuODU1NDY5IEMgMzMuNjA1NDY5IDAuODY3MTg4IDIyLjM3MTA5NCA1LjUyMzQzOCAxMy45Mjk2ODggMTMuOTg0Mzc1IEMgNS40ODgyODEgMjIuNDQ5MjE5IDAuODM5ODQ0IDMzLjY4MzU5NCAwLjg0NzY1NiA0NS42Mjg5MDYgTCAwLjg4NjcxOSAxMDIuNzUzOTA2IEMgMC44OTg0MzggMTEzLjAyMzQzOCA0LjU4MjAzMSAxMjIuNjk1MzEyIDExLjI2OTUzMSAxMzAuMDA3ODEyIEMgMTcuMTE3MTg4IDEzNi4zOTQ1MzEgMjQuNzA3MDMxIDE0MC42NDQ1MzEgMzMuODQzNzUgMTQyLjYyODkwNiBDIDM2Ljg0Mzc1IDE0My4yODUxNTYgMzkuODc1IDE0My42MDU0NjkgNDIuOTIxODc1IDE0My42MDU0NjkgQyA0OS4wMzEyNSAxNDMuNjA1NDY5IDU1LjE2Nzk2OSAxNDIuMjkyOTY5IDYxLjAxOTUzMSAxMzkuNzEwOTM4IEwgOTEuOTE3OTY5IDEyNi45MDYyNSBMIDkxLjkyOTY4OCAxNDEuOTE0MDYyIEMgOTEuOTI5Njg4IDE0Mi45NTcwMzEgOTIuNzczNDM4IDE0My44MDA3ODEgOTMuODA0Njg4IDE0My44MTI1IEwgOTMuOTk2MDk0IDE0My44MTI1IEwgMTIwLjEzNjcxOSAxNDMuNzkyOTY5IEMgMTIxLjE5MTQwNiAxNDMuNzkyOTY5IDEyMi4wMzUxNTYgMTQyLjkzNzUgMTIyLjAzNTE1NiAxNDEuODk0NTMxIEwgMTIxLjk1MzEyNSA0My45NDE0MDYgQyAxMjEuOTQ1MzEyIDI5LjA0Mjk2OSAxMTQuNDM3NSAxNS4zMDg1OTQgMTAxLjIxNDg0NCA3LjAzNTE1NiBDIDk0LjUzMTI1IDIuODQzNzUgODYuNzE0ODQ0IDAuODI0MjE5IDc4LjgxNjQwNiAwLjgyNDIxOSBaIE0gNzguNzc3MzQ0IDAuODI0MjE5ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9IjMyYjVjNjBmNGYiPjxyZWN0IHg9IjAiIHdpZHRoPSIxMjMiIHk9IjAiIGhlaWdodD0iMTQ0Ii8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImNjZTkyMDYxMjUiPjxwYXRoIGQ9Ik0gMTU1LjU3ODEyNSAyLjkxNDA2MiBMIDE4NS44MDA3ODEgMi45MTQwNjIgTCAxODUuODAwNzgxIDE0NS45MTQwNjIgTCAxNTUuNTc4MTI1IDE0NS45MTQwNjIgWiBNIDE1NS41NzgxMjUgMi45MTQwNjIgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iZTg3N2Y2ZjRkMCI+PHBhdGggZD0iTSAxODMuNzg1MTU2IDE0NS44MTI1IEwgMTU3LjQ3NjU2MiAxNDUuODEyNSBDIDE1Ni40MjE4NzUgMTQ1LjgxMjUgMTU1LjU3ODEyNSAxNDQuOTU3MDMxIDE1NS41NzgxMjUgMTQzLjkxNDA2MiBMIDE1NS41NzgxMjUgNC44MTI1IEMgMTU1LjU3ODEyNSAzLjc2OTUzMSAxNTYuNDMzNTk0IDIuOTE0MDYyIDE1Ny40NzY1NjIgMi45MTQwNjIgTCAxODMuNzg1MTU2IDIuOTE0MDYyIEMgMTg0LjgzOTg0NCAyLjkxNDA2MiAxODUuNjgzNTk0IDMuNzY5NTMxIDE4NS42ODM1OTQgNC44MTI1IEwgMTg1LjY4MzU5NCAxNDMuOTE0MDYyIEMgMTg1LjY4MzU5NCAxNDQuOTY0ODQ0IDE4NC44MjgxMjUgMTQ1LjgxMjUgMTgzLjc4NTE1NiAxNDUuODEyNSAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJiNGM0MTY3YmM2Ij48cGF0aCBkPSJNIDAuNTc4MTI1IDAuOTE0MDYyIEwgMzAuNjgzNTk0IDAuOTE0MDYyIEwgMzAuNjgzNTk0IDE0My44ODY3MTkgTCAwLjU3ODEyNSAxNDMuODg2NzE5IFogTSAwLjU3ODEyNSAwLjkxNDA2MiAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSI2YjQwODRhN2ZkIj48cGF0aCBkPSJNIDI4Ljc4NTE1NiAxNDMuODEyNSBMIDIuNDc2NTYyIDE0My44MTI1IEMgMS40MjE4NzUgMTQzLjgxMjUgMC41NzgxMjUgMTQyLjk1NzAzMSAwLjU3ODEyNSAxNDEuOTE0MDYyIEwgMC41NzgxMjUgMi44MTI1IEMgMC41NzgxMjUgMS43Njk1MzEgMS40MzM1OTQgMC45MTQwNjIgMi40NzY1NjIgMC45MTQwNjIgTCAyOC43ODUxNTYgMC45MTQwNjIgQyAyOS44Mzk4NDQgMC45MTQwNjIgMzAuNjgzNTk0IDEuNzY5NTMxIDMwLjY4MzU5NCAyLjgxMjUgTCAzMC42ODM1OTQgMTQxLjkxNDA2MiBDIDMwLjY4MzU5NCAxNDIuOTY0ODQ0IDI5LjgyODEyNSAxNDMuODEyNSAyOC43ODUxNTYgMTQzLjgxMjUgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iZGVhY2JiZDFiNCI+PHJlY3QgeD0iMCIgd2lkdGg9IjMxIiB5PSIwIiBoZWlnaHQ9IjE0NCIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJiOTA2MTA0OGExIj48cGF0aCBkPSJNIDIxNy45MjE4NzUgMCBMIDQwNi40NDkyMTkgMCBMIDQwNi40NDkyMTkgMTQ1LjgwODU5NCBMIDIxNy45MjE4NzUgMTQ1LjgwODU5NCBaIE0gMjE3LjkyMTg3NSAwICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImFjN2I1NGFlMzAiPjxwYXRoIGQ9Ik0gMzE5Ljk4ODI4MSA2Mi45MTAxNTYgTCAzMDIuNjI1IDc0LjI2NTYyNSBDIDMwMS4wODU5MzggNzUuMjc3MzQ0IDMwMC4xNjQwNjIgNzYuOTc2NTYyIDMwMC4xNjQwNjIgNzguODI0MjE5IEwgMzAwLjE2NDA2MiAxMDAuOTE0MDYyIEMgMzAwLjE2NDA2MiAxMDEuODU1NDY5IDMwMC45MjU3ODEgMTAyLjYyMTA5NCAzMDEuODU5Mzc1IDEwMi42MjEwOTQgTCAzMTguMDcwMzEyIDEwMi42MjEwOTQgQyAzMTkuMTI1IDEwMi42MjEwOTQgMzE5Ljk4ODI4MSAxMDEuNzY5NTMxIDMxOS45ODgyODEgMTAwLjcwMzEyNSBaIE0gNDA0LjUwMzkwNiAxNDUuODA4NTk0IEwgMzc4LjE5MTQwNiAxNDUuODA4NTk0IEMgMzc3LjE0MDYyNSAxNDUuODA4NTk0IDM3Ni4yOTI5NjkgMTQ0Ljk1MzEyNSAzNzYuMjkyOTY5IDE0My45MTAxNTYgTCAzNzYuMjkyOTY5IDM1LjA1MDc4MSBDIDM3Ni4yOTI5NjkgMzIuODU1NDY5IDM3NC44OTQ1MzEgMzAuODAwNzgxIDM3Mi43Njk1MzEgMzAuMjY1NjI1IEMgMzcxLjQzNzUgMjkuOTI1NzgxIDM3MC4wNzgxMjUgMzAuMTU2MjUgMzY4Ljk2NDg0NCAzMC44Nzg5MDYgTCAzNDguMjY1NjI1IDQ0LjQxNzk2OSBDIDM0OS40NTcwMzEgNDkuMDg1OTM4IDM1MC4wOTM3NSA1My45NzI2NTYgMzUwLjA5Mzc1IDU5LjAwNzgxMiBMIDM1MC4wOTM3NSAxMDAuNzAzMTI1IEMgMzUwLjA5Mzc1IDExOC4zODI4MTIgMzM1Ljc2MTcxOSAxMzIuNzI2NTYyIDMxOC4wNzAzMTIgMTMyLjcyNjU2MiBMIDMwMS44NTkzNzUgMTMyLjcyNjU2MiBDIDI4NC4yODkwNjIgMTMyLjcyNjU2MiAyNzAuMDU4NTk0IDExOC40ODQzNzUgMjcwLjA1ODU5NCAxMDAuOTE0MDYyIEwgMjcwLjA1ODU5NCA3OC44MjQyMTkgQyAyNzAuMDU4NTk0IDY2Ljc4NTE1NiAyNzYuMDc4MTI1IDU1LjY2MDE1NiAyODYuMTQ4NDM4IDQ5LjA2NjQwNiBMIDMwNy40MDIzNDQgMzUuMTYwMTU2IEMgMzAyLjc1MzkwNiAzMS45NzI2NTYgMjk3LjEzMjgxMiAzMC4xMDU0NjkgMjkxLjA4NTkzOCAzMC4xMDU0NjkgTCAyNzYuNzkyOTY5IDMwLjEwNTQ2OSBDIDI2MC45MTAxNTYgMzAuMTA1NDY5IDI0OC4wMjczNDQgNDIuOTg4MjgxIDI0OC4wMjczNDQgNTguODcxMDk0IEwgMjQ4LjAyNzM0NCAxNDMuOTEwMTU2IEMgMjQ4LjAyNzM0NCAxNDQuOTY0ODQ0IDI0Ny4xNzE4NzUgMTQ1LjgwODU5NCAyNDYuMTI4OTA2IDE0NS44MDg1OTQgTCAyMTkuODIwMzEyIDE0NS44MDg1OTQgQyAyMTguNzY1NjI1IDE0NS44MDg1OTQgMjE3LjkyMTg3NSAxNDQuOTUzMTI1IDIxNy45MjE4NzUgMTQzLjkxMDE1NiBMIDIxNy45MjE4NzUgNTguODcxMDk0IEMgMjE3LjkyMTg3NSAyNi4zNTkzNzUgMjQ0LjI4MTI1IDAgMjc2Ljc5Mjk2OSAwIEwgMjkxLjA4NTkzOCAwIEMgMzA3Ljc0MjE4OCAwIDMyMi43OTY4NzUgNi45MzM1OTQgMzMzLjU0Njg3NSAxOC4wNjY0MDYgTCAzNTEuOTgwNDY5IDYuMDA3ODEyIEMgMzU2LjUzOTA2MiAzLjAxOTUzMSAzNjEuNjgzNTk0IDAuOTUzMTI1IDM2Ny4wOTc2NTYgMC4yNzczNDQgQyAzODguMjkyOTY5IC0yLjM2MzI4MSA0MDYuMzk4NDM4IDE0LjE2NDA2MiA0MDYuMzk4NDM4IDM0Ljg0Mzc1IEwgNDA2LjM5ODQzOCAxNDMuOTEwMTU2IEMgNDA2LjM5ODQzOCAxNDQuOTY0ODQ0IDQwNS41NDY4NzUgMTQ1LjgwODU5NCA0MDQuNTAzOTA2IDE0NS44MDg1OTQgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iNTNhYjdiMDEyMyI+PHBhdGggZD0iTSAwLjkyMTg3NSAwIEwgMTg5LjQyMTg3NSAwIEwgMTg5LjQyMTg3NSAxNDUuODA4NTk0IEwgMC45MjE4NzUgMTQ1LjgwODU5NCBaIE0gMC45MjE4NzUgMCAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJkMmNjMjMzNTA2Ij48cGF0aCBkPSJNIDEwMi45ODgyODEgNjIuOTEwMTU2IEwgODUuNjI1IDc0LjI2NTYyNSBDIDg0LjA4NTkzOCA3NS4yNzczNDQgODMuMTY0MDYyIDc2Ljk3NjU2MiA4My4xNjQwNjIgNzguODI0MjE5IEwgODMuMTY0MDYyIDEwMC45MTQwNjIgQyA4My4xNjQwNjIgMTAxLjg1NTQ2OSA4My45MjU3ODEgMTAyLjYyMTA5NCA4NC44NTkzNzUgMTAyLjYyMTA5NCBMIDEwMS4wNzAzMTIgMTAyLjYyMTA5NCBDIDEwMi4xMjUgMTAyLjYyMTA5NCAxMDIuOTg4MjgxIDEwMS43Njk1MzEgMTAyLjk4ODI4MSAxMDAuNzAzMTI1IFogTSAxODcuNTAzOTA2IDE0NS44MDg1OTQgTCAxNjEuMTkxNDA2IDE0NS44MDg1OTQgQyAxNjAuMTQwNjI1IDE0NS44MDg1OTQgMTU5LjI5Mjk2OSAxNDQuOTUzMTI1IDE1OS4yOTI5NjkgMTQzLjkxMDE1NiBMIDE1OS4yOTI5NjkgMzUuMDUwNzgxIEMgMTU5LjI5Mjk2OSAzMi44NTU0NjkgMTU3Ljg5NDUzMSAzMC44MDA3ODEgMTU1Ljc2OTUzMSAzMC4yNjU2MjUgQyAxNTQuNDM3NSAyOS45MjU3ODEgMTUzLjA3ODEyNSAzMC4xNTYyNSAxNTEuOTY0ODQ0IDMwLjg3ODkwNiBMIDEzMS4yNjU2MjUgNDQuNDE3OTY5IEMgMTMyLjQ1NzAzMSA0OS4wODU5MzggMTMzLjA5Mzc1IDUzLjk3MjY1NiAxMzMuMDkzNzUgNTkuMDA3ODEyIEwgMTMzLjA5Mzc1IDEwMC43MDMxMjUgQyAxMzMuMDkzNzUgMTE4LjM4MjgxMiAxMTguNzYxNzE5IDEzMi43MjY1NjIgMTAxLjA3MDMxMiAxMzIuNzI2NTYyIEwgODQuODU5Mzc1IDEzMi43MjY1NjIgQyA2Ny4yODkwNjIgMTMyLjcyNjU2MiA1My4wNTg1OTQgMTE4LjQ4NDM3NSA1My4wNTg1OTQgMTAwLjkxNDA2MiBMIDUzLjA1ODU5NCA3OC44MjQyMTkgQyA1My4wNTg1OTQgNjYuNzg1MTU2IDU5LjA3ODEyNSA1NS42NjAxNTYgNjkuMTQ4NDM4IDQ5LjA2NjQwNiBMIDkwLjQwMjM0NCAzNS4xNjAxNTYgQyA4NS43NTM5MDYgMzEuOTcyNjU2IDgwLjEzMjgxMiAzMC4xMDU0NjkgNzQuMDg1OTM4IDMwLjEwNTQ2OSBMIDU5Ljc5Mjk2OSAzMC4xMDU0NjkgQyA0My45MTAxNTYgMzAuMTA1NDY5IDMxLjAyNzM0NCA0Mi45ODgyODEgMzEuMDI3MzQ0IDU4Ljg3MTA5NCBMIDMxLjAyNzM0NCAxNDMuOTEwMTU2IEMgMzEuMDI3MzQ0IDE0NC45NjQ4NDQgMzAuMTcxODc1IDE0NS44MDg1OTQgMjkuMTI4OTA2IDE0NS44MDg1OTQgTCAyLjgyMDMxMiAxNDUuODA4NTk0IEMgMS43NjU2MjUgMTQ1LjgwODU5NCAwLjkyMTg3NSAxNDQuOTUzMTI1IDAuOTIxODc1IDE0My45MTAxNTYgTCAwLjkyMTg3NSA1OC44NzEwOTQgQyAwLjkyMTg3NSAyNi4zNTkzNzUgMjcuMjgxMjUgMCA1OS43OTI5NjkgMCBMIDc0LjA4NTkzOCAwIEMgOTAuNzQyMTg4IDAgMTA1Ljc5Njg3NSA2LjkzMzU5NCAxMTYuNTQ2ODc1IDE4LjA2NjQwNiBMIDEzNC45ODA0NjkgNi4wMDc4MTIgQyAxMzkuNTM5MDYyIDMuMDE5NTMxIDE0NC42ODM1OTQgMC45NTMxMjUgMTUwLjA5NzY1NiAwLjI3NzM0NCBDIDE3MS4yOTI5NjkgLTIuMzYzMjgxIDE4OS4zOTg0MzggMTQuMTY0MDYyIDE4OS4zOTg0MzggMzQuODQzNzUgTCAxODkuMzk4NDM4IDE0My45MTAxNTYgQyAxODkuMzk4NDM4IDE0NC45NjQ4NDQgMTg4LjU0Njg3NSAxNDUuODA4NTk0IDE4Ny41MDM5MDYgMTQ1LjgwODU5NCAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSI0YTk3YjNmYzg3Ij48cmVjdCB4PSIwIiB3aWR0aD0iMTkwIiB5PSIwIiBoZWlnaHQ9IjE0NiIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSIxNmI3ODIyNTQ5Ij48cGF0aCBkPSJNIDQzNSAyLjUxNTYyNSBMIDU1Ni41MzkwNjIgMi41MTU2MjUgTCA1NTYuNTM5MDYyIDE0NS45NTcwMzEgTCA0MzUgMTQ1Ljk1NzAzMSBaIE0gNDM1IDIuNTE1NjI1ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9IjQzM2ZmYzA1ZDYiPjxwYXRoIGQ9Ik0gNTEzLjMyMDMxMiAzMi42MjEwOTQgTCA1MTMuMzA4NTk0IDMyLjYyMTA5NCBMIDQ4MC4wOTM3NSAzMi42NTIzNDQgQyA0NzIuMDE5NTMxIDMyLjY2MDE1NiA0NjUuNDUzMTI1IDM5LjIzNDM3NSA0NjUuNDY0ODQ0IDQ3LjMwMDc4MSBMIDQ2NS41MDM5MDYgMTA0LjQyMTg3NSBDIDQ2NS41MDM5MDYgMTA3LjExMzI4MSA0NjYuNDA2MjUgMTA5LjY0ODQzOCA0NjcuOTg4MjgxIDExMS4zNjcxODggQyA0NjkuNTc4MTI1IDExMy4xMDU0NjkgNDcxLjc5Mjk2OSAxMTQuMjUzOTA2IDQ3NC43Njk1MzEgMTE0LjkxMDE1NiBDIDQ3Ny40OTIxODggMTE1LjUwNzgxMiA0ODAuNTcwMzEyIDExNS4xMjEwOTQgNDgzLjQ2MDkzOCAxMTMuODI4MTI1IEwgNDgzLjgzOTg0NCAxMTMuNjY3OTY5IEwgNTI2LjM5ODQzOCA5Ni4wMzEyNSBMIDUyNi4zNTkzNzUgNDUuNjUyMzQ0IEMgNTI2LjM1MTU2MiAzOC40NjA5MzggNTIwLjUgMzIuNjIxMDk0IDUxMy4zMjAzMTIgMzIuNjIxMDk0IE0gNTI2LjQzNzUgMTQzLjkyNTc4MSBMIDUyNi40Mjk2ODggMTI4LjYwOTM3NSBMIDQ5NS41MzEyNSAxNDEuNDEwMTU2IEMgNDg2Ljc1IDE0NS4yODUxNTYgNDc3LjM2MzI4MSAxNDYuMjg5MDYyIDQ2OC4zNTU0NjkgMTQ0LjMyMDMxMiBDIDQ1OS4yMTQ4NDQgMTQyLjMyNDIxOSA0NTEuNjI4OTA2IDEzOC4wODIwMzEgNDQ1Ljc3NzM0NCAxMzEuNjg3NSBDIDQzOS4wODIwMzEgMTI0LjM4NjcxOSA0MzUuMzk4NDM4IDExNC43MTA5MzggNDM1LjM5MDYyNSAxMDQuNDQxNDA2IEwgNDM1LjM0NzY1NiA0Ny4zMjAzMTIgQyA0MzUuMzI4MTI1IDIyLjYwOTM3NSA0NTUuMzUxNTYyIDIuNTY2NDA2IDQ4MC4wNjY0MDYgMi41NDY4NzUgTCA1MTMuMjc3MzQ0IDIuNTE1NjI1IEwgNTEzLjMwODU5NCAyLjUxNTYyNSBDIDUzNy4wODU5MzggMi41MTU2MjUgNTU2LjQ0NTMxMiAyMS44NTU0NjkgNTU2LjQ1NzAzMSA0NS42MzI4MTIgTCA1NTYuNTM1MTU2IDE0My45MDIzNDQgQyA1NTYuNTM1MTU2IDE0NC45NTcwMzEgNTU1LjY5MTQwNiAxNDUuODAwNzgxIDU1NC42MzY3MTkgMTQ1LjgwMDc4MSBMIDUyOC4zMjgxMjUgMTQ1LjgyMDMxMiBDIDUyNy4yNzM0MzggMTQ1LjgyMDMxMiA1MjYuNDI5Njg4IDE0NC45NzY1NjIgNTI2LjQyOTY4OCAxNDMuOTI1NzgxICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImY4YWM5YzQyZmIiPjxwYXRoIGQ9Ik0gMC4yNjU2MjUgMC41MTU2MjUgTCAxMjEuNTM5MDYyIDAuNTE1NjI1IEwgMTIxLjUzOTA2MiAxNDMuOTU3MDMxIEwgMC4yNjU2MjUgMTQzLjk1NzAzMSBaIE0gMC4yNjU2MjUgMC41MTU2MjUgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iYWE1NDljNTc4OCI+PHBhdGggZD0iTSA3OC4zMjAzMTIgMzAuNjIxMDk0IEwgNzguMzA4NTk0IDMwLjYyMTA5NCBMIDQ1LjA5Mzc1IDMwLjY1MjM0NCBDIDM3LjAxOTUzMSAzMC42NjAxNTYgMzAuNDUzMTI1IDM3LjIzNDM3NSAzMC40NjQ4NDQgNDUuMzAwNzgxIEwgMzAuNTAzOTA2IDEwMi40MjE4NzUgQyAzMC41MDM5MDYgMTA1LjExMzI4MSAzMS40MDYyNSAxMDcuNjQ4NDM4IDMyLjk4ODI4MSAxMDkuMzY3MTg4IEMgMzQuNTc4MTI1IDExMS4xMDU0NjkgMzYuNzkyOTY5IDExMi4yNTM5MDYgMzkuNzY5NTMxIDExMi45MTAxNTYgQyA0Mi40OTIxODggMTEzLjUwNzgxMiA0NS41NzAzMTIgMTEzLjEyMTA5NCA0OC40NjA5MzggMTExLjgyODEyNSBMIDQ4LjgzOTg0NCAxMTEuNjY3OTY5IEwgOTEuMzk4NDM4IDk0LjAzMTI1IEwgOTEuMzU5Mzc1IDQzLjY1MjM0NCBDIDkxLjM1MTU2MiAzNi40NjA5MzggODUuNSAzMC42MjEwOTQgNzguMzIwMzEyIDMwLjYyMTA5NCBNIDkxLjQzNzUgMTQxLjkyNTc4MSBMIDkxLjQyOTY4OCAxMjYuNjA5Mzc1IEwgNjAuNTMxMjUgMTM5LjQxMDE1NiBDIDUxLjc1IDE0My4yODUxNTYgNDIuMzYzMjgxIDE0NC4yODkwNjIgMzMuMzU1NDY5IDE0Mi4zMjAzMTIgQyAyNC4yMTQ4NDQgMTQwLjMyNDIxOSAxNi42Mjg5MDYgMTM2LjA4MjAzMSAxMC43NzczNDQgMTI5LjY4NzUgQyA0LjA4MjAzMSAxMjIuMzg2NzE5IDAuMzk4NDM4IDExMi43MTA5MzggMC4zOTA2MjUgMTAyLjQ0MTQwNiBMIDAuMzQ3NjU2IDQ1LjMyMDMxMiBDIDAuMzI4MTI1IDIwLjYwOTM3NSAyMC4zNTE1NjIgMC41NjY0MDYgNDUuMDY2NDA2IDAuNTQ2ODc1IEwgNzguMjc3MzQ0IDAuNTE1NjI1IEwgNzguMzA4NTk0IDAuNTE1NjI1IEMgMTAyLjA4NTkzOCAwLjUxNTYyNSAxMjEuNDQ1MzEyIDE5Ljg1NTQ2OSAxMjEuNDU3MDMxIDQzLjYzMjgxMiBMIDEyMS41MzUxNTYgMTQxLjkwMjM0NCBDIDEyMS41MzUxNTYgMTQyLjk1NzAzMSAxMjAuNjkxNDA2IDE0My44MDA3ODEgMTE5LjYzNjcxOSAxNDMuODAwNzgxIEwgOTMuMzI4MTI1IDE0My44MjAzMTIgQyA5Mi4yNzM0MzggMTQzLjgyMDMxMiA5MS40Mjk2ODggMTQyLjk3NjU2MiA5MS40Mjk2ODggMTQxLjkyNTc4MSAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSI4MDY4MDc5MGNkIj48cmVjdCB4PSIwIiB3aWR0aD0iMTIyIiB5PSIwIiBoZWlnaHQ9IjE0NCIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSIxMmIxZmVmZmI1Ij48cGF0aCBkPSJNIDU4Ni4wNzQyMTkgMi43MTA5MzggTCA3MDkuMDk3NjU2IDIuNzEwOTM4IEwgNzA5LjA5NzY1NiAxNDUuODM5ODQ0IEwgNTg2LjA3NDIxOSAxNDUuODM5ODQ0IFogTSA1ODYuMDc0MjE5IDIuNzEwOTM4ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9IjlmYzA3MjE5ZTIiPjxwYXRoIGQ9Ik0gNjYzLjU2NjQwNiAyLjcxMDkzOCBMIDYzMC4wNzQyMTkgMi43MzA0NjkgQyA2MDYuMDU4NTk0IDIuNzUgNTg2LjUzMTI1IDIyLjMwNDY4OCA1ODYuNTUwNzgxIDQ2LjMzMjAzMSBMIDU4Ni42MjEwOTQgMTQzLjkyOTY4OCBDIDU4Ni42MjEwOTQgMTQ0Ljk3MjY1NiA1ODcuNDc2NTYyIDE0NS44MjQyMTkgNTg4LjUxOTUzMSAxNDUuODI0MjE5IEwgNjE0LjgyODEyNSAxNDUuODA0Njg4IEMgNjE1Ljg4MjgxMiAxNDUuODA0Njg4IDYxNi43MjY1NjIgMTQ0Ljk1MzEyNSA2MTYuNzI2NTYyIDE0My45MTAxNTYgTCA2MTYuNjU2MjUgNDYuMzEyNSBDIDYxNi42NDg0MzggMzguODk0NTMxIDYyMi42ODc1IDMyLjg1NTQ2OSA2MzAuMTA1NDY5IDMyLjg0Mzc1IEwgNjYzLjU5NzY1NiAzMi44MjQyMTkgTCA2NjMuNjA5Mzc1IDMyLjgyNDIxOSBDIDY3Mi4wNTg1OTQgMzIuODI0MjE5IDY3OC45MjE4NzUgMzkuNjc5Njg4IDY3OC45MjE4NzUgNDguMTI4OTA2IEwgNjc4Ljk5MjE4OCAxNDMuOTI5Njg4IEMgNjc4Ljk5MjE4OCAxNDQuOTcyNjU2IDY3OS44NDc2NTYgMTQ1LjgyNDIxOSA2ODAuODkwNjI1IDE0NS44MjQyMTkgTCA3MDcuMTk5MjE5IDE0NS44MDQ2ODggQyA3MDguMjUzOTA2IDE0NS44MDQ2ODggNzA5LjA5NzY1NiAxNDQuOTUzMTI1IDcwOS4wOTc2NTYgMTQzLjkxMDE1NiBMIDcwOS4wMjczNDQgNDguMTA5Mzc1IEMgNzA5LjAwNzgxMiAyMy4wNjI1IDY4OC42MzY3MTkgMi43MTA5MzggNjYzLjYwOTM3NSAyLjcxMDkzOCBaIE0gNjYzLjU2NjQwNiAyLjcxMDkzOCAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSJiNDlmZGM5MzljIj48cGF0aCBkPSJNIDAuMzk4NDM4IDAuNzEwOTM4IEwgMTIzLjA5NzY1NiAwLjcxMDkzOCBMIDEyMy4wOTc2NTYgMTQzLjgzOTg0NCBMIDAuMzk4NDM4IDE0My44Mzk4NDQgWiBNIDAuMzk4NDM4IDAuNzEwOTM4ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9IjExMTQwZGU2NDAiPjxwYXRoIGQ9Ik0gNzcuNTY2NDA2IDAuNzEwOTM4IEwgNDQuMDc0MjE5IDAuNzMwNDY5IEMgMjAuMDU4NTk0IDAuNzUgMC41MzEyNSAyMC4zMDQ2ODggMC41NTA3ODEgNDQuMzMyMDMxIEwgMC42MjEwOTQgMTQxLjkyOTY4OCBDIDAuNjIxMDk0IDE0Mi45NzI2NTYgMS40NzY1NjIgMTQzLjgyNDIxOSAyLjUxOTUzMSAxNDMuODI0MjE5IEwgMjguODI4MTI1IDE0My44MDQ2ODggQyAyOS44ODI4MTIgMTQzLjgwNDY4OCAzMC43MjY1NjIgMTQyLjk1MzEyNSAzMC43MjY1NjIgMTQxLjkxMDE1NiBMIDMwLjY1NjI1IDQ0LjMxMjUgQyAzMC42NDg0MzggMzYuODk0NTMxIDM2LjY4NzUgMzAuODU1NDY5IDQ0LjEwNTQ2OSAzMC44NDM3NSBMIDc3LjU5NzY1NiAzMC44MjQyMTkgTCA3Ny42MDkzNzUgMzAuODI0MjE5IEMgODYuMDU4NTk0IDMwLjgyNDIxOSA5Mi45MjE4NzUgMzcuNjc5Njg4IDkyLjkyMTg3NSA0Ni4xMjg5MDYgTCA5Mi45OTIxODggMTQxLjkyOTY4OCBDIDkyLjk5MjE4OCAxNDIuOTcyNjU2IDkzLjg0NzY1NiAxNDMuODI0MjE5IDk0Ljg5MDYyNSAxNDMuODI0MjE5IEwgMTIxLjE5OTIxOSAxNDMuODA0Njg4IEMgMTIyLjI1MzkwNiAxNDMuODA0Njg4IDEyMy4wOTc2NTYgMTQyLjk1MzEyNSAxMjMuMDk3NjU2IDE0MS45MTAxNTYgTCAxMjMuMDI3MzQ0IDQ2LjEwOTM3NSBDIDEyMy4wMDc4MTIgMjEuMDYyNSAxMDIuNjM2NzE5IDAuNzEwOTM4IDc3LjYwOTM3NSAwLjcxMDkzOCBaIE0gNzcuNTY2NDA2IDAuNzEwOTM4ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9Ijk1Y2NjY2VjYmMiPjxyZWN0IHg9IjAiIHdpZHRoPSIxMjQiIHk9IjAiIGhlaWdodD0iMTQ0Ii8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9ImE1ZmU4NmY0YjciPjxwYXRoIGQ9Ik0gNzM2LjE5MTQwNiAyLjI5Njg3NSBMIDg1Ny44NTE1NjIgMi4yOTY4NzUgTCA4NTcuODUxNTYyIDE0NiBMIDczNi4xOTE0MDYgMTQ2IFogTSA3MzYuMTkxNDA2IDIuMjk2ODc1ICIgY2xpcC1ydWxlPSJub256ZXJvIi8+PC9jbGlwUGF0aD48Y2xpcFBhdGggaWQ9IjBkMmNhNGM3YTciPjxwYXRoIGQ9Ik0gODE0LjYzMjgxMiAzMi40MDIzNDQgQyA4MjEuODI0MjE5IDMyLjQwMjM0NCA4MjcuNjcxODc1IDM4LjI1MzkwNiA4MjcuNjcxODc1IDQ1LjQzMzU5NCBMIDgyNy43MTQ4NDQgOTUuODEyNSBMIDc4NS4xNDQ1MzEgMTEzLjQ1MzEyNSBMIDc4NC43NjU2MjUgMTEzLjYwOTM3NSBDIDc4Mi43Njk1MzEgMTE0LjUwMzkwNiA3ODAuNjcxODc1IDExNC45NjA5MzggNzc4LjY2Nzk2OSAxMTQuOTYwOTM4IEMgNzc3Ljc4NTE1NiAxMTQuOTYwOTM4IDc3Ni45MTAxNTYgMTE0Ljg3MTA5NCA3NzYuMDc0MjE5IDExNC42OTE0MDYgQyA3NzMuMDkzNzUgMTE0LjA0Njg3NSA3NzAuODcxMDk0IDExMi44ODY3MTkgNzY5LjI4MTI1IDExMS4xNDg0MzggQyA3NjcuNzEwOTM4IDEwOS40Mjk2ODggNzY2LjgwODU5NCAxMDYuODk0NTMxIDc2Ni44MDg1OTQgMTA0LjIwMzEyNSBMIDc2Ni43NTc4MTIgNDcuMDgyMDMxIEMgNzY2Ljc1NzgxMiA0My4xNzE4NzUgNzY4LjI3NzM0NCAzOS40OTYwOTQgNzcxLjAzOTA2MiAzNi43MjI2NTYgQyA3NzMuODAwNzgxIDMzLjk1MzEyNSA3NzcuNDc2NTYyIDMyLjQzMzU5NCA3ODEuMzkwNjI1IDMyLjQyMTg3NSBMIDgxNC42MDE1NjIgMzIuMzk0NTMxIFogTSA4MTQuNTkzNzUgMi4yOTY4NzUgTCA3ODEuMzc4OTA2IDIuMzI4MTI1IEMgNzY4Ljg5NDUzMSAyLjMyODEyNSA3NTcuMTkxNDA2IDcuNDIxODc1IDc0OC42MzI4MTIgMTYuNjA5Mzc1IEMgNzQwLjcyNjU2MiAyNS4wOTM3NSA3MzYuNjUyMzQ0IDM2LjQ0NTMxMiA3MzYuNjY0MDYyIDQ4LjAzNTE1NiBMIDczNi43MDMxMjUgMTA0LjIyMjY1NiBDIDczNi43MTA5MzggMTE0LjQ5NjA5NCA3NDAuMzk4NDM4IDEyNC4xNjc5NjkgNzQ3LjA4MjAzMSAxMzEuNDY4NzUgQyA3NTIuOTMzNTk0IDEzNy44NTU0NjkgNzYwLjUxOTUzMSAxNDIuMTA1NDY5IDc2OS42NjAxNTYgMTQ0LjEwMTU2MiBDIDc3Mi42NTYyNSAxNDQuNzU3ODEyIDc3NS42OTkyMTkgMTQ1LjA3ODEyNSA3NzguNzM4MjgxIDE0NS4wNzgxMjUgQyA3ODQuODQzNzUgMTQ1LjA3ODEyNSA3OTAuOTcyNjU2IDE0My43NjU2MjUgNzk2LjgzMjAzMSAxNDEuMTgzNTk0IEwgODI3LjczNDM3NSAxMjguMzc4OTA2IEwgODI3Ljc0MjE4OCAxNDMuOTE0MDYyIEMgODI3Ljc0MjE4OCAxNDQuOTU3MDMxIDgyOC41OTc2NTYgMTQ1LjgxMjUgODI5LjY0MDYyNSAxNDUuODEyNSBMIDg1NS45NTMxMjUgMTQ1Ljc5Mjk2OSBDIDg1Ni45OTYwOTQgMTQ1Ljc5Mjk2OSA4NTcuODQ3NjU2IDE0NC45Mzc1IDg1Ny44NDc2NTYgMTQzLjg5NDUzMSBMIDg1Ny43Njk1MzEgNDUuNDE0MDYyIEMgODU3Ljc1NzgxMiAyMS42MjUgODM4LjQwMjM0NCAyLjI5Njg3NSA4MTQuNjIxMDk0IDIuMjk2ODc1IFogTSA4MTQuNTkzNzUgMi4yOTY4NzUgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iNTRjMmMzZTg5NSI+PHBhdGggZD0iTSAwLjU3ODEyNSAwLjI5Njg3NSBMIDEyMS44NTE1NjIgMC4yOTY4NzUgTCAxMjEuODUxNTYyIDE0My44ODY3MTkgTCAwLjU3ODEyNSAxNDMuODg2NzE5IFogTSAwLjU3ODEyNSAwLjI5Njg3NSAiIGNsaXAtcnVsZT0ibm9uemVybyIvPjwvY2xpcFBhdGg+PGNsaXBQYXRoIGlkPSIzMTMzNjhlNGFiIj48cGF0aCBkPSJNIDc4LjYzMjgxMiAzMC40MDIzNDQgQyA4NS44MjQyMTkgMzAuNDAyMzQ0IDkxLjY3MTg3NSAzNi4yNTM5MDYgOTEuNjcxODc1IDQzLjQzMzU5NCBMIDkxLjcxNDg0NCA5My44MTI1IEwgNDkuMTQ0NTMxIDExMS40NTMxMjUgTCA0OC43NjU2MjUgMTExLjYwOTM3NSBDIDQ2Ljc2OTUzMSAxMTIuNTAzOTA2IDQ0LjY3MTg3NSAxMTIuOTYwOTM4IDQyLjY2Nzk2OSAxMTIuOTYwOTM4IEMgNDEuNzg1MTU2IDExMi45NjA5MzggNDAuOTEwMTU2IDExMi44NzEwOTQgNDAuMDc0MjE5IDExMi42OTE0MDYgQyAzNy4wOTM3NSAxMTIuMDQ2ODc1IDM0Ljg3MTA5NCAxMTAuODg2NzE5IDMzLjI4MTI1IDEwOS4xNDg0MzggQyAzMS43MTA5MzggMTA3LjQyOTY4OCAzMC44MDg1OTQgMTA0Ljg5NDUzMSAzMC44MDg1OTQgMTAyLjIwMzEyNSBMIDMwLjc1NzgxMiA0NS4wODIwMzEgQyAzMC43NTc4MTIgNDEuMTcxODc1IDMyLjI3NzM0NCAzNy40OTYwOTQgMzUuMDM5MDYyIDM0LjcyMjY1NiBDIDM3LjgwMDc4MSAzMS45NTMxMjUgNDEuNDc2NTYyIDMwLjQzMzU5NCA0NS4zOTA2MjUgMzAuNDIxODc1IEwgNzguNjAxNTYyIDMwLjM5NDUzMSBaIE0gNzguNTkzNzUgMC4yOTY4NzUgTCA0NS4zNzg5MDYgMC4zMjgxMjUgQyAzMi44OTQ1MzEgMC4zMjgxMjUgMjEuMTkxNDA2IDUuNDIxODc1IDEyLjYzMjgxMiAxNC42MDkzNzUgQyA0LjcyNjU2MiAyMy4wOTM3NSAwLjY1MjM0NCAzNC40NDUzMTIgMC42NjQwNjIgNDYuMDM1MTU2IEwgMC43MDMxMjUgMTAyLjIyMjY1NiBDIDAuNzEwOTM4IDExMi40OTYwOTQgNC4zOTg0MzggMTIyLjE2Nzk2OSAxMS4wODIwMzEgMTI5LjQ2ODc1IEMgMTYuOTMzNTk0IDEzNS44NTU0NjkgMjQuNTE5NTMxIDE0MC4xMDU0NjkgMzMuNjYwMTU2IDE0Mi4xMDE1NjIgQyAzNi42NTYyNSAxNDIuNzU3ODEyIDM5LjY5OTIxOSAxNDMuMDc4MTI1IDQyLjczODI4MSAxNDMuMDc4MTI1IEMgNDguODQzNzUgMTQzLjA3ODEyNSA1NC45NzI2NTYgMTQxLjc2NTYyNSA2MC44MzIwMzEgMTM5LjE4MzU5NCBMIDkxLjczNDM3NSAxMjYuMzc4OTA2IEwgOTEuNzQyMTg4IDE0MS45MTQwNjIgQyA5MS43NDIxODggMTQyLjk1NzAzMSA5Mi41OTc2NTYgMTQzLjgxMjUgOTMuNjQwNjI1IDE0My44MTI1IEwgMTE5Ljk1MzEyNSAxNDMuNzkyOTY5IEMgMTIwLjk5NjA5NCAxNDMuNzkyOTY5IDEyMS44NDc2NTYgMTQyLjkzNzUgMTIxLjg0NzY1NiAxNDEuODk0NTMxIEwgMTIxLjc2OTUzMSA0My40MTQwNjIgQyAxMjEuNzU3ODEyIDE5LjYyNSAxMDIuNDAyMzQ0IDAuMjk2ODc1IDc4LjYyMTA5NCAwLjI5Njg3NSBaIE0gNzguNTkzNzUgMC4yOTY4NzUgIiBjbGlwLXJ1bGU9Im5vbnplcm8iLz48L2NsaXBQYXRoPjxjbGlwUGF0aCBpZD0iOWNjYWZhZTY1MSI+PHJlY3QgeD0iMCIgd2lkdGg9IjEyMiIgeT0iMCIgaGVpZ2h0PSIxNDQiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjZjBhMDY1YWJhMikiPjxnIGNsaXAtcGF0aD0idXJsKCNkYjkyNjljNzA0KSI+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwgMCwgMCwgMSwgMiwgMikiPjxnIGNsaXAtcGF0aD0idXJsKCMzMmI1YzYwZjRmKSI+PGcgY2xpcC1wYXRoPSJ1cmwoIzlkODlmMTFlYTIpIj48ZyBjbGlwLXBhdGg9InVybCgjY2MxZDJmNDBiYSkiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0gMC44NDc2NTYgMC44MjQyMTkgTCAxMjIuMDM5MDYyIDAuODI0MjE5IEwgMTIyLjAzOTA2MiAxNDMuNzkyOTY5IEwgMC44NDc2NTYgMTQzLjc5Mjk2OSBaIE0gMC44NDc2NTYgMC44MjQyMTkgIiBmaWxsLW9wYWNpdHk9IjEiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIGNsaXAtcGF0aD0idXJsKCNjY2U5MjA2MTI1KSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2U4NzdmNmY0ZDApIj48ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLCAwLCAwLCAxLCAxNTUsIDIpIj48ZyBjbGlwLXBhdGg9InVybCgjZGVhY2JiZDFiNCkiPjxnIGNsaXAtcGF0aD0idXJsKCNiNGM0MTY3YmM2KSI+PGcgY2xpcC1wYXRoPSJ1cmwoIzZiNDA4NGE3ZmQpIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNIDAuNTc4MTI1IDAuOTE0MDYyIEwgMzAuNjgzNTk0IDAuOTE0MDYyIEwgMzAuNjgzNTk0IDE0My43OTY4NzUgTCAwLjU3ODEyNSAxNDMuNzk2ODc1IFogTSAwLjU3ODEyNSAwLjkxNDA2MiAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjwvZz48L2c+PC9nPjwvZz48L2c+PGcgY2xpcC1wYXRoPSJ1cmwoI2I5MDYxMDQ4YTEpIj48ZyBjbGlwLXBhdGg9InVybCgjYWM3YjU0YWUzMCkiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDEsIDAsIDAsIDEsIDIxNywgMC4wMDAwMDAwMDAwMDAwMDk5OTYpIj48ZyBjbGlwLXBhdGg9InVybCgjNGE5N2IzZmM4NykiPjxnIGNsaXAtcGF0aD0idXJsKCM1M2FiN2IwMTIzKSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2QyY2MyMzM1MDYpIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNIDAuOTIxODc1IDAgTCAxODkuNDQ5MjE5IDAgTCAxODkuNDQ5MjE5IDE0NS44MDg1OTQgTCAwLjkyMTg3NSAxNDUuODA4NTk0IFogTSAwLjkyMTg3NSAwICIgZmlsbC1vcGFjaXR5PSIxIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48ZyBjbGlwLXBhdGg9InVybCgjMTZiNzgyMjU0OSkiPjxnIGNsaXAtcGF0aD0idXJsKCM0MzNmZmMwNWQ2KSI+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwgMCwgMCwgMSwgNDM1LCAyKSI+PGcgY2xpcC1wYXRoPSJ1cmwoIzgwNjgwNzkwY2QpIj48ZyBjbGlwLXBhdGg9InVybCgjZjhhYzljNDJmYikiPjxnIGNsaXAtcGF0aD0idXJsKCNhYTU0OWM1Nzg4KSI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTSAwLjM0NzY1NiAwLjUxNTYyNSBMIDEyMS41MzkwNjIgMC41MTU2MjUgTCAxMjEuNTM5MDYyIDE0My45NTcwMzEgTCAwLjM0NzY1NiAxNDMuOTU3MDMxIFogTSAwLjM0NzY1NiAwLjUxNTYyNSAiIGZpbGwtb3BhY2l0eT0iMSIgZmlsbC1ydWxlPSJub256ZXJvIi8+PC9nPjwvZz48L2c+PC9nPjwvZz48L2c+PGcgY2xpcC1wYXRoPSJ1cmwoIzEyYjFmZWZmYjUpIj48ZyBjbGlwLXBhdGg9InVybCgjOWZjMDcyMTllMikiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDEsIDAsIDAsIDEsIDU4NiwgMikiPjxnIGNsaXAtcGF0aD0idXJsKCM5NWNjY2NlY2JjKSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2I0OWZkYzkzOWMpIj48ZyBjbGlwLXBhdGg9InVybCgjMTExNDBkZTY0MCkiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0gMC41NTA3ODEgMC43MTA5MzggTCAxMjMuMDk3NjU2IDAuNzEwOTM4IEwgMTIzLjA5NzY1NiAxNDMuODM5ODQ0IEwgMC41NTA3ODEgMTQzLjgzOTg0NCBaIE0gMC41NTA3ODEgMC43MTA5MzggIiBmaWxsLW9wYWNpdHk9IjEiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvZz48L2c+PC9nPjwvZz48L2c+PC9nPjxnIGNsaXAtcGF0aD0idXJsKCNhNWZlODZmNGI3KSI+PGcgY2xpcC1wYXRoPSJ1cmwoIzBkMmNhNGM3YTcpIj48ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLCAwLCAwLCAxLCA3MzYsIDIpIj48ZyBjbGlwLXBhdGg9InVybCgjOWNjYWZhZTY1MSkiPjxnIGNsaXAtcGF0aD0idXJsKCM1NGMyYzNlODk1KSI+PGcgY2xpcC1wYXRoPSJ1cmwoIzMxMzM2OGU0YWIpIj48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNIDAuNjY0MDYyIDAuMjk2ODc1IEwgMTIxLjg1MTU2MiAwLjI5Njg3NSBMIDEyMS44NTE1NjIgMTQzLjczODI4MSBMIDAuNjY0MDYyIDE0My43MzgyODEgWiBNIDAuNjY0MDYyIDAuMjk2ODc1ICIgZmlsbC1vcGFjaXR5PSIxIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L2c+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=" alt="AIMANA" class="header-logo" id="headerLogo">
+    <div class="header-divider"></div>
+    <h1>Sugestões de Agentes <span>· <span class="sistema-unimed">Sistema Unimed</span></span></h1>
+  </div>
+  <div class="header-right">
+    <button class="cta-header" onclick="openContactModal()">Fale com nosso time</button>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="setView('area')">Por área</button>
+    <button class="view-btn" onclick="setView('complexidade')">Por complexidade</button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar agente..." oninput="renderCards()">
+  </div>
+
+  <div class="stats">
+    <div class="stat-pill"><span class="dot dot-p"></span> <span id="countP">11</span> Prontos</div>
+    <div class="stat-pill"><span class="dot dot-m"></span> <span id="countM">15</span> Customizados</div>
+    <div class="stat-pill"><span class="dot dot-g"></span> <span id="countG">14</span> Desenvolvimento</div>
+  </div>
+</div>
+
+<div class="main" id="mainContent">
+  <!-- Rendered by JS -->
+</div>
+
+<script>
+const AGENTS = [
+  // B1 — Recursos próprios
+  { name: "Faturamento cirúrgico", area: "Recursos próprios", areaCode: "B1", tier: "customizado", desc: "Captura procedimentos do CC, codifica em TUSS e gera cobrança sem depender do preenchimento do cirurgião.", impact: "Recupera 8–20% de receita não faturada" },
+  { name: "Triagem e acolhimento hospitalar", area: "Recursos próprios", areaCode: "B1", tier: "desenvolvimento", desc: "Pré-triagem via WhatsApp ou totem, classifica Manchester e direciona o paciente antes do enfermeiro.", impact: "Reduz tempo de espera em até 40%" },
+  { name: "Gestão de leitos", area: "Recursos próprios", areaCode: "B1", tier: "desenvolvimento", desc: "Monitora ocupação em tempo real, prevê altas por evolução clínica e aciona higienização e fila automaticamente.", impact: "Aumenta giro de leitos, reduz diárias" },
+  { name: "Controle de OPME", area: "Recursos próprios", areaCode: "B1", tier: "desenvolvimento", desc: "Monitora uso de materiais por cirurgião, compara com pares e sugere padronização por custo-efetividade.", impact: "Redução de 10–25% no custo de OPME" },
+  { name: "Laudo laboratorial assistido", area: "Recursos próprios", areaCode: "B1", tier: "customizado", desc: "Interpreta pedidos médicos, resolve sinônimos, sugere diagnósticos diferenciais e padroniza codificação TUSS.", impact: "Mais laudos por dia sem ampliar equipe" },
+
+  // B2 — Autorização e custos
+  { name: "Triagem de guias e autorizações", area: "Autorização e custos", areaCode: "B2", tier: "customizado", desc: "Analisa solicitações por protocolo clínico, histórico do beneficiário e regras ANS, emitindo parecer em segundos.", impact: "Elimina fila de autorizações rotineiras" },
+  { name: "Conciliação de intercâmbio", area: "Autorização e custos", areaCode: "B2", tier: "desenvolvimento", desc: "Monitora atendimentos entre cooperativas, cruza valores recebidos e gera cobranças automáticas.", impact: "Recupera valores não cobrados entre cooperativas" },
+  { name: "Revisão de contas hospitalares", area: "Autorização e custos", areaCode: "B2", tier: "desenvolvimento", desc: "Analisa lotes de contas, verifica TUSS, compatibilidade CID × procedimento e duplicidades.", impact: "Reduz pagamentos indevidos na fonte" },
+  { name: "Glosas preventivas", area: "Autorização e custos", areaCode: "B2", tier: "customizado", desc: "Identifica inconsistências de codificação antes do pagamento e sugere glosas com trilha de auditoria.", impact: "Redução de 15–30% em pagamentos indevidos" },
+  { name: "Credenciamento de prestadores", area: "Autorização e custos", areaCode: "B2", tier: "customizado", desc: "Automatiza coleta de documentação, verifica CRM/ANVISA e gera parecer de habilitação.", impact: "Prazo de credenciamento de semanas para dias" },
+  { name: "Autorização inteligente", area: "Autorização e custos", areaCode: "B2", tier: "customizado", desc: "Analisa solicitações por protocolo, histórico e regras ANS, emitindo autorização ou parecer em segundos.", impact: "Prazo de autorização reduzido para minutos" },
+  { name: "Prevenção de omissão e fraude", area: "Autorização e custos", areaCode: "B2", tier: "desenvolvimento", desc: "Cruza dados de produção, faturamento e contratos para identificar padrões de omissão e fraude assistencial.", impact: "Potencial de recuperação muito alto" },
+  { name: "Auditoria autorização × pagamento", area: "Autorização e custos", areaCode: "B2", tier: "desenvolvimento", desc: "Cruza autorizações emitidas com pagamentos realizados, detecta divergências e gera relatório de auditoria.", impact: "Controle total do ciclo financeiro" },
+
+  // B3 — Jurídico e regulatório
+  { name: "Monitoramento jurídico e ANS", area: "Jurídico e regulatório", areaCode: "B3", tier: "customizado", desc: "Acompanha publicações da ANS, STJ e TRFs diariamente, resume mudanças e entrega briefing com impacto.", impact: "Antecipa riscos regulatórios automaticamente" },
+  { name: "Redação e revisão de contratos", area: "Jurídico e regulatório", areaCode: "B3", tier: "pronto", desc: "Redige, revisa e padroniza contratos, identifica cláusulas fora do padrão e gera minutas prontas.", impact: "Contratos de rotina de dias para horas" },
+  { name: "Assembleia e governança cooperativa", area: "Jurídico e regulatório", areaCode: "B3", tier: "customizado", desc: "Organiza pautas, redige atas, consolida deliberações e monitora cumprimento com alertas estatutários.", impact: "Elimina retrabalho em governança" },
+  { name: "Gestão de processos judiciais", area: "Jurídico e regulatório", areaCode: "B3", tier: "customizado", desc: "Monitora contencioso, acompanha prazos processuais, resume movimentações e prioriza casos críticos.", impact: "Elimina risco de perda de prazo" },
+  { name: "Análise de contratos com prestadores", area: "Jurídico e regulatório", areaCode: "B3", tier: "customizado", desc: "Revisa contratos de credenciamento, identifica cláusulas desfavoráveis e incompatibilidades com tabela ANS.", impact: "Reduz passivo contratual" },
+
+  // B4 — Atuarial, contábil e financeiro
+  { name: "Precificação atuarial dinâmica", area: "Atuarial, contábil e financeiro", areaCode: "B4", tier: "desenvolvimento", desc: "Cruza sinistralidade por faixa etária, carteira e produto, simulando cenários de reajuste com precisão.", impact: "Decisões de pricing 10x mais rápidas" },
+  { name: "Análise de sinistralidade", area: "Atuarial, contábil e financeiro", areaCode: "B4", tier: "desenvolvimento", desc: "Segmenta sinistralidade por produto, faixa e prestador, identifica grupos de alto custo e gera narrativa.", impact: "Dados brutos viram inteligência em minutos" },
+  { name: "Relatórios gerenciais automáticos", area: "Atuarial, contábil e financeiro", areaCode: "B4", tier: "pronto", desc: "Conecta fontes de dados e gera relatórios executivos em linguagem natural com narrativa e alertas.", impact: "Elimina consolidação manual" },
+  { name: "Fechamento contábil assistido", area: "Atuarial, contábil e financeiro", areaCode: "B4", tier: "customizado", desc: "Verifica lançamentos pendentes, identifica inconsistências e produz rascunho de notas explicativas.", impact: "Reduz prazo de fechamento" },
+  { name: "Projeção e monitoramento orçamentário", area: "Atuarial, contábil e financeiro", areaCode: "B4", tier: "desenvolvimento", desc: "Monitora execução em tempo real, compara realizado vs planejado e projeta resultado.", impact: "Visibilidade contínua do orçamento" },
+
+  // B5 — Financeiro e administrativo
+  { name: "Inadimplência e régua de cobrança", area: "Financeiro e administrativo", areaCode: "B5", tier: "customizado", desc: "Identifica beneficiários em atraso, aciona régua personalizada e escala para humano apenas casos críticos.", impact: "Reduz inadimplência, libera equipe" },
+  { name: "Retenção de beneficiários", area: "Financeiro e administrativo", areaCode: "B5", tier: "customizado", desc: "Monitora sinais de cancelamento, aciona régua de relacionamento antes do churn acontecer.", impact: "Reduz churn e aumenta valor da carteira" },
+  { name: "Contratos e documentos administrativos", area: "Financeiro e administrativo", areaCode: "B5", tier: "pronto", desc: "Padroniza contratos com fornecedores, identifica cláusulas fora do padrão e gera minutas prontas.", impact: "Reduz passivo jurídico e administrativo" },
+  { name: "Gestão de fornecedores e compras", area: "Financeiro e administrativo", areaCode: "B5", tier: "customizado", desc: "Monitora contratos, vencimentos e SLAs, gera cotações automáticas e alerta oportunidades.", impact: "Elimina vencimentos despercebidos" },
+  { name: "Monitoramento de SLA e pendências", area: "Financeiro e administrativo", areaCode: "B5", tier: "pronto", desc: "Acompanha prazos em tempo real, sinaliza atrasos e aciona responsáveis via WhatsApp ou e-mail.", impact: "Visibilidade gerencial em tempo real" },
+
+  // B6 — RH e gestão de pessoas
+  { name: "Recrutamento e triagem de candidatos", area: "RH e gestão de pessoas", areaCode: "B6", tier: "pronto", desc: "Analisa currículos, aplica questionários e entrega lista ranqueada com resumo comparativo.", impact: "Reduz até 70% do tempo de triagem" },
+  { name: "Treinamento e capacitação interna", area: "RH e gestão de pessoas", areaCode: "B6", tier: "pronto", desc: "Cria trilhas por cargo, responde dúvidas sobre processos e normas em linguagem simples — 24h disponível.", impact: "Acelera onboarding, reduz presenciais" },
+  { name: "Clima e engajamento", area: "RH e gestão de pessoas", areaCode: "B6", tier: "pronto", desc: "Aplica pulsos de clima, analisa respostas em linguagem natural e entrega relatório de risco de turnover.", impact: "Reduz turnover e melhora retenção" },
+  { name: "Ponto, jornada e banco de horas", area: "RH e gestão de pessoas", areaCode: "B6", tier: "customizado", desc: "Monitora jornada, identifica inconsistências, calcula banco de horas e alerta riscos trabalhistas.", impact: "Reduz passivo trabalhista" },
+  { name: "Avaliação de desempenho e PDI", area: "RH e gestão de pessoas", areaCode: "B6", tier: "pronto", desc: "Conduz ciclos de avaliação via conversação, consolida resultados e sugere planos individuais.", impact: "Acelera ciclos, conecta ao negócio" },
+  { name: "Assistente de dúvidas operacionais", area: "RH e gestão de pessoas", areaCode: "B6", tier: "pronto", desc: "Responde sobre processos, normas ANS e rotinas internas 24h a partir da base de conhecimento da cooperativa.", impact: "Reduz treinamentos presenciais" },
+
+  // B7 — Estratégico e inovação
+  { name: "Inteligência competitiva e mercado", area: "Estratégico e inovação", areaCode: "B7", tier: "desenvolvimento", desc: "Monitora concorrentes, publicações setoriais e dados ANS com painel semanal de alertas.", impact: "Decisões baseadas em mercado atualizado" },
+  { name: "Preparação de reuniões executivas", area: "Estratégico e inovação", areaCode: "B7", tier: "pronto", desc: "A partir da pauta, busca dados, prepara briefing executivo e gera apresentação-resumo.", impact: "Diretores preparados em fração do tempo" },
+  { name: "NPS e voz do beneficiário", area: "Estratégico e inovação", areaCode: "B7", tier: "pronto", desc: "Analisa respostas abertas de pesquisas pós-atendimento e identifica padrões de insatisfação.", impact: "Satisfação vira ação sem analista dedicado" },
+  { name: "Sinistralidade estratégica", area: "Estratégico e inovação", areaCode: "B7", tier: "desenvolvimento", desc: "Cruza sinistralidade com benchmarks do setor para subsidiar decisões de portfólio.", impact: "Visão estratégica além do operacional" },
+  { name: "Novos negócios e inovação", area: "Estratégico e inovação", areaCode: "B7", tier: "desenvolvimento", desc: "Monitora tendências de saúde suplementar, startups e oportunidades de parceria.", impact: "Cooperativa na dianteira de tendências" },
+  { name: "Orquestrador ponta a ponta", area: "Estratégico e inovação", areaCode: "B7", tier: "desenvolvimento", desc: "Agente que coordena múltiplos agentes em fluxo contínuo — visão de futuro do ecossistema de IA.", impact: "Automação inteligente de processos completos" },
+
+  // B8 — Marketing e comercial
+  { name: "Geração e qualificação de leads", area: "Marketing e comercial", areaCode: "B8", tier: "pronto", desc: "Captura leads de múltiplos canais, aplica scoring automático por perfil e comportamento, e distribui para o time comercial priorizado.", impact: "Mais leads qualificados, menos tempo desperdiçado" },
+  { name: "Assistente de vendas e CRM", area: "Marketing e comercial", areaCode: "B8", tier: "pronto", desc: "Registra interações, sugere próximos passos, prepara resumos de conta e gera follow-ups automáticos integrado ao CRM.", impact: "Produtividade comercial sem perder contexto" },
+  { name: "Criação de conteúdo e campanhas", area: "Marketing e comercial", areaCode: "B8", tier: "pronto", desc: "Gera textos para e-mail marketing, redes sociais, landing pages e materiais de campanha alinhados ao tom da cooperativa.", impact: "Produção de conteúdo 5x mais rápida" },
+  { name: "Análise de performance comercial", area: "Marketing e comercial", areaCode: "B8", tier: "customizado", desc: "Consolida dados de vendas, funil e conversão, gera dashboards narrativos e identifica gargalos no processo comercial.", impact: "Visibilidade total do funil de vendas" },
+  { name: "Relacionamento e régua de comunicação", area: "Marketing e comercial", areaCode: "B8", tier: "customizado", desc: "Automatiza comunicação segmentada com beneficiários e prospects por ciclo de vida, canal e perfil de engajamento.", impact: "Comunicação personalizada em escala" },
+  { name: "Inteligência de mercado e pricing", area: "Marketing e comercial", areaCode: "B8", tier: "desenvolvimento", desc: "Monitora concorrência, analisa elasticidade de preço por produto e região, e sugere estratégias de posicionamento.", impact: "Decisões de mercado baseadas em dados" },
+  { name: "Proposta comercial automatizada", area: "Marketing e comercial", areaCode: "B8", tier: "customizado", desc: "Gera propostas personalizadas a partir do perfil do prospect, histórico de interações e regras comerciais da cooperativa.", impact: "Propostas em minutos, não em dias" },
+];
+
+const AREA_COLORS = {
+  "B1": "#ef5ba1",
+  "B2": "#2c479e",
+  "B3": "#6167af",
+  "B4": "#028c8e",
+  "B5": "#2bbcb6",
+  "B6": "#58c9f4",
+  "B7": "#2b296b",
+  "B8": "#e8734a",
+};
+
+const AREA_ORDER = ["B1","B2","B3","B4","B5","B6","B7","B8"];
+const TIER_ORDER = ["pronto","customizado","desenvolvimento"];
+const TIER_LABELS = { pronto: "Pronto", customizado: "Customizado", desenvolvimento: "Desenvolvimento" };
+const TIER_COLORS = { pronto: "var(--teal)", customizado: "var(--blue)", desenvolvimento: "var(--navy)" };
+
+let currentView = 'area';
+
+function setView(view) {
+  currentView = view;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderCards();
+}
+
+function getFilteredAgents() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (!q) return AGENTS;
+  return AGENTS.filter(a =>
+    a.name.toLowerCase().includes(q) ||
+    a.area.toLowerCase().includes(q) ||
+    a.desc.toLowerCase().includes(q) ||
+    a.impact.toLowerCase().includes(q) ||
+    TIER_LABELS[a.tier].toLowerCase().includes(q)
+  );
+}
+
+function makeCard(agent) {
+  const tierClass = `t-${agent.tier}`;
+  const cbClass = `cb-${agent.tier}`;
+  const areaLabel = currentView === 'complexidade'
+    ? `<div class="area-badge">${agent.areaCode} · ${agent.area}</div>`
+    : '';
+  const tierBadge = `<span class="complexity-badge ${cbClass}">${TIER_LABELS[agent.tier]}</span>`;
+  return `
+    <div class="card ${tierClass}">
+      ${areaLabel}
+      <div class="card-top">
+        <h3>${agent.name}</h3>
+        ${tierBadge}
+      </div>
+      <div class="card-desc">${agent.desc}</div>
+      <div class="card-impact">${agent.impact}</div>
+    </div>
+  `;
+}
+
+function renderCards() {
+  const agents = getFilteredAgents();
+  const container = document.getElementById('mainContent');
+  const all = getFilteredAgents();
+  document.getElementById('countP').textContent = all.filter(a=>a.tier==='pronto').length;
+  document.getElementById('countM').textContent = all.filter(a=>a.tier==='customizado').length;
+  document.getElementById('countG').textContent = all.filter(a=>a.tier==='desenvolvimento').length;
+
+  if (agents.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="emoji">🔍</div>
+        <h3>Nenhum agente encontrado</h3>
+        <p>Tente outro termo de busca.</p>
+      </div>`;
+    return;
+  }
+
+  let html = `
+    <div class="legend">
+      <span class="legend-title">Complexidade:</span>
+      <div class="legend-item"><span class="legend-swatch ls-pronto"></span> Pronto — usuário opera sozinho na plataforma</div>
+      <div class="legend-item"><span class="legend-swatch ls-customizado"></span> Customizado — configurado pela Aimana para a sua área</div>
+      <div class="legend-item"><span class="legend-swatch ls-desenvolvimento"></span> Desenvolvimento — projeto com integração e arquitetura dedicada</div>
+    </div>
+  `;
+
+  if (currentView === 'area') {
+    const grouped = {};
+    agents.forEach(a => {
+      const key = a.areaCode;
+      if (!grouped[key]) grouped[key] = { area: a.area, code: a.areaCode, agents: [] };
+      grouped[key].agents.push(a);
+    });
+    AREA_ORDER.forEach(code => {
+      if (!grouped[code]) return;
+      const g = grouped[code];
+      g.agents.sort((a,b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier));
+      const color = AREA_COLORS[code];
+      html += `
+        <div class="group">
+          <div class="group-header">
+            <div class="group-icon" style="background:${color}">${code}</div>
+            <h2>${g.area}</h2>
+            <span class="group-count">${g.agents.length} agente${g.agents.length>1?'s':''}</span>
+          </div>
+          <div class="card-grid">
+            ${g.agents.map(makeCard).join('')}
+          </div>
+        </div>
+      `;
+    });
+  } else {
+    TIER_ORDER.forEach(tier => {
+      const group = agents.filter(a => a.tier === tier);
+      if (group.length === 0) return;
+      group.sort((a,b) => AREA_ORDER.indexOf(a.areaCode) - AREA_ORDER.indexOf(b.areaCode));
+      const color = TIER_COLORS[tier];
+      const label = TIER_LABELS[tier];
+      const descriptions = {
+        pronto: "Rodam na plataforma Aimana com autonomia total do colaborador",
+        customizado: "Configurado pela Aimana com regras e dados da sua cooperativa",
+        desenvolvimento: "Projeto com integração profunda, arquitetura dedicada e ROI direto",
+      };
+      html += `
+        <div class="group">
+          <div class="group-header">
+            <div class="group-icon" style="background:${color}">${group.length}</div>
+            <h2>${label} <span style="font-weight:300;font-size:14px;color:var(--mid-gray);margin-left:8px">${descriptions[tier]}</span></h2>
+          </div>
+          <div class="card-grid">
+            ${group.map(makeCard).join('')}
+          </div>
+        </div>
+      `;
+    });
+  }
+  container.innerHTML = html;
+}
+
+renderCards();
+</script>
+
+<!-- ===== CONTACT MODAL ===== -->
+<div class="modal-backdrop" id="contactModal" onclick="handleBackdropClick(event)">
+  <div class="modal" role="dialog" aria-labelledby="modalTitle">
+    <button class="modal-close" onclick="closeContactModal()" aria-label="Fechar">×</button>
+    <h2 id="modalTitle">Fale com nosso time</h2>
+    <p>Preencha seus dados e agende uma reunião com o time AIMANA.</p>
+    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+      <div class="form-field">
+        <label for="f-name">Nome</label>
+        <input type="text" id="f-name" name="name" required autocomplete="name">
+      </div>
+      <div class="form-field">
+        <label for="f-email">E-mail corporativo</label>
+        <input type="email" id="f-email" name="email" required autocomplete="email">
+      </div>
+      <div class="form-field">
+        <label for="f-phone">Telefone</label>
+        <input type="tel" id="f-phone" name="phone" required autocomplete="tel" placeholder="(00) 00000-0000">
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="f-company">Empresa</label>
+          <input type="text" id="f-company" name="company" required autocomplete="organization">
+        </div>
+        <div class="form-field">
+          <label for="f-role">Cargo</label>
+          <input type="text" id="f-role" name="role" required autocomplete="organization-title">
+        </div>
+      </div>
+      <button type="submit" class="modal-submit" id="contactSubmitBtn">Agendar reunião</button>
+      <div class="modal-feedback" id="contactFeedback"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+// TODO: substituir pela URL real do webhook (HubSpot / Zapier / Make / etc.)
+const CONTACT_WEBHOOK_URL = 'WEBHOOK_URL_AQUI';
+const CALENDLY_URL = 'https://calendly.com/lucas-aimana/1h';
+
+function openContactModal() {
+  document.getElementById('contactModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('f-name').focus(), 100);
+}
+
+function closeContactModal() {
+  document.getElementById('contactModal').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('contactFeedback').classList.remove('show', 'error');
+}
+
+function handleBackdropClick(e) {
+  if (e.target.id === 'contactModal') closeContactModal();
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeContactModal();
+});
+
+async function handleContactSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('contactSubmitBtn');
+  const feedback = document.getElementById('contactFeedback');
+  const data = {
+    name:    document.getElementById('f-name').value.trim(),
+    email:   document.getElementById('f-email').value.trim(),
+    phone:   document.getElementById('f-phone').value.trim(),
+    company: document.getElementById('f-company').value.trim(),
+    role:    document.getElementById('f-role').value.trim(),
+    source:  'lp.aimana.ai/agentes_unimed',
+    timestamp: new Date().toISOString()
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  feedback.classList.remove('show', 'error');
+
+  try {
+    if (CONTACT_WEBHOOK_URL && CONTACT_WEBHOOK_URL !== 'WEBHOOK_URL_AQUI') {
+      await fetch(CONTACT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        mode: 'no-cors'
+      });
+    } else {
+      console.warn('[AIMANA] Webhook não configurado. Dados do formulário:', data);
+    }
+
+    feedback.textContent = 'Cadastro enviado! Redirecionando para o Calendly...';
+    feedback.classList.add('show');
+    btn.textContent = 'Agendar reunião';
+
+    // Pré-preenche e abre o Calendly em nova aba
+    const calendlyWithParams = `${CALENDLY_URL}?name=${encodeURIComponent(data.name)}&email=${encodeURIComponent(data.email)}&a1=${encodeURIComponent(data.company + ' — ' + data.role)}`;
+    setTimeout(() => {
+      window.open(calendlyWithParams, '_blank', 'noopener');
+      closeContactModal();
+      document.getElementById('contactForm').reset();
+      btn.disabled = false;
+    }, 800);
+
+  } catch (err) {
+    console.error('[AIMANA] Erro no envio:', err);
+    feedback.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
+    feedback.classList.add('show', 'error');
+    btn.disabled = false;
+    btn.textContent = 'Agendar reunião';
+  }
+}
+</script>
+
+</body>
+</html>
