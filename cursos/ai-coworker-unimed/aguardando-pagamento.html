@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aguardando pagamento · AI Coworker Unimed · AIMANA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#2b296b;
+    --ink:#0f0f2d;
+    --teal:#2bbcb6;
+    --pink:#e91e90;
+    --amber:#f5a623;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Titillium Web',system-ui,sans-serif;color:#fff;background:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;-webkit-font-smoothing:antialiased}
+
+  .card{
+    max-width:560px;
+    width:100%;
+    background:var(--navy);
+    border-radius:32px;
+    padding:56px 48px;
+    text-align:center;
+    box-shadow:0 40px 80px rgba(0,0,0,.4);
+    border:1px solid rgba(255,255,255,0.08);
+  }
+
+  .logo{margin-bottom:40px}
+  .logo img{height:28px;display:inline-block}
+
+  .icon{
+    width:72px;height:72px;border-radius:50%;
+    background:rgba(245,166,35,0.12);
+    border:2px solid var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 32px;
+    font-size:30px;
+  }
+
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0.3)}
+    50%{box-shadow:0 0 0 10px rgba(245,166,35,0)}
+  }
+  .icon{animation:pulse 2.4s ease-in-out infinite}
+
+  .eyebrow{
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--amber);font-weight:700;margin-bottom:16px;display:block;
+  }
+
+  h1{
+    font-size:36px;font-weight:900;line-height:1.05;
+    letter-spacing:-.01em;text-transform:uppercase;
+    margin-bottom:20px;
+  }
+  h1 em{font-style:normal;color:var(--pink)}
+
+  .lead{
+    font-size:17px;line-height:1.6;
+    color:rgba(255,255,255,0.78);
+    font-weight:300;
+    margin-bottom:36px;
+  }
+
+  .next-steps{
+    background:rgba(255,255,255,0.04);
+    border-radius:16px;
+    padding:24px 28px;
+    text-align:left;
+  }
+  .next-steps .label{
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--teal);font-weight:700;margin-bottom:14px;display:block;
+  }
+  .next-steps ul{list-style:none;padding:0}
+  .next-steps li{
+    font-size:15px;line-height:1.6;
+    color:rgba(255,255,255,0.78);
+    font-weight:300;
+    padding:8px 0;
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    padding-left:18px;
+    position:relative;
+  }
+  .next-steps li:last-child{border:none}
+  .next-steps li::before{
+    content:"→";position:absolute;left:0;
+    color:var(--teal);font-weight:700;font-size:12px;top:10px;
+  }
+  .next-steps li strong{color:#fff;font-weight:700}
+
+  .footer-note{
+    margin-top:36px;
+    font-size:13px;color:rgba(255,255,255,0.38);
+    line-height:1.5;
+  }
+  .footer-note a{color:var(--teal);text-decoration:none}
+  .footer-note a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <img src="assets/logo-aimana-branco.svg" alt="AIMANA" onerror="this.outerHTML='<span style=\'font-size:20px;font-weight:700;letter-spacing:.12em;color:#fff\'>aimana</span>'">
+  </div>
+
+  <div class="icon">⏳</div>
+
+  <span class="eyebrow">Aguardando pagamento</span>
+  <h1>Quase lá,<br><em>AI Coworker Unimed</em></h1>
+
+  <p class="lead">Recebemos seu pedido. Assim que o pagamento for confirmado, sua vaga na turma estará garantida.</p>
+
+  <div class="next-steps">
+    <span class="label">O que acontece agora</span>
+    <ul>
+      <li>Efetue o pagamento conforme as instruções enviadas pela Hotmart.</li>
+      <li><strong>Confirmação em até 1 dia útil</strong> após o pagamento ser processado.</li>
+      <li>Você receberá um e-mail com acesso à plataforma e todos os detalhes da turma.</li>
+    </ul>
+  </div>
+
+  <p class="footer-note">Dúvidas sobre o pagamento? Escreva para <a href="mailto:contato@aimana.ai">contato@aimana.ai</a></p>
+</div>
+
+</body></html>
