@@ -847,7 +847,7 @@
     success.scrollIntoView({ behavior: "smooth", block: "center" });
 
     if (dest){
-      setTimeout(function(){ window.location.href = dest; }, 1200);
+      setTimeout(function(){ window.open(dest, "_blank"); }, 1200);
     }
   });
 })();
