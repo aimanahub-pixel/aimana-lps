@@ -761,11 +761,13 @@
     return url.toString();
   }
 
-  function buildDest(modalidade, nome, email){
+  function buildDest(modalidade, nome, email, telefone){
     var d = DEST[modalidade];
     if (!d) return null;
     if (d.type === "hotmart"){
-      return addParams(d.url, { name: nome, email: email });
+      var params = { name: nome, email: email };
+      if (telefone) params.phone_number = telefone;
+      return addParams(d.url, params);
     }
     if (d.type === "whatsapp"){
       var msg = "Olá! Me chamo " + nome + " e tenho interesse no plano Grupo do AI Coworker Unimed. E-mail: " + email;
@@ -802,6 +804,7 @@
     var fd         = new FormData(form);
     var nome       = (fd.get("nome")       || "").trim();
     var email      = (fd.get("email")      || "").trim();
+    var telefone   = (fd.get("telefone")   || "").trim();
     var modalidade = fd.get("modalidade")  || "";
 
     var payload = {
@@ -830,7 +833,7 @@
       body:    JSON.stringify(payload)
     }).catch(function(err){ console.error("[form] webhook failed:", err); });
 
-    var dest = buildDest(modalidade, nome, email);
+    var dest = buildDest(modalidade, nome, email, telefone);
 
     form.style.display = "none";
     if (micro) micro.style.display = "none";
