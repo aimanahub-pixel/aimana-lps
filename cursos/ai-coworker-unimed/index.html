@@ -840,11 +840,14 @@
     var heading = success.querySelector("h3");
     var subtext = success.querySelector("p");
 
+    success.style.background = "#2b296b";
+    success.style.borderColor = "#2b296b";
+    if (heading) heading.style.color = "#e91e90";
+    if (subtext)  subtext.style.color  = "#e91e90";
+
     if (modalidade === "grupo_2800") {
-      success.style.background = "#2b296b";
-      success.style.borderColor = "#2b296b";
-      if (heading) { heading.textContent = "Inscrição feita ✓"; heading.style.color = "#e91e90"; }
-      if (subtext)  { subtext.textContent = "Nosso time irá entrar em contato com você em breve."; subtext.style.color = "#e91e90"; }
+      if (heading) heading.textContent = "Inscrição feita ✓";
+      if (subtext)  subtext.textContent = "Nosso time irá entrar em contato com você em breve.";
     } else {
       if (heading) heading.textContent = "Tudo certo! ✓";
       if (subtext)  subtext.textContent = dest
