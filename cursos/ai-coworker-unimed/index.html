@@ -226,7 +226,7 @@
   .price-card li{padding:10px 0;font-size:14px;line-height:1.45;border-bottom:1px solid var(--line);color:var(--ink);display:flex;gap:10px}
   .price-card.featured li{border-color:rgba(255,255,255,0.12)}
   .price-card li::before{content:"→";color:var(--teal);font-weight:700;flex:0 0 auto}
-  .price-card button{width:100%;background:var(--teal);color:var(--navy);font-size:15px;font-weight:700;padding:14px;border:none;border-radius:12px;letter-spacing:.02em}
+  .price-card button,.price-card .btn-card{display:block;width:100%;background:var(--teal);color:var(--navy);font-size:15px;font-weight:700;padding:14px;border:none;border-radius:12px;letter-spacing:.02em;text-align:center;text-decoration:none;cursor:pointer;box-sizing:border-box}
   .price-card.featured button{background:var(--teal);color:var(--navy)}
   .price-note{text-align:center;margin-top:48px;padding:24px;background:#fff;border-radius:16px;font-size:14px;color:var(--ink);line-height:1.55;border:1px dashed rgba(43,188,182,0.4)}
   .price-note strong{color:var(--navy)}
@@ -619,7 +619,7 @@
           <li>Demoday com banca</li>
           <li>Certificado AIMANA</li>
         </ul>
-        <button>Quero individual</button>
+        <a href="#inscricao" class="btn-card" onclick="document.querySelector('[name=modalidade]').value='individual_3500'">Quero individual</a>
       </div>
       <div class="price-card featured">
         <span class="badge">Mais vendido</span>
@@ -632,7 +632,7 @@
           <li>Dever de casa coletivo entre aulas</li>
           <li>Economia de R$ 700 por pessoa</li>
         </ul>
-        <button>Quero em grupo</button>
+        <a href="#inscricao" class="btn-card" onclick="document.querySelector('[name=modalidade]').value='grupo_2800'">Quero em grupo</a>
       </div>
       <div class="price-card">
         <h4>Turma corporativa</h4>
@@ -645,7 +645,7 @@
           <li>Banca de dirigentes no Demoday</li>
           <li>Condição por volume</li>
         </ul>
-        <button>Falar com o time</button>
+        <a href="#inscricao" class="btn-card" onclick="document.querySelector('[name=modalidade]').value='turma_corporativa'">Falar com o time</a>
       </div>
     </div>
 
@@ -738,7 +738,44 @@
  * POST JSON ao webhook Make. Loading + success/error state.
  * ============================================================ */
 (function(){
-  var WEBHOOK_URL = "https://hook.us2.make.com/y29l81gh0t1xmm4mkae4mxzqu2mqwu2a"; // <-- trocar antes do deploy
+  var WEBHOOK_URL = "https://hook.us2.make.com/y29l81gh0t1xmm4mkae4mxzqu2mqwu2a";
+
+  // ─── Destinos por modalidade ────────────────────────────────────────────────
+  // TODO individual_3500 : substituir pela URL real do checkout Hotmart
+  // TODO grupo_2800      : substituir pelo número real (formato: 5511999999999)
+  var DEST = {
+    individual_3500:   { type: "hotmart",  url: "https://pay.hotmart.com/XXXXXXXX" },
+    grupo_2800:        { type: "whatsapp", number: "5500000000000" },
+    turma_corporativa: { type: "calendly", url: "https://calendly.com/lucas-aimana/1h" }
+  };
+
+  var MSG_REDIRECT = {
+    individual_3500:   "Redirecionando para o checkout…",
+    grupo_2800:        "Abrindo WhatsApp…",
+    turma_corporativa: "Abrindo Calendly…"
+  };
+
+  function addParams(base, params){
+    var url = new URL(base);
+    Object.keys(params).forEach(function(k){ url.searchParams.set(k, params[k]); });
+    return url.toString();
+  }
+
+  function buildDest(modalidade, nome, email){
+    var d = DEST[modalidade];
+    if (!d) return null;
+    if (d.type === "hotmart"){
+      return addParams(d.url, { name: nome, email: email });
+    }
+    if (d.type === "whatsapp"){
+      var msg = "Olá! Me chamo " + nome + " e tenho interesse no plano Grupo do AI Coworker Unimed. E-mail: " + email;
+      return "https://wa.me/" + d.number + "?text=" + encodeURIComponent(msg);
+    }
+    if (d.type === "calendly"){
+      return addParams(d.url, { name: nome, email: email });
+    }
+    return null;
+  }
 
   function getUTMs(){
     var p = new URLSearchParams(location.search);
@@ -762,7 +799,11 @@
     e.preventDefault();
     if (!form.checkValidity()){ form.reportValidity(); return; }
 
-    var fd = new FormData(form);
+    var fd         = new FormData(form);
+    var nome       = (fd.get("nome")       || "").trim();
+    var email      = (fd.get("email")      || "").trim();
+    var modalidade = fd.get("modalidade")  || "";
+
     var payload = {
       meta: {
         timestamp:   new Date().toISOString(),
@@ -779,32 +820,35 @@
     if (!("lgpd_consent" in payload.form)) payload.form.lgpd_consent = false;
 
     btn.disabled = true;
-    var oldLabel = btn.textContent;
-    btn.textContent = "Enviando...";
+    btn.textContent = "Enviando…";
 
+    // Captura o lead em background — não bloqueia o redirecionamento
     fetch(WEBHOOK_URL, {
       method:  "POST",
       mode:    "cors",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify(payload)
-    })
-    .then(function(r){ if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
-    .then(function(){
-      form.style.display = "none";
-      if (micro) micro.style.display = "none";
-      success.style.display = "";
-      success.scrollIntoView({behavior:"smooth", block:"center"});
-    })
-    .catch(function(err){
-      console.error("[form] submit failed:", err);
-      form.style.display = "none";
-      if (micro) micro.style.display = "none";
-      errBox.style.display = "";
-    })
-    .finally(function(){
-      btn.disabled = false;
-      btn.textContent = oldLabel;
-    });
+    }).catch(function(err){ console.error("[form] webhook failed:", err); });
+
+    var dest = buildDest(modalidade, nome, email);
+
+    form.style.display = "none";
+    if (micro) micro.style.display = "none";
+
+    // Mensagem de transição antes do redirect
+    var heading = success.querySelector("h3");
+    var subtext = success.querySelector("p");
+    if (heading) heading.textContent = "Tudo certo! ✓";
+    if (subtext)  subtext.textContent = dest
+      ? (MSG_REDIRECT[modalidade] || "Redirecionando…")
+      : "Sua inscrição foi recebida. Nosso time responde em até 1 dia útil.";
+
+    success.style.display = "";
+    success.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    if (dest){
+      setTimeout(function(){ window.location.href = dest; }, 1200);
+    }
   });
 })();
 </script>
