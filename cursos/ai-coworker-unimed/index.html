@@ -766,7 +766,7 @@
     if (!d) return null;
     if (d.type === "hotmart"){
       var params = { name: nome, email: email };
-      if (telefone) params.phone_number = telefone;
+      if (telefone) params.phone_number = telefone.replace(/\D/g, "");
       return addParams(d.url, params);
     }
     if (d.type === "whatsapp"){
